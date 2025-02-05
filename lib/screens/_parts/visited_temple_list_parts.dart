@@ -7,57 +7,80 @@ import '../../extensions/extensions.dart';
 
 import '../../models/temple_model.dart';
 
-// import '../function.dart';
-//
-//
-//
-
 ///
-Widget visitedTempleListParts({
-  //   required List<TempleModel> templeList,
-  // required Map<String, List<String>> templeVisitDateMap,
-  // required Map<String, TempleModel> dateTempleMap,
-  required WidgetRef ref,
-  // required BuildContext context
-  //
-  //
-}) {
-  // List<int> yearList = <int>[];
-  //
-  // if (yearList.isEmpty) {
-  //   yearList = makeTempleVisitYearList(ref: ref);
-  // }
+Widget visitedTempleListParts({required WidgetRef ref}) {
+  final List<Widget> list = <Widget>[];
 
   final TempleState templeState = ref.watch(templeProvider);
 
   final List<TempleModel> roopList = List<TempleModel>.from(templeState.templeList);
 
-  return DefaultTextStyle(
-    style: const TextStyle(fontSize: 12),
-    child: Column(
-      children: roopList.map((TempleModel e) {
-        final List<String> templeList = <String>[e.temple];
+  String keepYear = '';
 
-        if (e.memo.isNotEmpty) {
-          e.memo.split('、').forEach((String e2) => templeList.add(e2));
-        }
+  int i = 0;
+  for (final TempleModel element in roopList) {
+    final List<String> templeList = <String>[element.temple];
 
-        return Row(
+    if (element.memo.isNotEmpty) {
+      element.memo.split('、').forEach((String e2) => templeList.add(e2));
+    }
+
+    if (keepYear != element.date.yyyymmdd.split('-')[0]) {
+      list.add(
+        Container(
+          decoration: BoxDecoration(color: Colors.white.withOpacity(0.2)),
+          margin: (i == 0) ? null : const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.all(5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(element.date.yyyymmdd.split('-')[0]),
+              Container(),
+            ],
+          ),
+        ),
+      );
+    }
+
+    list.add(
+      Container(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3))),
+        ),
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(width: 80, child: Text(e.date.yyyymmdd)),
+            SizedBox(width: 80, child: Text(element.date.yyyymmdd)),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: templeList.map((String e3) {
-                  return Text(e3);
+                children: templeList.map((String element2) {
+                  return Row(
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {},
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 5, bottom: 5, right: 15),
+                          child: Icon(Icons.all_out, color: Colors.white),
+                        ),
+                      ),
+                      Expanded(child: Text(element2)),
+                    ],
+                  );
                 }).toList(),
               ),
             ),
           ],
-        );
-      }).toList(),
-    ),
-  );
+        ),
+      ),
+    );
+
+    keepYear = element.date.yyyymmdd.split('-')[0];
+
+    i++;
+  }
+
+  return DefaultTextStyle(style: const TextStyle(fontSize: 12), child: Column(children: list));
 }
