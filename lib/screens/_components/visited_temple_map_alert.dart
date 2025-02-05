@@ -21,21 +21,12 @@ import '../_parts/temple_overlay.dart';
 import '../_parts/visited_temple_list_parts.dart';
 
 class VisitedTempleMapAlert extends ConsumerStatefulWidget {
-  const VisitedTempleMapAlert({
-    super.key,
-    required this.templeList,
-    required this.templeVisitDateMap,
-    required this.dateTempleMap,
-    this.pinpointLat,
-    this.pinpointLng,
-  });
+  const VisitedTempleMapAlert(
+      {super.key, required this.templeList, required this.templeVisitDateMap, required this.dateTempleMap});
 
   final List<TempleModel> templeList;
   final Map<String, List<String>> templeVisitDateMap;
   final Map<String, TempleModel> dateTempleMap;
-
-  final double? pinpointLat;
-  final double? pinpointLng;
 
   @override
   ConsumerState<VisitedTempleMapAlert> createState() => _VisitedTempleMapAlertState();
@@ -67,10 +58,19 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
 
   ///
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    makeTempleDataList();
 
-    if (widget.pinpointLat == null && widget.pinpointLng == null) {
+    makeMarker();
+
+    const double pinpointLat = 35.718532;
+    const double pinpointLng = 139.586639;
+
+    final TempleState templeState = ref.watch(templeProvider);
+
+    if (templeState.selectTempleLat != '' && templeState.selectTempleLng != '') {
+      mapController.move(LatLng(templeState.selectTempleLat.toDouble(), templeState.selectTempleLng.toDouble()), 13);
+    } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() => isLoading = true);
 
@@ -82,25 +82,6 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
         });
       });
     }
-  }
-
-  ///
-  @override
-  Widget build(BuildContext context) {
-    makeTempleDataList();
-
-    makeMarker();
-
-    double pinpointLat = 35.718532;
-    double pinpointLng = 139.586639;
-
-    if (widget.pinpointLat != null) {
-      pinpointLat = widget.pinpointLat!;
-    }
-
-    if (widget.pinpointLng != null) {
-      pinpointLng = widget.pinpointLng!;
-    }
 
     return Scaffold(
       body: Stack(
@@ -108,7 +89,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
           FlutterMap(
             mapController: mapController,
             options: MapOptions(
-              initialCenter: LatLng(pinpointLat, pinpointLng),
+              initialCenter: const LatLng(pinpointLat, pinpointLng),
               initialZoom: currentZoomEightTeen,
               onPositionChanged: (MapCamera position, bool isMoving) {
                 if (isMoving) {
@@ -150,24 +131,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
                         initialPosition: Offset(0, context.screenSize.height * 0.7),
                         widget: Consumer(
                           builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                            // return notReachTempleTrainSelectParts(
-                            //   context: context,
-                            //   ref: ref,
-                            //   tokyoTrainList: widget.tokyoTrainList,
-                            //   setDefaultBoundsMap: setDefaultBoundsMap,
-                            // );
-
-                            return visitedTempleListParts(
-                              ref: ref,
-
-                              //
-                              //
-                              //
-                              // context: context,
-                              // templeList: widget.templeList,
-                              // templeVisitDateMap: widget.templeVisitDateMap,
-                              // dateTempleMap: widget.dateTempleMap,
-                            );
+                            return visitedTempleListParts(ref: ref);
                           },
                         ),
                         onPositionChanged: (Offset newPos) =>

@@ -3,13 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/temple/temple.dart';
 
+import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../extensions/extensions.dart';
 
+import '../../models/temple_lat_lng_model.dart';
 import '../../models/temple_model.dart';
 
 ///
 Widget visitedTempleListParts({required WidgetRef ref}) {
   final List<Widget> list = <Widget>[];
+
+  final AsyncValue<TempleLatLngState> templeLatLngState = ref.watch(templeLatLngProvider);
+  final Map<String, TempleLatLngModel>? templeLatLngMap = templeLatLngState.value?.templeLatLngMap;
 
   final TempleState templeState = ref.watch(templeProvider);
 
@@ -60,7 +65,14 @@ Widget visitedTempleListParts({required WidgetRef ref}) {
                   return Row(
                     children: <Widget>[
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          if (templeLatLngMap?[element2] != null) {
+                            ref.read(templeProvider.notifier).setSelectTemple(
+                                name: element2,
+                                lat: templeLatLngMap![element2]!.lat,
+                                lng: templeLatLngMap[element2]!.lng);
+                          }
+                        },
                         child: const Padding(
                           padding: EdgeInsets.only(top: 5, bottom: 5, right: 15),
                           child: Icon(Icons.all_out, color: Colors.white),
