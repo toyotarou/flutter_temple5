@@ -25,4 +25,8 @@ class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
 
   ///
   void updateOverlayPosition(Offset newPos) => state = state.copyWith(overlayPosition: newPos);
+
+  ///
+  void setVisitedTempleMapDisplayFinish({required bool flag}) =>
+      state = state.copyWith(visitedTempleMapDisplayFinish: flag);
 }

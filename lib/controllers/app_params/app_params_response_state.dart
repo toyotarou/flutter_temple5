@@ -13,5 +13,8 @@ class AppParamsResponseState with _$AppParamsResponseState {
     ///
     List<OverlayEntry>? firstEntries,
     List<OverlayEntry>? secondEntries,
+
+    ///
+    @Default(false) bool visitedTempleMapDisplayFinish,
   }) = _AppParamsResponseState;
 }

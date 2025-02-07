@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/app_params/app_params_notifier.dart';
 import '../../controllers/temple/temple.dart';
 
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
@@ -67,6 +68,8 @@ Widget visitedTempleListParts({required WidgetRef ref}) {
                       GestureDetector(
                         onTap: () {
                           if (templeLatLngMap?[element2] != null) {
+                            ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: false);
+
                             ref.read(templeProvider.notifier).setSelectTemple(
                                 name: element2,
                                 lat: templeLatLngMap![element2]!.lat,

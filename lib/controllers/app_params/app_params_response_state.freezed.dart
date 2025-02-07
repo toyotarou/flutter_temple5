@@ -24,6 +24,9 @@ mixin _$AppParamsResponseState {
   List<OverlayEntry>? get firstEntries => throw _privateConstructorUsedError;
   List<OverlayEntry>? get secondEntries => throw _privateConstructorUsedError;
 
+  ///
+  bool get visitedTempleMapDisplayFinish => throw _privateConstructorUsedError;
+
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -42,7 +45,8 @@ abstract class $AppParamsResponseStateCopyWith<$Res> {
       int currentPaddingIndex,
       Offset? overlayPosition,
       List<OverlayEntry>? firstEntries,
-      List<OverlayEntry>? secondEntries});
+      List<OverlayEntry>? secondEntries,
+      bool visitedTempleMapDisplayFinish});
 }
 
 /// @nodoc
@@ -66,6 +70,7 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
     Object? overlayPosition = freezed,
     Object? firstEntries = freezed,
     Object? secondEntries = freezed,
+    Object? visitedTempleMapDisplayFinish = null,
   }) {
     return _then(_value.copyWith(
       currentZoom: null == currentZoom
@@ -88,6 +93,10 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
           ? _value.secondEntries
           : secondEntries // ignore: cast_nullable_to_non_nullable
               as List<OverlayEntry>?,
+      visitedTempleMapDisplayFinish: null == visitedTempleMapDisplayFinish
+          ? _value.visitedTempleMapDisplayFinish
+          : visitedTempleMapDisplayFinish // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -106,7 +115,8 @@ abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
       int currentPaddingIndex,
       Offset? overlayPosition,
       List<OverlayEntry>? firstEntries,
-      List<OverlayEntry>? secondEntries});
+      List<OverlayEntry>? secondEntries,
+      bool visitedTempleMapDisplayFinish});
 }
 
 /// @nodoc
@@ -129,6 +139,7 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
     Object? overlayPosition = freezed,
     Object? firstEntries = freezed,
     Object? secondEntries = freezed,
+    Object? visitedTempleMapDisplayFinish = null,
   }) {
     return _then(_$AppParamsResponseStateImpl(
       currentZoom: null == currentZoom
@@ -151,6 +162,10 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
           ? _value._secondEntries
           : secondEntries // ignore: cast_nullable_to_non_nullable
               as List<OverlayEntry>?,
+      visitedTempleMapDisplayFinish: null == visitedTempleMapDisplayFinish
+          ? _value.visitedTempleMapDisplayFinish
+          : visitedTempleMapDisplayFinish // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -163,7 +178,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       this.currentPaddingIndex = 5,
       this.overlayPosition,
       final List<OverlayEntry>? firstEntries,
-      final List<OverlayEntry>? secondEntries})
+      final List<OverlayEntry>? secondEntries,
+      this.visitedTempleMapDisplayFinish = false})
       : _firstEntries = firstEntries,
         _secondEntries = secondEntries;
 
@@ -199,9 +215,14 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
     return EqualUnmodifiableListView(value);
   }
 
+  ///
+  @override
+  @JsonKey()
+  final bool visitedTempleMapDisplayFinish;
+
   @override
   String toString() {
-    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries)';
+    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish)';
   }
 
   @override
@@ -218,7 +239,11 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
             const DeepCollectionEquality()
                 .equals(other._firstEntries, _firstEntries) &&
             const DeepCollectionEquality()
-                .equals(other._secondEntries, _secondEntries));
+                .equals(other._secondEntries, _secondEntries) &&
+            (identical(other.visitedTempleMapDisplayFinish,
+                    visitedTempleMapDisplayFinish) ||
+                other.visitedTempleMapDisplayFinish ==
+                    visitedTempleMapDisplayFinish));
   }
 
   @override
@@ -228,7 +253,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       currentPaddingIndex,
       overlayPosition,
       const DeepCollectionEquality().hash(_firstEntries),
-      const DeepCollectionEquality().hash(_secondEntries));
+      const DeepCollectionEquality().hash(_secondEntries),
+      visitedTempleMapDisplayFinish);
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
@@ -246,7 +272,8 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
       final int currentPaddingIndex,
       final Offset? overlayPosition,
       final List<OverlayEntry>? firstEntries,
-      final List<OverlayEntry>? secondEntries}) = _$AppParamsResponseStateImpl;
+      final List<OverlayEntry>? secondEntries,
+      final bool visitedTempleMapDisplayFinish}) = _$AppParamsResponseStateImpl;
 
   @override
   double get currentZoom;
@@ -260,6 +287,10 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
   List<OverlayEntry>? get firstEntries;
   @override
   List<OverlayEntry>? get secondEntries;
+
+  ///
+  @override
+  bool get visitedTempleMapDisplayFinish;
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
