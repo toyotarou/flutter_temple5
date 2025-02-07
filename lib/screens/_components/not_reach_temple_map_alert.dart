@@ -364,6 +364,8 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
                 ),
                 onPositionChanged: (Offset newPos) => ref.read(appParamProvider.notifier).updateOverlayPosition(newPos),
                 secondEntries: _secondEntries,
+                ref: ref,
+                from: 'NotReachTempleMapAlert',
               );
             },
             child: CircleAvatar(

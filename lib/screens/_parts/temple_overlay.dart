@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/app_params/app_params_notifier.dart';
 import '../../controllers/app_params/app_params_response_state.dart';
+import '../../controllers/temple/temple.dart';
 
 //=======================================================//
 
@@ -129,6 +130,8 @@ void addFirstOverlay({
   required Widget widget,
   required ValueChanged<Offset> onPositionChanged,
   bool? fixedFlag,
+  WidgetRef? ref,
+  String? from,
 }) {
   if (firstEntries.isNotEmpty) {
     for (final OverlayEntry e in firstEntries) {
@@ -145,6 +148,12 @@ void addFirstOverlay({
     height: height,
     color: color,
     onRemove: () {
+      if (from == 'NotReachTempleMapAlert') {
+        if (ref != null) {
+          ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+        }
+      }
+
       entry.remove();
       setStateCallback(() => firstEntries.remove(entry));
     },
