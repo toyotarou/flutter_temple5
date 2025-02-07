@@ -154,6 +154,12 @@ void addFirstOverlay({
         }
       }
 
+      if (from == 'VisitedTempleMapAlert') {
+        if (ref != null) {
+          ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+        }
+      }
+
       entry.remove();
       setStateCallback(() => firstEntries.remove(entry));
     },
