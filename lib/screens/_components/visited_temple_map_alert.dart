@@ -6,8 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../../controllers/app_params/app_params_notifier.dart';
-import '../../controllers/app_params/app_params_response_state.dart';
 import '../../controllers/controllers_mixin.dart';
 import '../../controllers/temple/temple.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
