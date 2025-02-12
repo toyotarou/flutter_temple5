@@ -8,6 +8,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../controllers/app_params/app_params_notifier.dart';
 import '../../controllers/app_params/app_params_response_state.dart';
+import '../../controllers/controllers_mixin.dart';
 import '../../controllers/temple/temple.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../extensions/extensions.dart';
@@ -32,7 +33,8 @@ class VisitedTempleMapAlert extends ConsumerStatefulWidget {
   ConsumerState<VisitedTempleMapAlert> createState() => _VisitedTempleMapAlertState();
 }
 
-class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
+class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
+    with ControllersMixin<VisitedTempleMapAlert> {
   List<TempleData> templeDataList = <TempleData>[];
 
   double minLat = 0.0;
@@ -66,14 +68,11 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
     const double pinpointLat = 35.718532;
     const double pinpointLng = 139.586639;
 
-    final bool visitedTempleMapDisplayFinish =
-        ref.watch(appParamProvider.select((AppParamsResponseState value) => value.visitedTempleMapDisplayFinish));
-
-    if (!visitedTempleMapDisplayFinish) {
+    if (!appParamState.visitedTempleMapDisplayFinish) {
       final TempleState templeState = ref.watch(templeProvider);
 
       if (templeState.selectTempleLat != '' && templeState.selectTempleLng != '') {
-        ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: true);
+        appParamNotifier.setVisitedTempleMapDisplayFinish(flag: true);
 
         mapController.move(LatLng(templeState.selectTempleLat.toDouble(), templeState.selectTempleLng.toDouble()), 13);
       } else {
@@ -82,7 +81,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
 
           // ignore: always_specify_types
           Future.delayed(const Duration(seconds: 2), () {
-            ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: true);
+            appParamNotifier.setVisitedTempleMapDisplayFinish(flag: true);
 
             setDefaultBoundsMap();
 
@@ -102,7 +101,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
               initialZoom: currentZoomEightTeen,
               onPositionChanged: (MapCamera position, bool isMoving) {
                 if (isMoving) {
-                  ref.read(appParamProvider.notifier).setCurrentZoom(zoom: position.zoom);
+                  appParamNotifier.setCurrentZoom(zoom: position.zoom);
                 }
               },
             ),
@@ -128,7 +127,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
                       BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
                   child: IconButton(
                     onPressed: () {
-                      ref.read(appParamProvider.notifier).setSecondOverlayParams(secondEntries: _secondEntries);
+                      appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
 
                       addSecondOverlay(
                         context: context,
@@ -141,8 +140,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
                         widget: Consumer(
                             builder: (BuildContext context, WidgetRef ref, Widget? child) =>
                                 visitedTempleListParts(ref: ref)),
-                        onPositionChanged: (Offset newPos) =>
-                            ref.read(appParamProvider.notifier).updateOverlayPosition(newPos),
+                        onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
                         fixedFlag: true,
                       );
                     },
@@ -161,12 +159,10 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
   ///
   void setDefaultBoundsMap() {
     if (templeDataList.length > 1) {
-      final int currentPaddingIndex =
-          ref.watch(appParamProvider.select((AppParamsResponseState value) => value.currentPaddingIndex));
-
       final LatLngBounds bounds = LatLngBounds.fromPoints(<LatLng>[LatLng(minLat, maxLng), LatLng(maxLat, minLng)]);
 
-      final CameraFit cameraFit = CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(currentPaddingIndex * 10));
+      final CameraFit cameraFit =
+          CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(appParamState.currentPaddingIndex * 10));
 
       mapController.fitCamera(cameraFit);
 
@@ -177,7 +173,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
 
       setState(() => currentZoom = newZoom);
 
-      ref.read(appParamProvider.notifier).setCurrentZoom(zoom: newZoom);
+      appParamNotifier.setCurrentZoom(zoom: newZoom);
 
       getBoundsZoomValue = true;
     }
@@ -236,8 +232,6 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
 
   ///
   void makeMarker() {
-    final AppParamsResponseState appParamState = ref.watch(appParamProvider);
-
     Offset initialPosition = Offset(context.screenSize.width * 0.5, context.screenSize.height * 0.2);
 
     if (appParamState.overlayPosition != null) {
@@ -273,8 +267,6 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
                       initialPosition: initialPosition,
                       widget: Consumer(
                         builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                          final AppParamsResponseState appParamState = ref.watch(appParamProvider);
-
                           return templeInfoDisplayParts(
                             context: context,
                             temple: templeDataList[i],
@@ -288,8 +280,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert> {
                           );
                         },
                       ),
-                      onPositionChanged: (Offset newPos) =>
-                          ref.read(appParamProvider.notifier).updateOverlayPosition(newPos),
+                      onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
                       secondEntries: _secondEntries,
                       ref: ref,
                       from: 'VisitedTempleMapAlert',

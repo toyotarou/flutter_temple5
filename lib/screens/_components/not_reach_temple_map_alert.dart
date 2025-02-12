@@ -7,6 +7,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../controllers/app_params/app_params_notifier.dart';
 import '../../controllers/app_params/app_params_response_state.dart';
+import '../../controllers/controllers_mixin.dart';
 import '../../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../../controllers/temple/temple.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
@@ -42,7 +43,8 @@ class NotReachTempleMapAlert extends ConsumerStatefulWidget {
   ConsumerState<NotReachTempleMapAlert> createState() => _NotReachTempleMapAlertState();
 }
 
-class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert> {
+class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
+    with ControllersMixin<NotReachTempleMapAlert> {
   List<TempleData> templeDataList = <TempleData>[];
 
   List<double> latList = <double>[];
@@ -108,7 +110,7 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
               initialZoom: currentZoomEightTeen,
               onPositionChanged: (MapCamera position, bool isMoving) {
                 if (isMoving) {
-                  ref.read(appParamProvider.notifier).setCurrentZoom(zoom: position.zoom);
+                  appParamNotifier.setCurrentZoom(zoom: position.zoom);
                 }
               },
             ),
@@ -136,7 +138,7 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
                       BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
                   child: IconButton(
                     onPressed: () {
-                      ref.read(appParamProvider.notifier).setSecondOverlayParams(secondEntries: _secondEntries);
+                      appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
 
                       addSecondOverlay(
                         context: context,
@@ -161,8 +163,7 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
                         widget: NotReachTempleTrainSelectWidget(
                             tokyoTrainList: widget.tokyoTrainList, setDefaultBoundsMap: setDefaultBoundsMap),
 
-                        onPositionChanged: (Offset newPos) =>
-                            ref.read(appParamProvider.notifier).updateOverlayPosition(newPos),
+                        onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
                         fixedFlag: true,
                       );
                     },
@@ -251,9 +252,6 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
   ///
   void setDefaultBoundsMap() {
     if (templeDataList.length > 1) {
-      final int currentPaddingIndex =
-          ref.watch(appParamProvider.select((AppParamsResponseState value) => value.currentPaddingIndex));
-
       final TokyoTrainState tokyoTrainState = ref.watch(tokyoTrainProvider);
 
       final List<double> stationLatList = <double>[];
@@ -275,7 +273,8 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
 
       final LatLngBounds bounds = LatLngBounds.fromPoints(<LatLng>[LatLng(minLat, maxLng), LatLng(maxLat, minLng)]);
 
-      final CameraFit cameraFit = CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(currentPaddingIndex * 10));
+      final CameraFit cameraFit =
+          CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(appParamState.currentPaddingIndex * 10));
 
       mapController.fitCamera(cameraFit);
 
@@ -286,7 +285,7 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
 
       setState(() => currentZoom = newZoom);
 
-      ref.read(appParamProvider.notifier).setCurrentZoom(zoom: newZoom);
+      appParamNotifier.setCurrentZoom(zoom: newZoom);
 
       getBoundsZoomValue = true;
     }
@@ -313,8 +312,6 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
 
   ///
   void makeMarker() {
-    final AppParamsResponseState appParamState = ref.watch(appParamProvider);
-
     Offset initialPosition = Offset(context.screenSize.width * 0.5, context.screenSize.height * 0.2);
 
     if (appParamState.overlayPosition != null) {
@@ -336,7 +333,7 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
               ref.read(templeProvider.notifier).setSelectTemple(
                   name: templeDataList[i].name, lat: templeDataList[i].latitude, lng: templeDataList[i].longitude);
 
-              ref.read(appParamProvider.notifier).setFirstOverlayParams(firstEntries: _firstEntries);
+              appParamNotifier.setFirstOverlayParams(firstEntries: _firstEntries);
 
               addFirstOverlay(
                 context: context,
@@ -348,8 +345,6 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
                 initialPosition: initialPosition,
                 widget: Consumer(
                   builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                    final AppParamsResponseState appParamState = ref.watch(appParamProvider);
-
                     return templeInfoDisplayParts(
                       context: context,
                       temple: templeDataList[i],
@@ -362,7 +357,7 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
                     );
                   },
                 ),
-                onPositionChanged: (Offset newPos) => ref.read(appParamProvider.notifier).updateOverlayPosition(newPos),
+                onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
                 secondEntries: _secondEntries,
                 ref: ref,
                 from: 'NotReachTempleMapAlert',

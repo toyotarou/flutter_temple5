@@ -7,6 +7,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../controllers/app_params/app_params_notifier.dart';
 import '../../controllers/app_params/app_params_response_state.dart';
+import '../../controllers/controllers_mixin.dart';
 import '../../controllers/station/station.dart';
 import '../../controllers/temple/temple.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
@@ -27,7 +28,8 @@ class TempleDetailMapAlert extends ConsumerStatefulWidget {
   ConsumerState<TempleDetailMapAlert> createState() => _TempleDetailMapAlertState();
 }
 
-class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert> {
+class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
+    with ControllersMixin<TempleDetailMapAlert> {
   List<TempleData> templeDataList = <TempleData>[];
 
   List<double> latList = <double>[];
@@ -91,7 +93,7 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert> {
               initialZoom: currentZoomEightTeen,
               onPositionChanged: (MapCamera position, bool isMoving) {
                 if (isMoving) {
-                  ref.read(appParamProvider.notifier).setCurrentZoom(zoom: position.zoom);
+                  appParamNotifier.setCurrentZoom(zoom: position.zoom);
                 }
               },
             ),
@@ -128,12 +130,10 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert> {
   ///
   void setDefaultBoundsMap() {
     if (templeDataList.length > 1) {
-      final int currentPaddingIndex =
-          ref.watch(appParamProvider.select((AppParamsResponseState value) => value.currentPaddingIndex));
-
       final LatLngBounds bounds = LatLngBounds.fromPoints(<LatLng>[LatLng(minLat, maxLng), LatLng(maxLat, minLng)]);
 
-      final CameraFit cameraFit = CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(currentPaddingIndex * 10));
+      final CameraFit cameraFit =
+          CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(appParamState.currentPaddingIndex * 10));
 
       mapController.fitCamera(cameraFit);
 
@@ -144,7 +144,7 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert> {
 
       setState(() => currentZoom = newZoom);
 
-      ref.read(appParamProvider.notifier).setCurrentZoom(zoom: newZoom);
+      appParamNotifier.setCurrentZoom(zoom: newZoom);
 
       getBoundsZoomValue = true;
     }

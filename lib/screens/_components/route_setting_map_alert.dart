@@ -7,6 +7,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../controllers/app_params/app_params_notifier.dart';
 import '../../controllers/app_params/app_params_response_state.dart';
+import '../../controllers/controllers_mixin.dart';
 import '../../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../../controllers/routing/routing.dart';
 import '../../controllers/temple/temple.dart';
@@ -47,7 +48,8 @@ class RouteSettingMapAlert extends ConsumerStatefulWidget {
   ConsumerState<RouteSettingMapAlert> createState() => _RouteSettingMapAlertState();
 }
 
-class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert> {
+class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
+    with ControllersMixin<RouteSettingMapAlert> {
   List<TempleData> templeDataList = <TempleData>[];
 
   double minLat = 0.0;
@@ -170,7 +172,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert> {
               initialZoom: currentZoomEightTeen,
               onPositionChanged: (MapCamera position, bool isMoving) {
                 if (isMoving) {
-                  ref.read(appParamProvider.notifier).setCurrentZoom(zoom: position.zoom);
+                  appParamNotifier.setCurrentZoom(zoom: position.zoom);
                 }
               },
             ),
@@ -211,12 +213,10 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert> {
   ///
   void setDefaultBoundsMap() {
     if (templeDataList.length > 1) {
-      final int currentPaddingIndex =
-          ref.watch(appParamProvider.select((AppParamsResponseState value) => value.currentPaddingIndex));
-
       final LatLngBounds bounds = LatLngBounds.fromPoints(<LatLng>[LatLng(minLat, maxLng), LatLng(maxLat, minLng)]);
 
-      final CameraFit cameraFit = CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(currentPaddingIndex * 10));
+      final CameraFit cameraFit =
+          CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(appParamState.currentPaddingIndex * 10));
 
       mapController.fitCamera(cameraFit);
 
@@ -227,7 +227,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert> {
 
       setState(() => currentZoom = newZoom);
 
-      ref.read(appParamProvider.notifier).setCurrentZoom(zoom: newZoom);
+      appParamNotifier.setCurrentZoom(zoom: newZoom);
 
       getBoundsZoomValue = true;
     }
@@ -235,8 +235,6 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert> {
 
   ///
   void makeMarker() {
-    final AppParamsResponseState appParamState = ref.watch(appParamProvider);
-
     Offset initialPosition = Offset(context.screenSize.width * 0.5, context.screenSize.height * 0.2);
 
     if (appParamState.overlayPosition != null) {
@@ -284,8 +282,6 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert> {
                         initialPosition: initialPosition,
                         widget: Consumer(
                           builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                            final AppParamsResponseState appParamState = ref.watch(appParamProvider);
-
                             return templeInfoDisplayParts(
                               context: context,
                               temple: templeDataList[i],
@@ -299,8 +295,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert> {
                             );
                           },
                         ),
-                        onPositionChanged: (Offset newPos) =>
-                            ref.read(appParamProvider.notifier).updateOverlayPosition(newPos),
+                        onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
                         secondEntries: _secondEntries,
                       );
                     }
