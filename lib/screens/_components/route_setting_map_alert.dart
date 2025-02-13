@@ -6,14 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../../controllers/routing/routing.dart';
 import '../../controllers/temple/temple.dart';
 import '../../controllers/tokyo_train/tokyo_train.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/lat_lng_temple_model.dart';
-import '../../models/near_station_model.dart';
 import '../../models/temple_model.dart';
 import '../../models/tokyo_station_model.dart';
 import '../../models/tokyo_train_model.dart';
@@ -241,10 +239,8 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
 
     markerList = <Marker>[];
 
-    final bool orangeDisplay = ref.watch(latLngTempleProvider.select((LatLngTempleState value) => value.orangeDisplay));
-
     for (int i = 0; i < templeDataList.length; i++) {
-      if (orangeDisplay) {
+      if (latLngTempleState.orangeDisplay) {
         if (templeDataList[i].cnt > 0) {
           continue;
         }
@@ -307,14 +303,11 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
       );
     }
 
-    final NearStationResponseStationModel? selectedNearStation =
-        ref.watch(latLngTempleProvider.select((LatLngTempleState value) => value.selectedNearStation));
-
-    if (selectedNearStation != null) {
-      if (selectedNearStation.y > 0 && selectedNearStation.x > 0) {
+    if (latLngTempleState.selectedNearStation != null) {
+      if (latLngTempleState.selectedNearStation!.y > 0 && latLngTempleState.selectedNearStation!.x > 0) {
         markerList.add(
           Marker(
-            point: LatLng(selectedNearStation.y, selectedNearStation.x),
+            point: LatLng(latLngTempleState.selectedNearStation!.y, latLngTempleState.selectedNearStation!.x),
             width: 40,
             height: 40,
             child: GestureDetector(

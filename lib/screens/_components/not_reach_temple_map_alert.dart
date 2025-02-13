@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../../controllers/temple/temple.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../controllers/temple_list/temple_list.dart';
@@ -14,7 +13,6 @@ import '../../controllers/tokyo_train/tokyo_train.dart';
 import '../../extensions/extensions.dart';
 import '../../mixin/not_reach_temple_train/not_reach_temple_train_select_widget.dart';
 import '../../models/common/temple_data.dart';
-import '../../models/near_station_model.dart';
 import '../../models/temple_lat_lng_model.dart';
 import '../../models/temple_list_model.dart';
 import '../../models/temple_model.dart';
@@ -377,14 +375,11 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
       );
     }
 
-    final NearStationResponseStationModel? selectedNearStation =
-        ref.watch(latLngTempleProvider.select((LatLngTempleState value) => value.selectedNearStation));
-
-    if (selectedNearStation != null) {
-      if (selectedNearStation.y > 0 && selectedNearStation.x > 0) {
+    if (latLngTempleState.selectedNearStation != null) {
+      if (latLngTempleState.selectedNearStation!.y > 0 && latLngTempleState.selectedNearStation!.x > 0) {
         markerList.add(
           Marker(
-            point: LatLng(selectedNearStation.y, selectedNearStation.x),
+            point: LatLng(latLngTempleState.selectedNearStation!.y, latLngTempleState.selectedNearStation!.x),
             width: 40,
             height: 40,
             child: GestureDetector(
