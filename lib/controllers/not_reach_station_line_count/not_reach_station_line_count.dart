@@ -14,14 +14,10 @@ part 'not_reach_station_line_count.g.dart';
 @freezed
 class NotReachStationLineCountState with _$NotReachStationLineCountState {
   const factory NotReachStationLineCountState({
-    @Default(<NotReachStationCountModel>[])
-    List<NotReachStationCountModel> notReachStationCountList,
-    @Default(<String, NotReachStationCountModel>{})
-    Map<String, NotReachStationCountModel> notReachStationCountMap,
-    @Default(<NotReachLineCountModel>[])
-    List<NotReachLineCountModel> notReachLineCountList,
-    @Default(<String, NotReachLineCountModel>{})
-    Map<String, NotReachLineCountModel> notReachLineCountMap,
+    @Default(<NotReachStationCountModel>[]) List<NotReachStationCountModel> notReachStationCountList,
+    @Default(<String, NotReachStationCountModel>{}) Map<String, NotReachStationCountModel> notReachStationCountMap,
+    @Default(<NotReachLineCountModel>[]) List<NotReachLineCountModel> notReachLineCountList,
+    @Default(<String, NotReachLineCountModel>{}) Map<String, NotReachLineCountModel> notReachLineCountMap,
   }) = _NotReachStationLineCountState;
 }
 
@@ -31,37 +27,26 @@ class NotReachStationLineCount extends _$NotReachStationLineCount {
 
   ///
   @override
-  Future<NotReachStationLineCountState> build() async {
-    return getAllNotReachStationLineCount();
-  }
+  NotReachStationLineCountState build() => const NotReachStationLineCountState();
 
   ///
-  /// temple_train_station_list_alert.dart
-  Future<NotReachStationLineCountState> getAllNotReachStationLineCount() async {
+  Future<NotReachStationLineCountState> fetchNotReachStationLineCountData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
-    final List<NotReachStationCountModel> list = <NotReachStationCountModel>[];
+    try {
+      final dynamic value = await client.post(path: APIPath.getTempleNotReachTrain);
 
-    final Map<String, NotReachStationCountModel> map =
-        <String, NotReachStationCountModel>{};
+      final List<NotReachStationCountModel> list = <NotReachStationCountModel>[];
 
-    final List<NotReachLineCountModel> list2 = <NotReachLineCountModel>[];
+      final Map<String, NotReachStationCountModel> map = <String, NotReachStationCountModel>{};
 
-    final Map<String, NotReachLineCountModel> map2 =
-        <String, NotReachLineCountModel>{};
+      final List<NotReachLineCountModel> list2 = <NotReachLineCountModel>[];
 
-    // ignore: always_specify_types
-    await client.post(path: APIPath.getTempleNotReachTrain).then((value) {
-      for (int i = 0;
-          i <
-              // ignore: avoid_dynamic_calls
-              value['data']['not_reach_station_count']
-                  .length
-                  .toString()
-                  .toInt();
-          i++) {
-        final NotReachStationCountModel val =
-            NotReachStationCountModel.fromJson(
+      final Map<String, NotReachLineCountModel> map2 = <String, NotReachLineCountModel>{};
+
+      // ignore: avoid_dynamic_calls
+      for (int i = 0; i < value['data']['not_reach_station_count'].length.toString().toInt(); i++) {
+        final NotReachStationCountModel val = NotReachStationCountModel.fromJson(
           // ignore: avoid_dynamic_calls
           value['data']['not_reach_station_count'][i] as Map<String, dynamic>,
         );
@@ -70,10 +55,8 @@ class NotReachStationLineCount extends _$NotReachStationLineCount {
         map[val.station] = val;
       }
 
-      for (int i = 0;
-          // ignore: avoid_dynamic_calls
-          i < value['data']['not_reach_line_count'].length.toString().toInt();
-          i++) {
+      // ignore: avoid_dynamic_calls
+      for (int i = 0; i < value['data']['not_reach_line_count'].length.toString().toInt(); i++) {
         final NotReachLineCountModel val2 = NotReachLineCountModel.fromJson(
           // ignore: avoid_dynamic_calls
           value['data']['not_reach_line_count'][i] as Map<String, dynamic>,
@@ -83,15 +66,24 @@ class NotReachStationLineCount extends _$NotReachStationLineCount {
         map2[val2.line] = val2;
       }
 
-      // ignore: always_specify_types
-    }).catchError((error, _) {
-      utility.showError('予期せぬエラーが発生しました');
-    });
-
-    return NotReachStationLineCountState(
+      return state.copyWith(
         notReachStationCountList: list,
         notReachStationCountMap: map,
         notReachLineCountList: list2,
-        notReachLineCountMap: map2);
+        notReachLineCountMap: map2,
+      );
+    } catch (e) {
+      utility.showError('予期せぬエラーが発生しました');
+      rethrow; // これにより呼び出し元でキャッチできる
+    }
+  }
+
+  ///
+  Future<void> getAllNotReachStationLineCount() async {
+    try {
+      final NotReachStationLineCountState newState = await fetchNotReachStationLineCountData();
+
+      state = newState;
+    } catch (_) {}
   }
 }

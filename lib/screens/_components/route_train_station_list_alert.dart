@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/not_reach_station_line_count/not_reach_station_line_count.dart';
 import '../../extensions/extensions.dart';
 import '../../models/lat_lng_temple_model.dart';
-import '../../models/not_reach_station_line_count_model.dart';
 import '../../models/temple_model.dart';
 import '../../models/tokyo_station_model.dart';
 import '../../models/tokyo_train_model.dart';
@@ -144,14 +142,18 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
   Widget displayTokyoTrainList() {
     final List<Widget> list = <Widget>[];
 
-    final AsyncValue<NotReachStationLineCountState> notReachStationLineCountState =
-        ref.watch(notReachStationLineCountProvider);
-
-    final Map<String, NotReachLineCountModel>? notReachLineCountMap =
-        notReachStationLineCountState.value?.notReachLineCountMap;
-
-    final Map<String, NotReachStationCountModel>? notReachStationCountMap =
-        notReachStationLineCountState.value?.notReachStationCountMap;
+    // final AsyncValue<NotReachStationLineCountState> notReachStationLineCountState =
+    //     ref.watch(notReachStationLineCountProvider);
+    //
+    // final Map<String, NotReachLineCountModel>? notReachLineCountMap =
+    //     notReachStationLineCountState.value?.notReachLineCountMap;
+    //
+    // final Map<String, NotReachStationCountModel>? notReachStationCountMap =
+    //     notReachStationLineCountState.value?.notReachStationCountMap;
+    //
+    //
+    //
+    //
 
     for (final TokyoTrainModel element in widget.tokyoTrainList) {
       list.add(
@@ -171,15 +173,15 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
                   element.trainName,
                   style: const TextStyle(fontSize: 12, color: Colors.white),
                 ),
-                if (notReachLineCountMap != null) ...<Widget>[
-                  Text(
-                    (notReachLineCountMap[element.trainName]?.count ?? 0).toString(),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: (notReachLineCountMap[element.trainName] != null) ? Colors.white : Colors.transparent,
-                    ),
+                Text(
+                  (notReachStationLineCountState.notReachLineCountMap[element.trainName]?.count ?? 0).toString(),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: (notReachStationLineCountState.notReachLineCountMap[element.trainName] != null)
+                        ? Colors.white
+                        : Colors.transparent,
                   ),
-                ],
+                ),
               ],
             ),
           ),
@@ -203,15 +205,15 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
                     Text(e2.stationName),
                     Row(
                       children: <Widget>[
-                        if (notReachStationCountMap != null) ...<Widget>[
-                          Text(
-                            (notReachStationCountMap[e2.stationName]?.count ?? 0).toString(),
-                            style: TextStyle(
-                              color:
-                                  (notReachStationCountMap[e2.stationName] != null) ? Colors.white : Colors.transparent,
-                            ),
+                        Text(
+                          (notReachStationLineCountState.notReachStationCountMap[e2.stationName]?.count ?? 0)
+                              .toString(),
+                          style: TextStyle(
+                            color: (notReachStationLineCountState.notReachStationCountMap[e2.stationName] != null)
+                                ? Colors.white
+                                : Colors.transparent,
                           ),
-                        ],
+                        ),
                         GestureDetector(
                           onTap: () async {
                             latLngTempleNotifier.setParamLatLng(latitude: e2.lat, longitude: e2.lng);

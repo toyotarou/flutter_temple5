@@ -5,6 +5,7 @@ import 'app_params/app_params_notifier.dart';
 import 'app_params/app_params_response_state.dart';
 import 'complement_temple_visited_date/complement_temple_visited_date.dart';
 import 'lat_lng_temple/lat_lng_temple.dart';
+import 'not_reach_station_line_count/not_reach_station_line_count.dart';
 import 'routing/routing.dart';
 import 'temple/temple.dart';
 import 'tokyo_train/tokyo_train.dart';
@@ -35,7 +36,9 @@ mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
 
 //==========================================//
 
-//  NotReachStationLineCountState get notReachStationLineCountState => ref.watch(notReachStationLineCountProvider as ProviderListenable<NotReachStationLineCountState>);
+  NotReachStationLineCountState get notReachStationLineCountState => ref.watch(notReachStationLineCountProvider);
+
+  NotReachStationLineCount get notReachStationLineCountNotifier => ref.read(notReachStationLineCountProvider.notifier);
 
 //==========================================//
 

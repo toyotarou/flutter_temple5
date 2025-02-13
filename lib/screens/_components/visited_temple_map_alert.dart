@@ -67,7 +67,10 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
 
     if (!appParamState.visitedTempleMapDisplayFinish) {
       if (templeState.selectTempleLat != '' && templeState.selectTempleLng != '') {
-        appParamNotifier.setVisitedTempleMapDisplayFinish(flag: true);
+        // ignore: always_specify_types
+        Future(() {
+          appParamNotifier.setVisitedTempleMapDisplayFinish(flag: true);
+        });
 
         mapController.move(LatLng(templeState.selectTempleLat.toDouble(), templeState.selectTempleLng.toDouble()), 13);
       } else {
