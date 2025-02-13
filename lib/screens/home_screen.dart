@@ -4,14 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../controllers/controllers_mixin.dart';
-import '../controllers/lat_lng_temple/lat_lng_temple.dart';
-import '../controllers/temple/temple.dart';
 import '../controllers/temple_list/temple_list.dart';
-import '../controllers/tokyo_train/tokyo_train.dart';
 import '../extensions/extensions.dart';
 import '../models/temple_model.dart';
-import '../models/tokyo_station_model.dart';
-import '../models/tokyo_train_model.dart';
 import '../utility/utility.dart';
 import '_components/not_reach_temple_map_alert.dart';
 import '_components/route_train_station_list_alert.dart';
@@ -42,11 +37,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   void initState() {
     super.initState();
 
-    ref.read(templeProvider.notifier).getAllTemple();
+    templeNotifier.getAllTemple();
 
     ref.read(templeListProvider.notifier).getAllTempleListTemple();
 
-    ref.read(tokyoTrainProvider.notifier).getTokyoTrain();
+    tokyoTrainNotifier.getTokyoTrain();
 
     complementTempleVisitedDateNotifier.getComplementTempleVisitedDate();
 
@@ -104,8 +99,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
   ///
   Widget displayHomeTabBar() {
-    final TempleState templeState = ref.watch(templeProvider);
-
     if (templeState.doSearch) {
       return Container(
         height: 40,
@@ -127,20 +120,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   List<Widget> _getTabs() {
     final List<Widget> list = <Widget>[];
 
-    // ignore: always_specify_types
-    final selectYear = ref.watch(templeProvider.select((TempleState value) => value.selectYear));
-
     for (int i = 0; i < yearList.length; i++) {
       list.add(
         GestureDetector(
           onTap: () {
-            ref.read(templeProvider.notifier).setSelectYear(year: yearList[i].toString());
+            templeNotifier.setSelectYear(year: yearList[i].toString());
 
             scrollToIndex(i);
           },
           child: Text(
             yearList[i].toString(),
-            style: TextStyle(color: (selectYear == yearList[i].toString()) ? Colors.yellowAccent : Colors.white),
+            style: TextStyle(
+                color: (templeState.selectYear == yearList[i].toString()) ? Colors.yellowAccent : Colors.white),
           ),
         ),
       );
@@ -158,23 +149,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
   ///
   Widget displayHomeButton() {
-    final List<TempleModel> templeList = ref.watch(templeProvider.select((TempleState value) => value.templeList));
-
-    final Map<String, TokyoStationModel> tokyoStationMap =
-        ref.watch(tokyoTrainProvider.select((TokyoTrainState value) => value.tokyoStationMap));
-
-    final List<TokyoTrainModel> tokyoTrainList =
-        ref.watch(tokyoTrainProvider.select((TokyoTrainState value) => value.tokyoTrainList));
-
-    final Map<int, TokyoTrainModel> tokyoTrainIdMap =
-        ref.watch(tokyoTrainProvider.select((TokyoTrainState value) => value.tokyoTrainIdMap));
-
-    final Map<String, List<String>> templeVisitDateMap =
-        ref.watch(templeProvider.select((TempleState value) => value.templeVisitDateMap));
-
-    final Map<String, TempleModel> dateTempleMap =
-        ref.watch(templeProvider.select((TempleState value) => value.dateTempleMap));
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -182,16 +156,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
           children: <Widget>[
             IconButton(
               onPressed: () {
-                ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+                templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
 
-                ref.read(templeProvider.notifier).setSelectVisitedTempleListKey(key: -1);
+                templeNotifier.setSelectVisitedTempleListKey(key: -1);
 
                 TempleDialog(
                   context: context,
                   widget: VisitedTempleMapAlert(
-                    templeList: templeList,
-                    templeVisitDateMap: templeVisitDateMap,
-                    dateTempleMap: dateTempleMap,
+                    templeList: templeState.templeList,
+                    templeVisitDateMap: templeState.templeVisitDateMap,
+                    dateTempleMap: templeState.dateTempleMap,
                   ),
                   clearBarrierColor: true,
                   executeFunctionWhenDialogClose: true,
@@ -213,10 +187,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                   TempleDialog(
                     context: context,
                     widget: TokyoJinjachouTempleListAlert(
-                      templeVisitDateMap: templeVisitDateMap,
+                      templeVisitDateMap: templeState.templeVisitDateMap,
                       idBaseComplementTempleVisitedDateMap:
                           complementTempleVisitedDateState.idBaseComplementTempleVisitedDateMap,
-                      dateTempleMap: dateTempleMap,
+                      dateTempleMap: templeState.dateTempleMap,
                     ),
                   );
                 },
@@ -226,30 +200,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                 onPressed: () => TempleDialog(
                   context: context,
                   widget: RouteTrainStationListAlert(
-                    tokyoStationMap: tokyoStationMap,
-                    tokyoTrainList: tokyoTrainList,
-                    templeVisitDateMap: templeVisitDateMap,
-                    dateTempleMap: dateTempleMap,
-                    tokyoTrainIdMap: tokyoTrainIdMap,
+                    tokyoStationMap: tokyoTrainState.tokyoStationMap,
+                    tokyoTrainList: tokyoTrainState.tokyoTrainList,
+                    templeVisitDateMap: templeState.templeVisitDateMap,
+                    dateTempleMap: templeState.dateTempleMap,
+                    tokyoTrainIdMap: tokyoTrainState.tokyoTrainIdMap,
                   ),
                 ),
                 icon: const Icon(Icons.train, color: Colors.white),
               ),
               IconButton(
                 onPressed: () {
-                  ref.read(tokyoTrainProvider.notifier).clearTrainList();
+                  tokyoTrainNotifier.clearTrainList();
 
-                  ref.read(latLngTempleProvider.notifier).clearSelectedNearStation();
+                  latLngTempleNotifier.clearSelectedNearStation();
 
-                  ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+                  templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
+
+                  appParamNotifier.setFirstOverlayParams(firstEntries: null);
+                  appParamNotifier.setSecondOverlayParams(secondEntries: null);
 
                   TempleDialog(
                     context: context,
                     widget: NotReachTempleMapAlert(
-                      tokyoTrainIdMap: tokyoTrainIdMap,
-                      tokyoTrainList: tokyoTrainList,
-                      templeVisitDateMap: templeVisitDateMap,
-                      dateTempleMap: dateTempleMap,
+                      tokyoTrainIdMap: tokyoTrainState.tokyoTrainIdMap,
+                      tokyoTrainList: tokyoTrainState.tokyoTrainList,
+                      templeVisitDateMap: templeState.templeVisitDateMap,
+                      dateTempleMap: templeState.dateTempleMap,
                     ),
                     executeFunctionWhenDialogClose: true,
                     ref: ref,
@@ -273,7 +250,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
           onPressed: () {
             searchWordEditingController.text = '';
 
-            ref.read(templeProvider.notifier).clearSearch();
+            templeNotifier.clearSearch();
           },
           icon: const Icon(Icons.close, color: Colors.white),
         ),
@@ -296,7 +273,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
           ),
         ),
         IconButton(
-          onPressed: () => ref.read(templeProvider.notifier).doSearch(searchWord: searchWordEditingController.text),
+          onPressed: () => templeNotifier.doSearch(searchWord: searchWordEditingController.text),
           icon: const Icon(Icons.search, color: Colors.white),
         ),
       ],
@@ -306,8 +283,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   ///
   Widget displayTempleList() {
     final List<Widget> list = <Widget>[];
-
-    final TempleState templeState = ref.watch(templeProvider);
 
     int keepYear = 0;
     int i = 0;
@@ -362,8 +337,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
   ///
   Widget displayHomeCard({required TempleModel data, required String selectYear}) {
-    final TempleState templeState = ref.watch(templeProvider);
-
     return Card(
       color: Colors.black.withOpacity(0.3),
       child: ListTile(

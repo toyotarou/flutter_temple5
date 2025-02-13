@@ -251,6 +251,8 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
                         lat: templeDataList[i].latitude,
                         lng: templeDataList[i].longitude);
 
+                    appParamNotifier.setFirstOverlayParams(firstEntries: _firstEntries);
+
                     addFirstOverlay(
                       context: context,
                       firstEntries: _firstEntries,
