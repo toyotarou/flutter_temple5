@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../controllers/complement_temple_visited_date/complement_temple_visited_date.dart';
+import '../controllers/controllers_mixin.dart';
 import '../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../controllers/temple/temple.dart';
 import '../controllers/temple_list/temple_list.dart';
@@ -28,7 +28,7 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<HomeScreen> {
   List<int> yearList = <int>[];
 
   List<GlobalKey> globalKeyList = <GlobalKey<State<StatefulWidget>>>[];
@@ -48,7 +48,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     ref.read(tokyoTrainProvider.notifier).getTokyoTrain();
 
-    ref.read(complementTempleVisitedDateProvider.notifier).getComplementTempleVisitedDate();
+    complementTempleVisitedDateNotifier.getComplementTempleVisitedDate();
 
     // ignore: always_specify_types
     globalKeyList = List.generate(100, (int index) => GlobalKey());
@@ -175,10 +175,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final Map<String, TempleModel> dateTempleMap =
         ref.watch(templeProvider.select((TempleState value) => value.dateTempleMap));
 
-    final Map<String, List<DateTime>> idBaseComplementTempleVisitedDateMap = ref.watch(
-        complementTempleVisitedDateProvider
-            .select((ComplementTempleVisitedDateState value) => value.idBaseComplementTempleVisitedDateMap));
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -218,7 +214,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     context: context,
                     widget: TokyoJinjachouTempleListAlert(
                       templeVisitDateMap: templeVisitDateMap,
-                      idBaseComplementTempleVisitedDateMap: idBaseComplementTempleVisitedDateMap,
+                      idBaseComplementTempleVisitedDateMap:
+                          complementTempleVisitedDateState.idBaseComplementTempleVisitedDateMap,
                       dateTempleMap: dateTempleMap,
                     ),
                   );
