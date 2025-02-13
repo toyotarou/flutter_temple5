@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../controllers/routing/routing.dart';
+import '../../controllers/controllers_mixin.dart';
 import '../../controllers/temple/temple.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
@@ -9,19 +9,17 @@ import '../../models/tokyo_station_model.dart';
 import '../../models/tokyo_train_model.dart';
 
 class RouteGoalStationSettingAlert extends ConsumerStatefulWidget {
-  const RouteGoalStationSettingAlert(
-      {super.key, required this.tokyoStationMap, required this.tokyoTrainList});
+  const RouteGoalStationSettingAlert({super.key, required this.tokyoStationMap, required this.tokyoTrainList});
 
   final Map<String, TokyoStationModel> tokyoStationMap;
   final List<TokyoTrainModel> tokyoTrainList;
 
   @override
-  ConsumerState<RouteGoalStationSettingAlert> createState() =>
-      _GoalStationSettingAlertState();
+  ConsumerState<RouteGoalStationSettingAlert> createState() => _GoalStationSettingAlertState();
 }
 
-class _GoalStationSettingAlertState
-    extends ConsumerState<RouteGoalStationSettingAlert> {
+class _GoalStationSettingAlertState extends ConsumerState<RouteGoalStationSettingAlert>
+    with ControllersMixin<RouteGoalStationSettingAlert> {
   ///
   @override
   Widget build(BuildContext context) {
@@ -47,11 +45,8 @@ class _GoalStationSettingAlertState
     for (final TokyoTrainModel element in widget.tokyoTrainList) {
       list.add(ExpansionTile(
         collapsedIconColor: Colors.white,
-        title: Text(element.trainName,
-            style: const TextStyle(fontSize: 12, color: Colors.white)),
-        children: element.station
-            .map((TokyoStationModel e2) => displayGoalStation(data: e2))
-            .toList(),
+        title: Text(element.trainName, style: const TextStyle(fontSize: 12, color: Colors.white)),
+        children: element.station.map((TokyoStationModel e2) => displayGoalStation(data: e2)).toList(),
       ));
     }
 
@@ -71,24 +66,16 @@ class _GoalStationSettingAlertState
   Widget displayGoalStation({required TokyoStationModel data}) {
 //    final tokyoTrainState = ref.watch(tokyoTrainProvider);
 
-    final String goalStationId = ref.watch(
-        routingProvider.select((RoutingState value) => value.goalStationId));
-
-    final String startStationId = ref.watch(
-        routingProvider.select((RoutingState value) => value.startStationId));
-
     return Container(
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        border:
-            Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3))),
+        border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3))),
       ),
       child: DefaultTextStyle(
         style: TextStyle(
           fontSize: 12,
-          color:
-              (data.id == goalStationId) ? Colors.yellowAccent : Colors.white,
+          color: (data.id == routingState.goalStationId) ? Colors.yellowAccent : Colors.white,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,33 +83,28 @@ class _GoalStationSettingAlertState
             Text(data.stationName),
             GestureDetector(
               onTap: () {
-                ref
-                    .read(routingProvider.notifier)
-                    .setGoalStationId(id: data.id);
+                routingNotifier.setGoalStationId(id: data.id);
 
-                ref
-                    .read(templeProvider.notifier)
-                    .setSelectTemple(name: '', lat: '', lng: '');
+                ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
 
-                final TokyoStationModel? station =
-                    widget.tokyoStationMap[data.id];
+                final TokyoStationModel? station = widget.tokyoStationMap[data.id];
 
-                ref.read(routingProvider.notifier).setRouting(
-                      templeData: TempleData(
-                        name: (station != null) ? station.stationName : '',
-                        address: (station != null) ? station.address : '',
-                        latitude: (station != null) ? station.lat : '',
-                        longitude: (station != null) ? station.lng : '',
-                        mark: (station != null) ? station.id : '',
-                      ),
-                      station: widget.tokyoStationMap[startStationId],
-                    );
+                routingNotifier.setRouting(
+                  templeData: TempleData(
+                    name: (station != null) ? station.stationName : '',
+                    address: (station != null) ? station.address : '',
+                    latitude: (station != null) ? station.lat : '',
+                    longitude: (station != null) ? station.lng : '',
+                    mark: (station != null) ? station.id : '',
+                  ),
+                  station: widget.tokyoStationMap[routingState.startStationId],
+                );
 
                 Navigator.pop(context);
               },
               child: Icon(
                 Icons.location_on,
-                color: (data.id == goalStationId)
+                color: (data.id == routingState.goalStationId)
                     ? Colors.yellowAccent.withOpacity(0.4)
                     : Colors.white.withOpacity(0.4),
               ),

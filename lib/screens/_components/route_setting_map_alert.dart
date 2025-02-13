@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/routing/routing.dart';
 import '../../controllers/temple/temple.dart';
 import '../../controllers/tokyo_train/tokyo_train.dart';
 import '../../extensions/extensions.dart';
@@ -89,13 +88,9 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
   ///
   @override
   Widget build(BuildContext context) {
-    final List<TempleData> routingTempleDataList =
-        ref.watch(routingProvider.select((RoutingState value) => value.routingTempleDataList));
-
     //------------------// goal
     final TokyoTrainState tokyoTrainState = ref.watch(tokyoTrainProvider);
 
-    final String goalStationId = ref.watch(routingProvider.select((RoutingState value) => value.goalStationId));
     //------------------// goal
 
     templeDataList = <TempleData>[];
@@ -132,8 +127,8 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
       ));
     }
 
-    if (tokyoTrainState.tokyoStationMap[goalStationId] != null) {
-      final TokyoStationModel? goal = tokyoTrainState.tokyoStationMap[goalStationId];
+    if (tokyoTrainState.tokyoStationMap[routingState.goalStationId] != null) {
+      final TokyoStationModel? goal = tokyoTrainState.tokyoStationMap[routingState.goalStationId];
 
       if (goal != null) {
         latList.add(double.parse(goal.lat));
@@ -184,7 +179,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                 polylines: <Polyline<Object>>[
                   // ignore: always_specify_types
                   Polyline(
-                    points: routingTempleDataList.map((TempleData e) {
+                    points: routingState.routingTempleDataList.map((TempleData e) {
                       return LatLng(e.latitude.toDouble(), e.longitude.toDouble());
                     }).toList(),
                     color: Colors.redAccent,
@@ -324,14 +319,11 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
 
   ///
   Widget getCircleAvatarText({required TempleData element}) {
-    final List<TempleData> routingTempleDataList =
-        ref.watch(routingProvider.select((RoutingState value) => value.routingTempleDataList));
-
     String str = '';
     if (element.mark == '0') {
       str = 'S';
     } else if (element.mark.split('-').length == 2) {
-      if (routingTempleDataList.isNotEmpty && routingTempleDataList[0].name == element.name) {
+      if (routingState.routingTempleDataList.isNotEmpty && routingState.routingTempleDataList[0].name == element.name) {
         str = 'S';
       } else {
         str = 'G';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../controllers/routing/routing.dart';
+import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../function.dart';
@@ -14,7 +14,7 @@ class RouteDisplayAlert extends ConsumerStatefulWidget {
   ConsumerState<RouteDisplayAlert> createState() => _RouteDisplayAlertState();
 }
 
-class _RouteDisplayAlertState extends ConsumerState<RouteDisplayAlert> {
+class _RouteDisplayAlertState extends ConsumerState<RouteDisplayAlert> with ControllersMixin<RouteDisplayAlert> {
   ///
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _RouteDisplayAlertState extends ConsumerState<RouteDisplayAlert> {
               children: <Widget>[
                 IconButton(
                   onPressed: () {
-                    ref.read(routingProvider.notifier).insertRoute();
+                    routingNotifier.insertRoute();
                   },
                   icon: const Icon(
                     Icons.input,
@@ -56,11 +56,8 @@ class _RouteDisplayAlertState extends ConsumerState<RouteDisplayAlert> {
   Widget displayRoute() {
     final List<Widget> list = <Widget>[];
 
-    final RoutingState routingState = ref.watch(routingProvider);
-
     final DateFormat timeFormat = DateFormat('HH:mm');
-    final String startTime =
-        timeFormat.format(DateTime.parse(routingState.startTime));
+    final String startTime = timeFormat.format(DateTime.parse(routingState.startTime));
 
     String keepEndTime = '';
 
@@ -72,8 +69,7 @@ class _RouteDisplayAlertState extends ConsumerState<RouteDisplayAlert> {
       String distance = '';
       int walkMinutes = 0;
       if (i < record.length - 1) {
-        if ((record[i].latitude == record[i + 1].latitude) &&
-            (record[i].longitude == record[i + 1].longitude)) {
+        if ((record[i].latitude == record[i + 1].latitude) && (record[i].longitude == record[i + 1].longitude)) {
           // 緯度経度が同じ場合
           distance = '0';
         } else {
@@ -97,8 +93,7 @@ class _RouteDisplayAlertState extends ConsumerState<RouteDisplayAlert> {
 
       //------------------------//
       String st = (i == 0) ? startTime : keepEndTime;
-      final int spotStayTime =
-          (exMark.length == 1) ? routingState.spotStayTime : 0;
+      final int spotStayTime = (exMark.length == 1) ? routingState.spotStayTime : 0;
       st = getTimeStr(time: st, minutes: spotStayTime);
       final String endTime = getTimeStr(time: st, minutes: walkMinutes);
       //------------------------//

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/controllers_mixin.dart';
 import '../../controllers/not_reach_station_line_count/not_reach_station_line_count.dart';
-import '../../controllers/routing/routing.dart';
 import '../../controllers/temple/temple.dart';
 import '../../controllers/tokyo_train/tokyo_train.dart';
 import '../../extensions/extensions.dart';
@@ -65,10 +64,8 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
 
   ///
   Widget displayTempleTrainStationListButton() {
-    final String startStationId = ref.watch(routingProvider.select((RoutingState value) => value.startStationId));
-
     return IconButton(
-      onPressed: (startStationId == '')
+      onPressed: (routingState.startStationId == '')
           ? null
           : () {
               if (latLngTempleState.latLngTempleList.isEmpty) {
@@ -77,9 +74,9 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
                 return;
               }
 
-              ref.read(routingProvider.notifier).clearRoutingTempleDataList();
+              routingNotifier.clearRoutingTempleDataList();
 
-              ref.read(routingProvider.notifier).setGoalStationId(id: '');
+              routingNotifier.setGoalStationId(id: '');
 
               latLngTempleNotifier.clearSelectedNearStation();
 
@@ -93,7 +90,7 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
                 context: context,
                 widget: RouteSettingMapAlert(
                   templeList: latLngTempleState.latLngTempleList,
-                  station: widget.tokyoStationMap[startStationId],
+                  station: widget.tokyoStationMap[routingState.startStationId],
                   tokyoStationMap: widget.tokyoStationMap,
                   tokyoTrainList: widget.tokyoTrainList,
                   templeVisitDateMap: widget.templeVisitDateMap,
@@ -106,7 +103,7 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
             },
       icon: Icon(
         Icons.map,
-        color: (startStationId != '' && latLngTempleState.latLngTempleList.isNotEmpty)
+        color: (routingState.startStationId != '' && latLngTempleState.latLngTempleList.isNotEmpty)
             ? Colors.yellowAccent.withOpacity(0.4)
             : Colors.white.withOpacity(0.4),
       ),
@@ -115,16 +112,14 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
 
   ///
   Widget displaySelectedStation() {
-    final String startStationId = ref.watch(routingProvider.select((RoutingState value) => value.startStationId));
-
     getReachTempleNum();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(
-          (widget.tokyoStationMap[startStationId] != null)
-              ? widget.tokyoStationMap[startStationId]!.stationName
+          (widget.tokyoStationMap[routingState.startStationId] != null)
+              ? widget.tokyoStationMap[routingState.startStationId]!.stationName
               : '-----',
         ),
         Row(
@@ -150,8 +145,6 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
   ///
   Widget displayTokyoTrainList() {
     final List<Widget> list = <Widget>[];
-
-    final String startStationId = ref.watch(routingProvider.select((RoutingState value) => value.startStationId));
 
     final AsyncValue<NotReachStationLineCountState> notReachStationLineCountState =
         ref.watch(notReachStationLineCountProvider);
@@ -203,7 +196,7 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
               ),
               child: DefaultTextStyle(
                 style: TextStyle(
-                  color: (e2.id == startStationId) ? Colors.yellowAccent : Colors.white,
+                  color: (e2.id == routingState.startStationId) ? Colors.yellowAccent : Colors.white,
                   fontSize: 12,
                 ),
                 child: Row(
@@ -227,11 +220,11 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
 
                             latLngTempleNotifier.getLatLngTemple();
 
-                            ref.read(routingProvider.notifier).setStartStationId(id: e2.id);
+                            routingNotifier.setStartStationId(id: e2.id);
                           },
                           child: Icon(
                             Icons.location_on,
-                            color: (e2.id == startStationId)
+                            color: (e2.id == routingState.startStationId)
                                 ? Colors.yellowAccent.withOpacity(0.4)
                                 : Colors.white.withOpacity(0.4),
                           ),
