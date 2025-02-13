@@ -5,9 +5,8 @@ import 'app_params/app_params_notifier.dart';
 import 'app_params/app_params_response_state.dart';
 import 'complement_temple_visited_date/complement_temple_visited_date.dart';
 import 'lat_lng_temple/lat_lng_temple.dart';
-import 'near_station/near_station.dart';
-import 'not_reach_station_line_count/not_reach_station_line_count.dart';
 import 'routing/routing.dart';
+import 'temple/temple.dart';
 
 mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   //==========================================//
@@ -42,6 +41,16 @@ mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   RoutingState get routingState => ref.watch(routingProvider);
 
   Routing get routingNotifier => ref.read(routingProvider.notifier);
+
+//==========================================//
+
+//  StationState get stationState => ref.watch(stationProvider as ProviderListenable<StationState>);
+
+//==========================================//
+
+  TempleState get templeState => ref.watch(templeProvider);
+
+  Temple get templeNotifier => ref.read(templeProvider.notifier);
 
 //==========================================//
 

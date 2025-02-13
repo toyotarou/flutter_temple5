@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/temple/temple.dart';
 import '../../controllers/tokyo_train/tokyo_train.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
@@ -255,11 +254,11 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                     if (exMarkLength == 2) {
                       return;
                     } else {
-                      ref.read(templeProvider.notifier).setSelectTemple(
-                            name: templeDataList[i].name,
-                            lat: templeDataList[i].latitude,
-                            lng: templeDataList[i].longitude,
-                          );
+                      templeNotifier.setSelectTemple(
+                        name: templeDataList[i].name,
+                        lat: templeDataList[i].latitude,
+                        lng: templeDataList[i].longitude,
+                      );
 
                       addFirstOverlay(
                         context: context,

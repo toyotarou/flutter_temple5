@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/temple/temple.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
@@ -67,8 +66,6 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
     const double pinpointLng = 139.586639;
 
     if (!appParamState.visitedTempleMapDisplayFinish) {
-      final TempleState templeState = ref.watch(templeProvider);
-
       if (templeState.selectTempleLat != '' && templeState.selectTempleLng != '') {
         appParamNotifier.setVisitedTempleMapDisplayFinish(flag: true);
 
@@ -184,11 +181,9 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
     final List<double> latList = <double>[];
     final List<double> lngList = <double>[];
 
-    final List<TempleModel> templeList = ref.watch(templeProvider.select((TempleState value) => value.templeList));
-
     final List<String> templeNamesList = <String>[];
 
-    templeList
+    templeState.templeList
       ..forEach((TempleModel element) => templeNamesList.add(element.temple))
       ..forEach((TempleModel element) {
         if (element.memo != '') {
@@ -236,8 +231,6 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
       initialPosition = appParamState.overlayPosition!;
     }
 
-    final TempleState templeState = ref.watch(templeProvider);
-
     markerList = <Marker>[];
 
     for (int i = 0; i < templeDataList.length; i++) {
@@ -250,7 +243,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
             onTap: (templeDataList[i].mark == '0')
                 ? null
                 : () {
-                    ref.read(templeProvider.notifier).setSelectTemple(
+                    templeNotifier.setSelectTemple(
                         name: templeDataList[i].name,
                         lat: templeDataList[i].latitude,
                         lng: templeDataList[i].longitude);

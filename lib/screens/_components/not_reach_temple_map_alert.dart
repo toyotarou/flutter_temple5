@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/temple/temple.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../controllers/temple_list/temple_list.dart';
 import '../../controllers/tokyo_train/tokyo_train.dart';
@@ -314,8 +313,6 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
       initialPosition = appParamState.overlayPosition!;
     }
 
-    final TempleState templeState = ref.watch(templeProvider);
-
     markerList = <Marker>[];
 
     for (int i = 0; i < templeDataList.length; i++) {
@@ -326,7 +323,7 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
           height: 40,
           child: GestureDetector(
             onTap: () {
-              ref.read(templeProvider.notifier).setSelectTemple(
+              templeNotifier.setSelectTemple(
                   name: templeDataList[i].name, lat: templeDataList[i].latitude, lng: templeDataList[i].longitude);
 
               appParamNotifier.setFirstOverlayParams(firstEntries: _firstEntries);

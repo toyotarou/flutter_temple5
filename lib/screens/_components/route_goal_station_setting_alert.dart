@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/temple/temple.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/tokyo_station_model.dart';
@@ -85,7 +84,7 @@ class _GoalStationSettingAlertState extends ConsumerState<RouteGoalStationSettin
               onTap: () {
                 routingNotifier.setGoalStationId(id: data.id);
 
-                ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+                templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
 
                 final TokyoStationModel? station = widget.tokyoStationMap[data.id];
 

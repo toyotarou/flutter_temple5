@@ -7,7 +7,6 @@ import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
 import '../../controllers/station/station.dart';
-import '../../controllers/temple/temple.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
@@ -155,10 +154,7 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
     final AsyncValue<TempleLatLngState> templeLatLngState = ref.watch(templeLatLngProvider);
     final Map<String, TempleLatLngModel>? templeLatLngMap = templeLatLngState.value?.templeLatLngMap;
 
-    final Map<String, TempleModel> dateTempleMap =
-        ref.watch(templeProvider.select((TempleState value) => value.dateTempleMap));
-
-    final TempleModel? temple = dateTempleMap[widget.date.yyyymmdd];
+    final TempleModel? temple = templeState.dateTempleMap[widget.date.yyyymmdd];
 
     if (temple != null) {
       getStartEndPointInfo(temple: temple, flag: 'start');
