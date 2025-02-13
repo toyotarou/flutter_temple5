@@ -25,19 +25,19 @@ class Station extends _$Station {
 
   ///
   @override
-  Future<StationState> build() async => getAllStation();
+  StationState build() => const StationState();
 
   ///
-  /// home_screen.dart
-  Future<StationState> getAllStation() async {
+  Future<StationState> fetchStationData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
-    final List<StationModel> list = <StationModel>[];
-    final Map<String, StationModel> map = <String, StationModel>{};
+    try {
+      final dynamic value = await client.post(path: APIPath.getAllStation);
 
-    // ignore: always_specify_types
-    await client.post(path: APIPath.getAllStation).then((value) {
-      // ignore: avoid_dynamic_calls
+      final List<StationModel> list = <StationModel>[];
+
+      final Map<String, StationModel> map = <String, StationModel>{};
+
       for (int i = 0; i < value['data'].length.toString().toInt(); i++) {
         final StationModel val = StationModel.fromJson(
           // ignore: avoid_dynamic_calls
@@ -48,11 +48,19 @@ class Station extends _$Station {
         map[val.id.toString()] = val;
       }
 
-      // ignore: always_specify_types
-    }).catchError((error, _) {
+      return state.copyWith(stationList: list, stationMap: map);
+    } catch (e) {
       utility.showError('予期せぬエラーが発生しました');
-    });
+      rethrow; // これにより呼び出し元でキャッチできる
+    }
+  }
 
-    return StationState(stationList: list, stationMap: map);
+  ///
+  Future<void> getAllStation() async {
+    try {
+      final StationState newState = await fetchStationData();
+
+      state = newState;
+    } catch (_) {}
   }
 }

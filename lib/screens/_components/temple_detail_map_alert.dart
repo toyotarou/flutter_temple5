@@ -6,11 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/station/station.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
-import '../../models/station_model.dart';
 import '../../models/temple_lat_lng_model.dart';
 import '../../models/temple_model.dart';
 import '../../utility/tile_provider.dart';
@@ -208,16 +206,13 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
         point = temple.endPoint;
     }
 
-    final AsyncValue<StationState> stationState = ref.watch(stationProvider);
-    final Map<String, StationModel>? stationMap = stationState.value?.stationMap;
-
-    if (stationMap != null && stationMap[point] != null) {
+    if (stationState.stationMap[point] != null) {
       templeDataList.add(
         TempleData(
-          name: stationMap[point]!.stationName,
-          address: stationMap[point]!.address,
-          latitude: stationMap[point]!.lat,
-          longitude: stationMap[point]!.lng,
+          name: stationState.stationMap[point]!.stationName,
+          address: stationState.stationMap[point]!.address,
+          latitude: stationState.stationMap[point]!.lat,
+          longitude: stationState.stationMap[point]!.lng,
           mark: (flag == 'end')
               ? (temple.startPoint == temple.endPoint)
                   ? 'S/E'
