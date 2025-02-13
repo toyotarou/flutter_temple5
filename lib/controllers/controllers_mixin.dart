@@ -7,6 +7,7 @@ import 'complement_temple_visited_date/complement_temple_visited_date.dart';
 import 'lat_lng_temple/lat_lng_temple.dart';
 import 'routing/routing.dart';
 import 'temple/temple.dart';
+import 'tokyo_train/tokyo_train.dart';
 
 mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   //==========================================//
@@ -53,6 +54,18 @@ mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   Temple get templeNotifier => ref.read(templeProvider.notifier);
 
 //==========================================//
+
+//  TempleLatLngState get templeLatLngState => ref.watch(templeLatLngProvider as ProviderListenable<TempleLatLngState>);
+
+//==========================================//
+
+//  TempleListState get templeListState => ref.watch(templeListProvider as ProviderListenable<TempleListState>);
+
+//==========================================//
+
+  TokyoTrainState get tokyoTrainState => ref.watch(tokyoTrainProvider);
+
+  TokyoTrain get tokyoTrainNotifier => ref.read(tokyoTrainProvider.notifier);
 
 //==========================================//
 }

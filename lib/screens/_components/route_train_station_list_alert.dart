@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/controllers_mixin.dart';
 import '../../controllers/not_reach_station_line_count/not_reach_station_line_count.dart';
-import '../../controllers/tokyo_train/tokyo_train.dart';
 import '../../extensions/extensions.dart';
 import '../../models/lat_lng_temple_model.dart';
 import '../../models/not_reach_station_line_count_model.dart';
@@ -81,7 +80,7 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
 
               templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
 
-              ref.read(tokyoTrainProvider.notifier).clearTrainList();
+              tokyoTrainNotifier.clearTrainList();
 
               latLngTempleNotifier.clearParamLatLng();
 

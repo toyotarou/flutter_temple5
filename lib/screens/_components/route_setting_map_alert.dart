@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/tokyo_train/tokyo_train.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/lat_lng_temple_model.dart';
@@ -87,11 +86,6 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
   ///
   @override
   Widget build(BuildContext context) {
-    //------------------// goal
-    final TokyoTrainState tokyoTrainState = ref.watch(tokyoTrainProvider);
-
-    //------------------// goal
-
     templeDataList = <TempleData>[];
 
     final List<double> latList = <double>[];
@@ -149,9 +143,6 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
 
     makeMarker();
 
-    final List<int> selectTrainList =
-        ref.watch(tokyoTrainProvider.select((TokyoTrainState value) => value.selectTrainList));
-
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -185,7 +176,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                     strokeWidth: 5,
                   ),
 
-                  if (selectTrainList.isNotEmpty) ...<Polyline<Object>>[
+                  if (tokyoTrainState.selectTrainList.isNotEmpty) ...<Polyline<Object>>[
                     getTrainPolyline(),
                   ],
                 ],
@@ -340,13 +331,10 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
   ///
   // ignore: always_specify_types
   Polyline getTrainPolyline() {
-    final List<int> selectTrainList =
-        ref.watch(tokyoTrainProvider.select((TokyoTrainState value) => value.selectTrainList));
-
     final List<LatLng> points = <LatLng>[];
 
-    if (selectTrainList.isNotEmpty) {
-      final TokyoTrainModel? selectedTokyoTrainMap = widget.tokyoTrainIdMap[selectTrainList[0]];
+    if (tokyoTrainState.selectTrainList.isNotEmpty) {
+      final TokyoTrainModel? selectedTokyoTrainMap = widget.tokyoTrainIdMap[tokyoTrainState.selectTrainList[0]];
 
       selectedTokyoTrainMap?.station.forEach(
           (TokyoStationModel element2) => points.add(LatLng(element2.lat.toDouble(), element2.lng.toDouble())));

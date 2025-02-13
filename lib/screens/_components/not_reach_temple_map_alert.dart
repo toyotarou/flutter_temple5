@@ -8,7 +8,6 @@ import 'package:latlong2/latlong.dart';
 import '../../controllers/controllers_mixin.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../controllers/temple_list/temple_list.dart';
-import '../../controllers/tokyo_train/tokyo_train.dart';
 import '../../extensions/extensions.dart';
 import '../../mixin/not_reach_temple_train/not_reach_temple_train_select_widget.dart';
 import '../../models/common/temple_data.dart';
@@ -247,8 +246,6 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
   ///
   void setDefaultBoundsMap() {
     if (templeDataList.length > 1) {
-      final TokyoTrainState tokyoTrainState = ref.watch(tokyoTrainProvider);
-
       final List<double> stationLatList = <double>[];
       final List<double> stationLngList = <double>[];
 
@@ -289,8 +286,6 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
   ///
   void makePolylineList() {
     polylineList = <Polyline<Object>>[];
-
-    final TokyoTrainState tokyoTrainState = ref.watch(tokyoTrainProvider);
 
     final List<LatLng> points = <LatLng>[];
 
