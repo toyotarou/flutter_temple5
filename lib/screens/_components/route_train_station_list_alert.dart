@@ -142,19 +142,6 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
   Widget displayTokyoTrainList() {
     final List<Widget> list = <Widget>[];
 
-    // final AsyncValue<NotReachStationLineCountState> notReachStationLineCountState =
-    //     ref.watch(notReachStationLineCountProvider);
-    //
-    // final Map<String, NotReachLineCountModel>? notReachLineCountMap =
-    //     notReachStationLineCountState.value?.notReachLineCountMap;
-    //
-    // final Map<String, NotReachStationCountModel>? notReachStationCountMap =
-    //     notReachStationLineCountState.value?.notReachStationCountMap;
-    //
-    //
-    //
-    //
-
     for (final TokyoTrainModel element in widget.tokyoTrainList) {
       list.add(
         ExpansionTile(
@@ -243,10 +230,8 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
     return CustomScrollView(
       slivers: <Widget>[
         SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) => list[index],
-            childCount: list.length,
-          ),
+          delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) => list[index], childCount: list.length),
         ),
       ],
     );

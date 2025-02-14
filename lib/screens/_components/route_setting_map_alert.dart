@@ -164,23 +164,29 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                 userAgentPackageName: 'com.example.app',
               ),
               MarkerLayer(markers: markerList),
-              // ignore: always_specify_types
-              PolylineLayer(
-                polylines: <Polyline<Object>>[
-                  // ignore: always_specify_types
-                  Polyline(
-                    points: routingState.routingTempleDataList.map((TempleData e) {
-                      return LatLng(e.latitude.toDouble(), e.longitude.toDouble());
-                    }).toList(),
-                    color: Colors.redAccent,
-                    strokeWidth: 5,
-                  ),
 
-                  if (tokyoTrainState.selectTrainList.isNotEmpty) ...<Polyline<Object>>[
-                    getTrainPolyline(),
-                  ],
-                ],
-              ),
+              //
+              //
+              // // ignore: always_specify_types
+              // PolylineLayer(
+              //   polylines: <Polyline<Object>>[
+              //     // ignore: always_specify_types
+              //     Polyline(
+              //       points: routingState.routingTempleDataList.map((TempleData e) {
+              //         return LatLng(e.latitude.toDouble(), e.longitude.toDouble());
+              //       }).toList(),
+              //       color: Colors.redAccent,
+              //       strokeWidth: 5,
+              //     ),
+              //
+              //     if (tokyoTrainState.selectTrainList.isNotEmpty) ...<Polyline<Object>>[
+              //       getTrainPolyline(),
+              //     ],
+              //   ],
+              // ),
+              //
+              //
+              //
             ],
           ),
           if (isLoading) ...<Widget>[
@@ -328,21 +334,21 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
     );
   }
 
-  ///
-  // ignore: always_specify_types
-  Polyline getTrainPolyline() {
-    final List<LatLng> points = <LatLng>[];
-
-    if (tokyoTrainState.selectTrainList.isNotEmpty) {
-      final TokyoTrainModel? selectedTokyoTrainMap = widget.tokyoTrainIdMap[tokyoTrainState.selectTrainList[0]];
-
-      selectedTokyoTrainMap?.station.forEach(
-          (TokyoStationModel element2) => points.add(LatLng(element2.lat.toDouble(), element2.lng.toDouble())));
-    }
-
-    // ignore: always_specify_types
-    return Polyline(points: points, color: Colors.blueAccent, strokeWidth: 5);
-  }
+// ///
+// // ignore: always_specify_types
+// Polyline getTrainPolyline() {
+//   final List<LatLng> points = <LatLng>[];
+//
+//   if (tokyoTrainState.selectTrainList.isNotEmpty) {
+//     final TokyoTrainModel? selectedTokyoTrainMap = widget.tokyoTrainIdMap[tokyoTrainState.selectTrainList[0]];
+//
+//     selectedTokyoTrainMap?.station.forEach(
+//         (TokyoStationModel element2) => points.add(LatLng(element2.lat.toDouble(), element2.lng.toDouble())));
+//   }
+//
+//   // ignore: always_specify_types
+//   return Polyline(points: points, color: Colors.blueAccent, strokeWidth: 5);
+// }
 }
 
 // import 'dart:math';

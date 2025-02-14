@@ -200,12 +200,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
               ),
               IconButton(
                 onPressed: () {
-                  print(tokyoTrainState.tokyoStationMap);
-                  print(tokyoTrainState.tokyoTrainList);
-                  // print(templeState.templeVisitDateMap);
-                  // print(templeState.dateTempleMap);
-                  print(tokyoTrainState.tokyoTrainIdMap);
-
                   TempleDialog(
                     context: context,
                     widget: RouteTrainStationListAlert(
