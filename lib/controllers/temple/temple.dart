@@ -42,7 +42,7 @@ class TempleState with _$TempleState {
   }) = _TempleState;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Temple extends _$Temple {
   final Utility utility = Utility();
 

@@ -6,7 +6,7 @@ part of 'near_station.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$nearStationHash() => r'4a659ae421b705650ed76e721b076d48194f5f61';
+String _$nearStationHash() => r'a072e8c47706c11ece4bc363942d0263aa4f255c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,8 +29,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$NearStation
-    extends BuildlessAutoDisposeAsyncNotifier<NearStationState> {
+abstract class _$NearStation extends BuildlessAsyncNotifier<NearStationState> {
   late final String latitude;
   late final String longitude;
 
@@ -86,8 +85,8 @@ class NearStationFamily extends Family<AsyncValue<NearStationState>> {
 }
 
 /// See also [NearStation].
-class NearStationProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    NearStation, NearStationState> {
+class NearStationProvider
+    extends AsyncNotifierProviderImpl<NearStation, NearStationState> {
   /// See also [NearStation].
   NearStationProvider({
     required String latitude,
@@ -153,8 +152,7 @@ class NearStationProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<NearStation, NearStationState>
-      createElement() {
+  AsyncNotifierProviderElement<NearStation, NearStationState> createElement() {
     return _NearStationProviderElement(this);
   }
 
@@ -175,7 +173,7 @@ class NearStationProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 }
 
-mixin NearStationRef on AutoDisposeAsyncNotifierProviderRef<NearStationState> {
+mixin NearStationRef on AsyncNotifierProviderRef<NearStationState> {
   /// The parameter `latitude` of this provider.
   String get latitude;
 
@@ -184,8 +182,8 @@ mixin NearStationRef on AutoDisposeAsyncNotifierProviderRef<NearStationState> {
 }
 
 class _NearStationProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<NearStation,
-        NearStationState> with NearStationRef {
+    extends AsyncNotifierProviderElement<NearStation, NearStationState>
+    with NearStationRef {
   _NearStationProviderElement(super.provider);
 
   @override

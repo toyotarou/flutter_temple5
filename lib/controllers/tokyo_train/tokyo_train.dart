@@ -28,7 +28,7 @@ class TokyoTrainState with _$TokyoTrainState {
   }) = _TokyoTrainState;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class TokyoTrain extends _$TokyoTrain {
   final Utility utility = Utility();
 
@@ -65,6 +65,15 @@ class TokyoTrain extends _$TokyoTrain {
           stationMap[element.id] = element;
         }
       }
+
+
+
+
+      print(list);
+
+
+
+
 
       state = state.copyWith(
         tokyoTrainList: list,

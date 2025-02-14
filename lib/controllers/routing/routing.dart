@@ -38,7 +38,7 @@ class RoutingState with _$RoutingState {
   }) = _RoutingState;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Routing extends _$Routing {
   final Utility utility = Utility();
 

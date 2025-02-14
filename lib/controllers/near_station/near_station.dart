@@ -21,7 +21,7 @@ class NearStationState with _$NearStationState {
   }) = _NearStationState;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class NearStation extends _$NearStation {
   final Utility utility = Utility();
 

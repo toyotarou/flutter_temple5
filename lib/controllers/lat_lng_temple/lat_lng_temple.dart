@@ -26,7 +26,7 @@ class LatLngTempleState with _$LatLngTempleState {
   }) = _LatLngTempleState;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class LatLngTemple extends _$LatLngTemple {
   final Utility utility = Utility();
 

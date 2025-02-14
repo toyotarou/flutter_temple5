@@ -6,12 +6,11 @@ part of 'routing.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routingHash() => r'f6d0cde33274da90b7d3ede0563c7b8862b685aa';
+String _$routingHash() => r'b17abbff226d4570714b8c9f47d0721b31287e52';
 
 /// See also [Routing].
 @ProviderFor(Routing)
-final routingProvider =
-    AutoDisposeNotifierProvider<Routing, RoutingState>.internal(
+final routingProvider = NotifierProvider<Routing, RoutingState>.internal(
   Routing.new,
   name: r'routingProvider',
   debugGetCreateSourceHash:
@@ -20,6 +19,6 @@ final routingProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Routing = AutoDisposeNotifier<RoutingState>;
+typedef _$Routing = Notifier<RoutingState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

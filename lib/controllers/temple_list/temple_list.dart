@@ -22,7 +22,7 @@ class TempleListState with _$TempleListState {
   }) = _TempleListState;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class TempleList extends _$TempleList {
   final Utility utility = Utility();
 

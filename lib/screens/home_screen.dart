@@ -47,6 +47,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
     // ignore: always_specify_types
     globalKeyList = List.generate(100, (int index) => GlobalKey());
+
+    tokyoTrainNotifier.getTokyoTrain();
   }
 
   ///
@@ -197,16 +199,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                 icon: const Icon(Icons.ac_unit, color: Colors.white),
               ),
               IconButton(
-                onPressed: () => TempleDialog(
-                  context: context,
-                  widget: RouteTrainStationListAlert(
-                    tokyoStationMap: tokyoTrainState.tokyoStationMap,
-                    tokyoTrainList: tokyoTrainState.tokyoTrainList,
-                    templeVisitDateMap: templeState.templeVisitDateMap,
-                    dateTempleMap: templeState.dateTempleMap,
-                    tokyoTrainIdMap: tokyoTrainState.tokyoTrainIdMap,
-                  ),
-                ),
+                onPressed: () {
+                  print(tokyoTrainState.tokyoStationMap);
+                  print(tokyoTrainState.tokyoTrainList);
+                  // print(templeState.templeVisitDateMap);
+                  // print(templeState.dateTempleMap);
+                  print(tokyoTrainState.tokyoTrainIdMap);
+
+                  TempleDialog(
+                    context: context,
+                    widget: RouteTrainStationListAlert(
+                      tokyoStationMap: tokyoTrainState.tokyoStationMap,
+                      tokyoTrainList: tokyoTrainState.tokyoTrainList,
+                      templeVisitDateMap: templeState.templeVisitDateMap,
+                      dateTempleMap: templeState.dateTempleMap,
+                      tokyoTrainIdMap: tokyoTrainState.tokyoTrainIdMap,
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.train, color: Colors.white),
               ),
               IconButton(
