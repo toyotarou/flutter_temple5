@@ -38,6 +38,7 @@ class Station extends _$Station {
 
       final Map<String, StationModel> map = <String, StationModel>{};
 
+      // ignore: avoid_dynamic_calls
       for (int i = 0; i < value['data'].length.toString().toInt(); i++) {
         final StationModel val = StationModel.fromJson(
           // ignore: avoid_dynamic_calls

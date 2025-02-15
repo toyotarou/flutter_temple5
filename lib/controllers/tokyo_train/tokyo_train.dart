@@ -16,12 +16,9 @@ part 'tokyo_train.g.dart';
 class TokyoTrainState with _$TokyoTrainState {
   const factory TokyoTrainState({
     @Default(<TokyoTrainModel>[]) List<TokyoTrainModel> tokyoTrainList,
-    @Default(<String, TokyoTrainModel>{})
-    Map<String, TokyoTrainModel> tokyoTrainMap,
-    @Default(<int, TokyoTrainModel>{})
-    Map<int, TokyoTrainModel> tokyoTrainIdMap,
-    @Default(<String, TokyoStationModel>{})
-    Map<String, TokyoStationModel> tokyoStationMap,
+    @Default(<String, TokyoTrainModel>{}) Map<String, TokyoTrainModel> tokyoTrainMap,
+    @Default(<int, TokyoTrainModel>{}) Map<int, TokyoTrainModel> tokyoTrainIdMap,
+    @Default(<String, TokyoStationModel>{}) Map<String, TokyoStationModel> tokyoStationMap,
 
     //
     @Default(<int>[]) List<int> selectTrainList,
@@ -46,8 +43,7 @@ class TokyoTrain extends _$TokyoTrain {
       final List<TokyoTrainModel> list = <TokyoTrainModel>[];
       final Map<String, TokyoTrainModel> map = <String, TokyoTrainModel>{};
       final Map<int, TokyoTrainModel> idMap = <int, TokyoTrainModel>{};
-      final Map<String, TokyoStationModel> stationMap =
-          <String, TokyoStationModel>{};
+      final Map<String, TokyoStationModel> stationMap = <String, TokyoStationModel>{};
 
       // ignore: avoid_dynamic_calls
       for (int i = 0; i < value['data'].length.toString().toInt(); i++) {
@@ -66,21 +62,8 @@ class TokyoTrain extends _$TokyoTrain {
         }
       }
 
-
-
-
-      print(list);
-
-
-
-
-
-      state = state.copyWith(
-        tokyoTrainList: list,
-        tokyoTrainMap: map,
-        tokyoStationMap: stationMap,
-        tokyoTrainIdMap: idMap,
-      );
+      state =
+          state.copyWith(tokyoTrainList: list, tokyoTrainMap: map, tokyoStationMap: stationMap, tokyoTrainIdMap: idMap);
       // ignore: always_specify_types
     }).catchError((error, _) {
       utility.showError('予期せぬエラーが発生しました');

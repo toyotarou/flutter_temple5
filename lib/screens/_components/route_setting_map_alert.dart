@@ -13,9 +13,13 @@ import '../../models/temple_model.dart';
 import '../../models/tokyo_station_model.dart';
 import '../../models/tokyo_train_model.dart';
 import '../../utility/tile_provider.dart';
+import '../_parts/_caution_dialog.dart';
+import '../_parts/_temple_dialog.dart';
 import '../_parts/temple_info_display_parts.dart';
 import '../_parts/temple_overlay.dart';
 import '../function.dart';
+import 'route_display_setting_alert.dart';
+import 'route_goal_station_setting_alert.dart';
 
 class RouteSettingMapAlert extends ConsumerStatefulWidget {
   const RouteSettingMapAlert({
@@ -189,6 +193,129 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
               //
             ],
           ),
+          Positioned(
+            top: 5,
+            right: 5,
+            left: 5,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: context.screenSize.width,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  width: 60,
+                                  padding: const EdgeInsets.symmetric(vertical: 3),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green[900]!.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Text('Start', style: TextStyle(color: Colors.white)),
+                                ),
+                                const SizedBox(width: 20),
+                                Expanded(
+                                  child: Text(widget.station!.stationName, style: const TextStyle(color: Colors.white)),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: () {
+                                    if (routingState.routingTempleDataList.length < 2) {
+                                      caution_dialog(
+                                        context: context,
+                                        content: 'cant setting goal',
+                                      );
+
+                                      return;
+                                    }
+
+                                    TempleDialog(
+                                      context: context,
+                                      widget: RouteGoalStationSettingAlert(
+                                        tokyoStationMap: widget.tokyoStationMap,
+                                        tokyoTrainList: widget.tokyoTrainList,
+                                      ),
+                                      paddingLeft: context.screenSize.width * 0.2,
+                                      clearBarrierColor: true,
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 60,
+                                    padding: const EdgeInsets.symmetric(vertical: 3),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.purpleAccent.withOpacity(0.3),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Text(
+                                      'Goal',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                Expanded(
+                                  child: Text(
+                                    (tokyoTrainState.tokyoStationMap[routingState.goalStationId] != null)
+                                        ? tokyoTrainState.tokyoStationMap[routingState.goalStationId]!.stationName
+                                        : '-----',
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () => routingNotifier.removeGoalStation(),
+                                  child: const Icon(Icons.close, color: Colors.purpleAccent),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      GestureDetector(
+                        onTap: () {
+                          TempleDialog(
+                            context: context,
+                            widget: RouteDisplaySettingAlert(),
+                            paddingLeft: context.screenSize.width * 0.1,
+                          );
+                        },
+                        child: const Icon(Icons.settings, color: Colors.white),
+                      ),
+                      const SizedBox(width: 20),
+                      GestureDetector(
+                        onTap: () => latLngTempleNotifier.setOrangeDisplay(),
+                        child: CircleAvatar(backgroundColor: Colors.orangeAccent.withOpacity(0.6), radius: 10),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Container(
+                  width: context.screenSize.width,
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(color: Colors.blue.withOpacity(0.2)),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: context.screenSize.height / 15),
+                    child: displaySelectedRoutingTemple(),
+                  ),
+                ),
+              ],
+            ),
+          ),
           if (isLoading) ...<Widget>[
             const Center(child: CircularProgressIndicator()),
           ],
@@ -332,6 +459,57 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
       str,
       style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
     );
+  }
+
+  ///
+  Widget displaySelectedRoutingTemple() {
+    final List<Widget> list = <Widget>[];
+
+    for (int i = 1; i < routingState.routingTempleDataList.length; i++) {
+      final String distance = calcDistance(
+        originLat: routingState.routingTempleDataList[i - 1].latitude.toDouble(),
+        originLng: routingState.routingTempleDataList[i - 1].longitude.toDouble(),
+        destLat: routingState.routingTempleDataList[i].latitude.toDouble(),
+        destLng: routingState.routingTempleDataList[i].longitude.toDouble(),
+      );
+
+      list.add(
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(top: 5),
+              width: 40,
+              decoration: const BoxDecoration(
+                border: Border(top: BorderSide(color: Colors.white)),
+              ),
+              alignment: Alignment.topRight,
+              child: Text(distance, style: const TextStyle(fontSize: 10, color: Colors.white)),
+            ),
+            Container(
+              margin: const EdgeInsets.all(3),
+              padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
+              decoration: (routingState.routingTempleDataList[i].mark.split('-').length != 2)
+                  ? BoxDecoration(
+                      color: (routingState.routingTempleDataList[i].cnt > 0)
+                          ? Colors.pinkAccent.withOpacity(0.5)
+                          : Colors.orangeAccent.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(10),
+                    )
+                  : null,
+              child: (routingState.routingTempleDataList[i].mark.split('-').length != 2)
+                  ? Text(
+                      routingState.routingTempleDataList[i].mark,
+                      style: const TextStyle(fontSize: 10, color: Colors.white),
+                    )
+                  : const Text(''),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return (list.isNotEmpty) ? Wrap(children: list) : const Text('No Routing', style: TextStyle(color: Colors.white));
   }
 
 // ///
@@ -769,6 +947,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
 //             child: const Icon(Icons.settings, color: Colors.white),
 //           ),
 //           const SizedBox(width: 20),
+
 //           GestureDetector(
 //             onTap: () {
 //               ref.read(latLngTempleProvider.notifier).setOrangeDisplay();
@@ -894,7 +1073,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
 //           color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
 //     );
 //   }
-//
+
 //   ///
 //   Widget displaySelectedRoutingTemple() {
 //     final List<Widget> list = <Widget>[];
