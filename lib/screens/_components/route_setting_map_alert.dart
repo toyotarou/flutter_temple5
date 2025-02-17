@@ -115,13 +115,15 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
       latList.add(double.parse(widget.station!.lat));
       lngList.add(double.parse(widget.station!.lng));
 
-      templeDataList.add(TempleData(
-        name: widget.station!.stationName,
-        address: widget.station!.address,
-        latitude: widget.station!.lat,
-        longitude: widget.station!.lng,
-        mark: 'STA',
-      ));
+      templeDataList.add(
+        TempleData(
+          name: widget.station!.stationName,
+          address: widget.station!.address,
+          latitude: widget.station!.lat,
+          longitude: widget.station!.lng,
+          mark: 'STA',
+        ),
+      );
     }
 
     if (tokyoTrainState.tokyoStationMap[routingState.goalStationId] != null) {
@@ -306,9 +308,23 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
               ],
             ),
           ),
-          if (isLoading) ...<Widget>[
-            const Center(child: CircularProgressIndicator()),
-          ],
+          Positioned(
+            bottom: 5,
+            right: 5,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+              child: GestureDetector(
+                onTap: () {
+                  if (widget.station != null) {
+                    mapController.move(LatLng(widget.station!.lat.toDouble(), widget.station!.lng.toDouble()), 13);
+                  }
+                },
+                child: const Icon(Icons.center_focus_strong, color: Colors.white),
+              ),
+            ),
+          ),
+          if (isLoading) ...<Widget>[const Center(child: CircularProgressIndicator())],
         ],
       ),
     );
@@ -419,12 +435,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
             point: LatLng(latLngTempleState.selectedNearStation!.y, latLngTempleState.selectedNearStation!.x),
             width: 40,
             height: 40,
-            child: GestureDetector(
-              child: CircleAvatar(
-                backgroundColor: Colors.brown.withOpacity(0.5),
-                child: const Text(''),
-              ),
-            ),
+            child: CircleAvatar(backgroundColor: Colors.brown.withOpacity(0.5), child: const Text('')),
           ),
         );
       }

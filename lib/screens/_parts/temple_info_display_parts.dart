@@ -5,6 +5,7 @@ import '../../controllers/app_params/app_params_response_state.dart';
 import '../../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../../controllers/near_station/near_station.dart';
 import '../../controllers/routing/routing.dart';
+import '../../controllers/temple/temple.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/near_station_model.dart';
@@ -38,11 +39,17 @@ Widget templeInfoDisplayParts({
         Text(temple.latitude),
         Text(temple.longitude),
         const SizedBox(height: 10),
+
+        //-----------------------------------------------------------//
+
         if (from == 'NotReachTempleMapAlert') ...<Widget>[
           ///
           displayNearStation(from: from, ref: ref, temple: temple),
           const SizedBox(height: 10),
         ],
+
+        //-----------------------------------------------------------//
+
         if (from == 'RouteSettingMapAlert') ...<Widget>[
           ///
           displayNearStation(from: from, ref: ref, temple: temple),
@@ -52,6 +59,9 @@ Widget templeInfoDisplayParts({
           displayAddRemoveRoutingButton(from: from, ref: ref, temple: temple, station: station),
           const SizedBox(height: 10),
         ],
+
+        //-----------------------------------------------------------//
+
         if (from == 'VisitedTempleMapAlert') ...<Widget>[
           ///
           displayTempleVisitDate(from: from, temple: temple, context: context, templeVisitDateMap: templeVisitDateMap),
@@ -66,6 +76,8 @@ Widget templeInfoDisplayParts({
             dateTempleMap: dateTempleMap,
           ),
         ],
+
+        //-----------------------------------------------------------//
       ],
     ),
   );
@@ -151,6 +163,10 @@ Widget displayAddRemoveRoutingButton(
       ElevatedButton(
         onPressed: () {
           ref.read(routingProvider.notifier).setRouting(templeData: temple, station: station);
+
+          if (pos != -1) {
+            ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+          }
         },
         style: ElevatedButton.styleFrom(
             backgroundColor: (pos != -1) ? Colors.white.withOpacity(0.2) : Colors.indigo.withOpacity(0.2)),
@@ -177,9 +193,7 @@ Widget displayTempleVisitDate(
             padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
             margin: const EdgeInsets.all(1),
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.white.withOpacity(0.2)),
-            ),
+            decoration: BoxDecoration(border: Border.all(color: Colors.white.withOpacity(0.2))),
             child: Text(e, style: const TextStyle(fontSize: 10)),
           );
         }).toList(),
