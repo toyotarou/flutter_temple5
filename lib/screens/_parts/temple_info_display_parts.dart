@@ -32,6 +32,7 @@ Widget templeInfoDisplayParts({
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(width: context.screenSize.width),
+        Text(temple.mark),
         Text(temple.name),
         Text(temple.address),
         Text(temple.latitude),
@@ -42,7 +43,7 @@ Widget templeInfoDisplayParts({
           displayNearStation(from: from, ref: ref, temple: temple),
           const SizedBox(height: 10),
         ],
-        if (from == 'LatLngTempleMapAlert') ...<Widget>[
+        if (from == 'RouteSettingMapAlert') ...<Widget>[
           ///
           displayNearStation(from: from, ref: ref, temple: temple),
           const SizedBox(height: 10),
