@@ -235,7 +235,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                                       widget: RouteGoalStationSettingAlert(
                                           tokyoStationMap: widget.tokyoStationMap,
                                           tokyoTrainList: widget.tokyoTrainList),
-                                      paddingLeft: context.screenSize.width * 0.2,
+                                      paddingTop: context.screenSize.height * 0.6,
                                       clearBarrierColor: true,
                                     );
                                   },
@@ -270,11 +270,15 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                       const SizedBox(width: 20),
                       GestureDetector(
                         onTap: () {
+                          closeAllOverlays(ref: ref);
+
                           TempleDialog(
                             context: context,
                             widget: RouteDisplaySettingAlert(),
                             paddingLeft: context.screenSize.width * 0.1,
                           );
+
+                          _firstEntries.clear();
                         },
                         child: const Icon(Icons.settings, color: Colors.white),
                       ),
@@ -366,6 +370,8 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                           name: templeDataList[i].name,
                           lat: templeDataList[i].latitude,
                           lng: templeDataList[i].longitude);
+
+                      appParamNotifier.setFirstOverlayParams(firstEntries: _firstEntries);
 
                       addFirstOverlay(
                         context: context,
