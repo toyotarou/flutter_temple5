@@ -270,6 +270,8 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                       const SizedBox(width: 20),
                       GestureDetector(
                         onTap: () {
+                          templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
+
                           closeAllOverlays(ref: ref);
 
                           TempleDialog(
