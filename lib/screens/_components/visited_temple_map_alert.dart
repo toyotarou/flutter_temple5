@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/temple_lat_lng_model.dart';
@@ -136,8 +135,11 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
                         color: Colors.blueGrey.withOpacity(0.3),
                         initialPosition: Offset(0, context.screenSize.height * 0.7),
                         widget: Consumer(
-                            builder: (BuildContext context, WidgetRef ref, Widget? child) =>
-                                visitedTempleListParts(ref: ref)),
+                          builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
+                            ref: ref,
+                            templeLatLngMap: templeLatLngState.templeLatLngMap,
+                          ),
+                        ),
                         onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
                         fixedFlag: true,
                       );
@@ -198,31 +200,26 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
         }
       });
 
-    final AsyncValue<TempleLatLngState> templeLatLngState = ref.watch(templeLatLngProvider);
-    final Map<String, TempleLatLngModel>? templeLatLngMap = templeLatLngState.value?.templeLatLngMap;
+    for (final String element in templeNamesList) {
+      final TempleLatLngModel? temple = templeLatLngState.templeLatLngMap[element];
 
-    if (templeLatLngMap != null) {
-      for (final String element in templeNamesList) {
-        final TempleLatLngModel? temple = templeLatLngMap[element];
+      if (temple != null) {
+        if (temple.lat != 'null' && temple.lng != 'null') {
+          latList.add(double.parse(temple.lat));
+          lngList.add(double.parse(temple.lng));
 
-        if (temple != null) {
-          if (temple.lat != 'null' && temple.lng != 'null') {
-            latList.add(double.parse(temple.lat));
-            lngList.add(double.parse(temple.lng));
-
-            templeDataList.add(
-              TempleData(name: temple.temple, address: temple.address, latitude: temple.lat, longitude: temple.lng),
-            );
-          }
+          templeDataList.add(
+            TempleData(name: temple.temple, address: temple.address, latitude: temple.lat, longitude: temple.lng),
+          );
         }
       }
+    }
 
-      if (latList.isNotEmpty && lngList.isNotEmpty) {
-        minLat = latList.reduce(min);
-        maxLat = latList.reduce(max);
-        minLng = lngList.reduce(min);
-        maxLng = lngList.reduce(max);
-      }
+    if (latList.isNotEmpty && lngList.isNotEmpty) {
+      minLat = latList.reduce(min);
+      maxLat = latList.reduce(max);
+      minLng = lngList.reduce(min);
+      maxLng = lngList.reduce(max);
     }
   }
 

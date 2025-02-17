@@ -6,13 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../controllers/controllers_mixin.dart';
-import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
-import '../../controllers/temple_list/temple_list.dart';
 import '../../extensions/extensions.dart';
 import '../../mixin/not_reach_temple_train/not_reach_temple_train_select_widget.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/temple_lat_lng_model.dart';
-import '../../models/temple_list_model.dart';
 import '../../models/temple_model.dart';
 import '../../models/tokyo_station_model.dart';
 import '../../models/tokyo_train_model.dart';
@@ -181,65 +178,55 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
     final List<String> jogaiTempleAddressList = <String>[];
     final List<String> jogaiTempleAddressList2 = <String>[];
 
-    final AsyncValue<TempleLatLngState> templeLatLngState = ref.watch(templeLatLngProvider);
-    final List<TempleLatLngModel>? templeLatLngList = templeLatLngState.value?.templeLatLngList;
-
-    if (templeLatLngList != null) {
-      for (final TempleLatLngModel element in templeLatLngList) {
-        jogaiTempleNameList.add(element.temple);
-        jogaiTempleAddressList.add(element.address);
-        jogaiTempleAddressList2.add('東京都${element.address}');
-      }
+    for (final TempleLatLngModel element in templeLatLngState.templeLatLngList) {
+      jogaiTempleNameList.add(element.temple);
+      jogaiTempleAddressList.add(element.address);
+      jogaiTempleAddressList2.add('東京都${element.address}');
     }
 
-    final AsyncValue<TempleListState> templeListState = ref.watch(templeListProvider);
-    final List<TempleListModel>? templeListList = templeListState.value?.templeListList;
+    final List<double> latList = <double>[];
+    final List<double> lngList = <double>[];
 
-    if (templeListList != null) {
-      final List<double> latList = <double>[];
-      final List<double> lngList = <double>[];
-
-      for (int i = 0; i < templeListList.length; i++) {
-        if (jogaiTempleNameList.contains(templeListList[i].name)) {
-          continue;
-        }
-
-        if (jogaiTempleAddressList.contains(templeListList[i].address)) {
-          continue;
-        }
-
-        if (jogaiTempleAddressList2.contains(templeListList[i].address)) {
-          continue;
-        }
-
-        if (jogaiTempleAddressList.contains('東京都${templeListList[i].address}')) {
-          continue;
-        }
-
-        if (jogaiTempleAddressList2.contains('東京都${templeListList[i].address}')) {
-          continue;
-        }
-
-        latList.add(double.parse(templeListList[i].lat));
-        lngList.add(double.parse(templeListList[i].lng));
-
-        templeDataList.add(
-          TempleData(
-            name: templeListList[i].name,
-            address: templeListList[i].address,
-            latitude: templeListList[i].lat,
-            longitude: templeListList[i].lng,
-            mark: templeListList[i].id.toString(),
-          ),
-        );
+    for (int i = 0; i < templeListState.templeListList.length; i++) {
+      if (jogaiTempleNameList.contains(templeListState.templeListList[i].name)) {
+        continue;
       }
 
-      if (latList.isNotEmpty && lngList.isNotEmpty) {
-        minLat = latList.reduce(min);
-        maxLat = latList.reduce(max);
-        minLng = lngList.reduce(min);
-        maxLng = lngList.reduce(max);
+      if (jogaiTempleAddressList.contains(templeListState.templeListList[i].address)) {
+        continue;
       }
+
+      if (jogaiTempleAddressList2.contains(templeListState.templeListList[i].address)) {
+        continue;
+      }
+
+      if (jogaiTempleAddressList.contains('東京都${templeListState.templeListList[i].address}')) {
+        continue;
+      }
+
+      if (jogaiTempleAddressList2.contains('東京都${templeListState.templeListList[i].address}')) {
+        continue;
+      }
+
+      latList.add(double.parse(templeListState.templeListList[i].lat));
+      lngList.add(double.parse(templeListState.templeListList[i].lng));
+
+      templeDataList.add(
+        TempleData(
+          name: templeListState.templeListList[i].name,
+          address: templeListState.templeListList[i].address,
+          latitude: templeListState.templeListList[i].lat,
+          longitude: templeListState.templeListList[i].lng,
+          mark: templeListState.templeListList[i].id.toString(),
+        ),
+      );
+    }
+
+    if (latList.isNotEmpty && lngList.isNotEmpty) {
+      minLat = latList.reduce(min);
+      maxLat = latList.reduce(max);
+      minLng = lngList.reduce(min);
+      maxLng = lngList.reduce(max);
     }
   }
 

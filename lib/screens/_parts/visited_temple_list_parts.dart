@@ -4,18 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../controllers/app_params/app_params_notifier.dart';
 import '../../controllers/temple/temple.dart';
 
-import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../extensions/extensions.dart';
 
 import '../../models/temple_lat_lng_model.dart';
 import '../../models/temple_model.dart';
 
 ///
-Widget visitedTempleListParts({required WidgetRef ref}) {
+Widget visitedTempleListParts({required WidgetRef ref, required Map<String, TempleLatLngModel> templeLatLngMap}) {
   final List<Widget> list = <Widget>[];
-
-  final AsyncValue<TempleLatLngState> templeLatLngState = ref.watch(templeLatLngProvider);
-  final Map<String, TempleLatLngModel>? templeLatLngMap = templeLatLngState.value?.templeLatLngMap;
 
   final TempleState templeState = ref.watch(templeProvider);
 
@@ -67,12 +63,12 @@ Widget visitedTempleListParts({required WidgetRef ref}) {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
-                          if (templeLatLngMap?[element2] != null) {
+                          if (templeLatLngMap[element2] != null) {
                             ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: false);
 
                             ref.read(templeProvider.notifier).setSelectTemple(
                                 name: element2,
-                                lat: templeLatLngMap![element2]!.lat,
+                                lat: templeLatLngMap[element2]!.lat,
                                 lng: templeLatLngMap[element2]!.lng);
                           }
                         },

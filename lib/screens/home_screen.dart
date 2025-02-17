@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../controllers/controllers_mixin.dart';
-import '../controllers/temple_list/temple_list.dart';
 import '../extensions/extensions.dart';
 import '../models/temple_model.dart';
 import '../utility/utility.dart';
@@ -39,8 +38,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
     templeNotifier.getAllTemple();
 
-    ref.read(templeListProvider.notifier).getAllTempleListTemple();
-
     tokyoTrainNotifier.getTokyoTrain();
 
     complementTempleVisitedDateNotifier.getComplementTempleVisitedDate();
@@ -49,6 +46,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
     globalKeyList = List.generate(100, (int index) => GlobalKey());
 
     tokyoTrainNotifier.getTokyoTrain();
+
+    templeLatLngNotifier.getAllTempleLatLng();
   }
 
   ///
@@ -384,7 +383,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
             GestureDetector(
               onTap: () => TempleDialog(
                 context: context,
-                widget: TempleDetailMapAlert(date: data.date),
+                widget: TempleDetailMapAlert(
+                  date: data.date,
+                  data: data,
+                ),
               ),
               child: const Icon(Icons.call_made, color: Colors.white),
             ),

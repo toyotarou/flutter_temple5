@@ -15,10 +15,8 @@ part 'temple_list.g.dart';
 class TempleListState with _$TempleListState {
   const factory TempleListState({
     @Default(<TempleListModel>[]) List<TempleListModel> templeListList,
-    @Default(<String, TempleListModel>{})
-    Map<String, TempleListModel> templeListMap,
-    @Default(<String, List<TempleListModel>>{})
-    Map<String, List<TempleListModel>> templeStationMap,
+    @Default(<String, TempleListModel>{}) Map<String, TempleListModel> templeListMap,
+    @Default(<String, List<TempleListModel>>{}) Map<String, List<TempleListModel>> templeStationMap,
   }) = _TempleListState;
 }
 
@@ -28,56 +26,53 @@ class TempleList extends _$TempleList {
 
   ///
   @override
-  Future<TempleListState> build() async => getAllTempleListTemple();
+  TempleListState build() => const TempleListState();
 
   ///
-  /// home_screen.dart
-  Future<TempleListState> getAllTempleListTemple() async {
-    final List<TempleListModel> list = <TempleListModel>[];
-    final Map<String, TempleListModel> map = <String, TempleListModel>{};
-    final Map<String, List<TempleListModel>> templeStationMap =
-        <String, List<TempleListModel>>{};
-
+  Future<TempleListState> fetchTempleListData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
-    // ignore: always_specify_types
-    await client.post(path: APIPath.getTempleListTemple).then((value) {
+    try {
+      final dynamic value = await client.post(path: APIPath.getTempleListTemple);
+
+      final List<TempleListModel> list = <TempleListModel>[];
+
+      final Map<String, TempleListModel> map = <String, TempleListModel>{};
+
+      final Map<String, List<TempleListModel>> map2 = <String, List<TempleListModel>>{};
+
       // ignore: avoid_dynamic_calls
       for (int i = 0; i < value['data'].length.toString().toInt(); i++) {
-        final TempleListModel val = TempleListModel.fromJson(
-          // ignore: avoid_dynamic_calls
-          value['data'][i] as Map<String, dynamic>,
-        );
+        // ignore: avoid_dynamic_calls
+        final TempleListModel val = TempleListModel.fromJson(value['data'][i] as Map<String, dynamic>);
 
         list.add(val);
         map[val.name] = val;
 
-        val.nearStation.split(',').forEach((String element) {
-          templeStationMap[element.trim()] = <TempleListModel>[];
-        });
+        val.nearStation.split(',').forEach((String element) => map2[element.trim()] = <TempleListModel>[]);
       }
 
       // ignore: avoid_dynamic_calls
       for (int i = 0; i < value['data'].length.toString().toInt(); i++) {
-        final TempleListModel val = TempleListModel.fromJson(
-          // ignore: avoid_dynamic_calls
-          value['data'][i] as Map<String, dynamic>,
-        );
+        // ignore: avoid_dynamic_calls
+        final TempleListModel val = TempleListModel.fromJson(value['data'][i] as Map<String, dynamic>);
 
-        val.nearStation.split(',').forEach((String element) {
-          templeStationMap[element.trim()]?.add(val);
-        });
+        val.nearStation.split(',').forEach((String element) => map2[element.trim()]?.add(val));
       }
 
-      // ignore: always_specify_types
-    }).catchError((error, _) {
+      return state.copyWith(templeListList: list, templeListMap: map, templeStationMap: map2);
+    } catch (e) {
       utility.showError('予期せぬエラーが発生しました');
-    });
+      rethrow; // これにより呼び出し元でキャッチできる
+    }
+  }
 
-    return TempleListState(
-      templeListList: list,
-      templeListMap: map,
-      templeStationMap: templeStationMap,
-    );
+  ///
+  Future<void> getAllTempleList() async {
+    try {
+      final TempleListState newState = await fetchTempleListData();
+
+      state = newState;
+    } catch (_) {}
   }
 }

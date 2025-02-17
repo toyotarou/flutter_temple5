@@ -6,12 +6,12 @@ part of 'temple_lat_lng.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$templeLatLngHash() => r'f22094bb4e366435f8e0d9bb1397828c0e55f47d';
+String _$templeLatLngHash() => r'0c983e1e277d6f0d4bac3e897f5fb11cfa84ea63';
 
 /// See also [TempleLatLng].
 @ProviderFor(TempleLatLng)
 final templeLatLngProvider =
-    AsyncNotifierProvider<TempleLatLng, TempleLatLngState>.internal(
+    NotifierProvider<TempleLatLng, TempleLatLngState>.internal(
   TempleLatLng.new,
   name: r'templeLatLngProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final templeLatLngProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$TempleLatLng = AsyncNotifier<TempleLatLngState>;
+typedef _$TempleLatLng = Notifier<TempleLatLngState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
