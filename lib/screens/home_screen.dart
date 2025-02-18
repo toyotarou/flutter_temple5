@@ -48,6 +48,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
     tokyoTrainNotifier.getTokyoTrain();
 
     templeLatLngNotifier.getAllTempleLatLng();
+
+    stationNotifier.getAllStation();
   }
 
   ///
