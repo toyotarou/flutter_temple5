@@ -83,6 +83,8 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
 
     makeStartEnd();
 
+    final TempleModel? temple = templeState.dateTempleMap[widget.date.yyyymmdd];
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -104,7 +106,6 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
                 userAgentPackageName: 'com.example.app',
               ),
 
-              MarkerLayer(markers: markerList),
               // ignore: always_specify_types
               PolylineLayer(
                 polylines: <Polyline<Object>>[
@@ -118,66 +119,66 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
                   ),
                 ],
               ),
+
+              MarkerLayer(markers: markerList),
             ],
           ),
-          Positioned(top: 5, right: 5, left: 5, child: displayInfoPlate()),
-          if (isLoading) ...<Widget>[
-            const Center(child: CircularProgressIndicator()),
-          ],
-        ],
-      ),
-    );
-  }
-
-  ///
-  Widget displayInfoPlate() {
-    final TempleModel? temple = templeState.dateTempleMap[widget.date.yyyymmdd];
-
-    return Container(
-      width: context.screenSize.width,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          IconButton(
-            onPressed: () {
-              TempleDialog(
-                context: context,
-                widget: TempleCourseDisplayAlert(data: templeDataList),
-                paddingLeft: context.screenSize.width * 0.2,
-                clearBarrierColor: true,
-              );
-            },
-            icon: const Icon(Icons.info_outline, size: 30, color: Colors.white),
-          ),
-          if (temple == null)
-            Container()
-          else
-            DefaultTextStyle(
-              style: const TextStyle(color: Colors.white),
-              child: Column(
+          Positioned(
+            top: 5,
+            right: 5,
+            left: 5,
+            child: Container(
+              width: context.screenSize.width,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(widget.date.yyyymmdd),
-                  Text(temple.temple),
-                  const SizedBox(height: 10),
-                  Text(start),
-                  Text(end),
-                  if (temple.memo != '') ...<Widget>[
-                    const SizedBox(height: 10),
-                    Flexible(
-                      child: SizedBox(
-                        width: context.screenSize.width * 0.6,
-                        child: Text(temple.memo),
+                  IconButton(
+                    onPressed: () {
+                      TempleDialog(
+                        context: context,
+                        widget: TempleCourseDisplayAlert(data: templeDataList),
+                        paddingLeft: context.screenSize.width * 0.2,
+                        clearBarrierColor: true,
+                      );
+                    },
+                    icon: const Icon(Icons.info_outline, size: 30, color: Colors.white),
+                  ),
+                  if (temple == null)
+                    Container()
+                  else
+                    DefaultTextStyle(
+                      style: const TextStyle(color: Colors.white),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(widget.date.yyyymmdd),
+                          Text(temple.temple),
+                          const SizedBox(height: 10),
+                          Text(start),
+                          Text(end),
+                          if (temple.memo != '') ...<Widget>[
+                            const SizedBox(height: 10),
+                            Flexible(
+                              child: SizedBox(
+                                width: context.screenSize.width * 0.6,
+                                child: Text(temple.memo),
+                              ),
+                            ),
+                          ],
+                          const SizedBox(height: 10),
+                          displayThumbNailPhoto(),
+                        ],
                       ),
                     ),
-                  ],
-                  const SizedBox(height: 10),
-                  displayThumbNailPhoto(),
                 ],
               ),
             ),
+          ),
+          if (isLoading) ...<Widget>[
+            const Center(child: CircularProgressIndicator()),
+          ],
         ],
       ),
     );
