@@ -139,21 +139,8 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
                         height: context.screenSize.height * 0.3,
                         color: Colors.blueGrey.withOpacity(0.3),
                         initialPosition: Offset(0, context.screenSize.height * 0.7),
-
-                        //   widget: Consumer(
-                        //     builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                        //       return notReachTempleTrainSelectParts(
-                        //         context: context,
-                        //         ref: ref,
-                        //         tokyoTrainList: widget.tokyoTrainList,
-                        //         setDefaultBoundsMap: setDefaultBoundsMap,
-                        //       );
-                        //     },
-                        //   ),
-
                         widget: NotReachTempleTrainSelectWidget(
                             tokyoTrainList: widget.tokyoTrainList, setDefaultBoundsMap: setDefaultBoundsMap),
-
                         onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
                         fixedFlag: true,
                       );

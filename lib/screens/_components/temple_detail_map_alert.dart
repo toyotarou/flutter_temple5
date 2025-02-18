@@ -120,15 +120,7 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
               ),
             ],
           ),
-          // Positioned(top: 5, child: displayInfoPlate()),
-          //
-          //
-          //
-          //
-
-
-
-
+          Positioned(top: 5, right: 5, left: 5, child: displayInfoPlate()),
           if (isLoading) ...<Widget>[
             const Center(child: CircularProgressIndicator()),
           ],
@@ -139,36 +131,12 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
 
   ///
   Widget displayInfoPlate() {
-
-
-
-
-    return Container(
-      width: double.infinity,
-      height: 300,
-      child: Row(
-        children: [
-          Icon(Icons.ac_unit),
-        ],
-      ),
-    );
-
-
-
-
-    /*
-
-
     final TempleModel? temple = templeState.dateTempleMap[widget.date.yyyymmdd];
 
     return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.all(10),
+      width: context.screenSize.width,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
-        borderRadius: BorderRadius.circular(10),
-      ),
+      decoration: BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -181,11 +149,7 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
                 clearBarrierColor: true,
               );
             },
-            icon: const Icon(
-              Icons.info_outline,
-              size: 30,
-              color: Colors.white,
-            ),
+            icon: const Icon(Icons.info_outline, size: 30, color: Colors.white),
           ),
           if (temple == null)
             Container()
@@ -194,7 +158,6 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
               style: const TextStyle(color: Colors.white),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(widget.date.yyyymmdd),
                   Text(temple.temple),
@@ -218,15 +181,6 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
         ],
       ),
     );
-
-
-
-
-    */
-
-
-
-
   }
 
   ///
