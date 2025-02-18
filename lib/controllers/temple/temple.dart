@@ -50,22 +50,26 @@ class Temple extends _$Temple {
   @override
   TempleState build() => const TempleState();
 
+  //============================================== api
+
   ///
-  /// home_screen.dart
-  /// visited_temple_list_alert.dart
-  Future<void> getAllTemple() async {
+  Future<TempleState> fetchAllTempleData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
-    // ignore: always_specify_types
-    await client.post(path: APIPath.getAllTemple).then((value) {
+    try {
+      final dynamic value = await client.post(path: APIPath.getAllTemple);
+
       final List<TempleModel> list = <TempleModel>[];
+
       final Map<String, TempleModel> map = <String, TempleModel>{};
+
       final Map<String, TempleModel> map2 = <String, TempleModel>{};
 
       final Map<String, List<String>> map3 = <String, List<String>>{};
-      final List<String> templeNameList = <String>[];
 
       final Map<String, List<String>> map4 = <String, List<String>>{};
+
+      final List<String> templeNameList = <String>[];
 
       // ignore: avoid_dynamic_calls
       for (int i = 0; i < value['list'].length.toString().toInt(); i++) {
@@ -117,18 +121,24 @@ class Temple extends _$Temple {
         });
       }
 
-      state = state.copyWith(
-        templeList: list,
-        dateTempleMap: map,
-        latLngTempleMap: map2,
-        templeVisitDateMap: map3,
-        templeCountMap: map4,
-      );
-      // ignore: always_specify_types
-    }).catchError((error, _) {
+      return state.copyWith(
+          templeList: list, dateTempleMap: map, latLngTempleMap: map2, templeVisitDateMap: map3, templeCountMap: map4);
+    } catch (e) {
       utility.showError('予期せぬエラーが発生しました');
-    });
+      rethrow; // これにより呼び出し元でキャッチできる
+    }
   }
+
+  ///
+  Future<void> getAllTemple() async {
+    try {
+      final TempleState newState = await fetchAllTempleData();
+
+      state = newState;
+    } catch (_) {}
+  }
+
+  //============================================== api
 
   ///
   void doSearch({required String searchWord}) => state = state.copyWith(searchWord: searchWord, doSearch: true);

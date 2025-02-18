@@ -28,8 +28,10 @@ class TempleList extends _$TempleList {
   @override
   TempleListState build() => const TempleListState();
 
+  //============================================== api
+
   ///
-  Future<TempleListState> fetchTempleListData() async {
+  Future<TempleListState> fetchAllTempleListData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
     try {
@@ -70,9 +72,11 @@ class TempleList extends _$TempleList {
   ///
   Future<void> getAllTempleList() async {
     try {
-      final TempleListState newState = await fetchTempleListData();
+      final TempleListState newState = await fetchAllTempleListData();
 
       state = newState;
     } catch (_) {}
   }
+
+//============================================== api
 }

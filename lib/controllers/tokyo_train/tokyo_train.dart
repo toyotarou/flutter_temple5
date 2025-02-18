@@ -33,17 +33,22 @@ class TokyoTrain extends _$TokyoTrain {
   @override
   TokyoTrainState build() => const TokyoTrainState();
 
+  //============================================== api
+
   ///
-  /// home_screen.dart
-  Future<void> getTokyoTrain() async {
+  Future<TokyoTrainState> fetchAllTokyoTrainData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
-    // ignore: always_specify_types
-    await client.post(path: APIPath.getTokyoTrainStation).then((value) {
+    try {
+      final dynamic value = await client.post(path: APIPath.getTokyoTrainStation);
+
       final List<TokyoTrainModel> list = <TokyoTrainModel>[];
+
       final Map<String, TokyoTrainModel> map = <String, TokyoTrainModel>{};
-      final Map<int, TokyoTrainModel> idMap = <int, TokyoTrainModel>{};
-      final Map<String, TokyoStationModel> stationMap = <String, TokyoStationModel>{};
+
+      final Map<int, TokyoTrainModel> map2 = <int, TokyoTrainModel>{};
+
+      final Map<String, TokyoStationModel> map3 = <String, TokyoStationModel>{};
 
       // ignore: avoid_dynamic_calls
       for (int i = 0; i < value['data'].length.toString().toInt(); i++) {
@@ -55,20 +60,30 @@ class TokyoTrain extends _$TokyoTrain {
         list.add(val);
         map[val.trainName] = val;
 
-        idMap[val.trainNumber] = val;
+        map2[val.trainNumber] = val;
 
         for (final TokyoStationModel element in val.station) {
-          stationMap[element.id] = element;
+          map3[element.id] = element;
         }
       }
 
-      state =
-          state.copyWith(tokyoTrainList: list, tokyoTrainMap: map, tokyoStationMap: stationMap, tokyoTrainIdMap: idMap);
-      // ignore: always_specify_types
-    }).catchError((error, _) {
+      return state.copyWith(tokyoTrainList: list, tokyoTrainMap: map, tokyoStationMap: map3, tokyoTrainIdMap: map2);
+    } catch (e) {
       utility.showError('予期せぬエラーが発生しました');
-    });
+      rethrow; // これにより呼び出し元でキャッチできる
+    }
   }
+
+  ///
+  Future<void> getAllTokyoTrain() async {
+    try {
+      final TokyoTrainState newState = await fetchAllTokyoTrainData();
+
+      state = newState;
+    } catch (_) {}
+  }
+
+  //============================================== api
 
   ///
   void setTrainList({required int trainNumber}) {

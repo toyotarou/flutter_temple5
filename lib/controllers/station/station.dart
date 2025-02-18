@@ -27,8 +27,10 @@ class Station extends _$Station {
   @override
   StationState build() => const StationState();
 
+  //============================================== api
+
   ///
-  Future<StationState> fetchStationData() async {
+  Future<StationState> fetchAllStationData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
     try {
@@ -59,9 +61,11 @@ class Station extends _$Station {
   ///
   Future<void> getAllStation() async {
     try {
-      final StationState newState = await fetchStationData();
+      final StationState newState = await fetchAllStationData();
 
       state = newState;
     } catch (_) {}
   }
+
+//============================================== api
 }

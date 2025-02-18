@@ -36,20 +36,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   void initState() {
     super.initState();
 
-    templeNotifier.getAllTemple();
-
-    tokyoTrainNotifier.getTokyoTrain();
-
-    complementTempleVisitedDateNotifier.getComplementTempleVisitedDate();
-
     // ignore: always_specify_types
     globalKeyList = List.generate(100, (int index) => GlobalKey());
 
-    tokyoTrainNotifier.getTokyoTrain();
-
-    templeLatLngNotifier.getAllTempleLatLng();
-
+    complementTempleVisitedDateNotifier.getAllComplementTempleVisitedDate();
     stationNotifier.getAllStation();
+    templeLatLngNotifier.getAllTempleLatLng();
+    templeListNotifier.getAllTempleList();
+    templeNotifier.getAllTemple();
+    tokyoTrainNotifier.getAllTokyoTrain();
   }
 
   ///

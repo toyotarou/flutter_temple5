@@ -29,8 +29,10 @@ class NotReachStationLineCount extends _$NotReachStationLineCount {
   @override
   NotReachStationLineCountState build() => const NotReachStationLineCountState();
 
+  //============================================== api
+
   ///
-  Future<NotReachStationLineCountState> fetchNotReachStationLineCountData() async {
+  Future<NotReachStationLineCountState> fetchAllNotReachStationLineCountData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
     try {
@@ -81,9 +83,11 @@ class NotReachStationLineCount extends _$NotReachStationLineCount {
   ///
   Future<void> getAllNotReachStationLineCount() async {
     try {
-      final NotReachStationLineCountState newState = await fetchNotReachStationLineCountData();
+      final NotReachStationLineCountState newState = await fetchAllNotReachStationLineCountData();
 
       state = newState;
     } catch (_) {}
   }
+
+//============================================== api
 }

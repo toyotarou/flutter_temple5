@@ -27,15 +27,19 @@ class ComplementTempleVisitedDate extends _$ComplementTempleVisitedDate {
   @override
   ComplementTempleVisitedDateState build() => const ComplementTempleVisitedDateState();
 
+  //============================================== api
+
   ///
-  Future<void> getComplementTempleVisitedDate() async {
+  Future<ComplementTempleVisitedDateState> fetchAllComplementTempleVisitedDateData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
-    final Map<String, List<DateTime>> map = <String, List<DateTime>>{};
-    final Map<String, List<DateTime>> map2 = <String, List<DateTime>>{};
+    try {
+      final dynamic value = await client.post(path: APIPath.getComplementTempleVisitedDate);
 
-    // ignore: always_specify_types
-    await client.post(path: APIPath.getComplementTempleVisitedDate).then((value) {
+      final Map<String, List<DateTime>> map = <String, List<DateTime>>{};
+
+      final Map<String, List<DateTime>> map2 = <String, List<DateTime>>{};
+
       // ignore: avoid_dynamic_calls
       for (int i = 0; i < value['data'].length.toString().toInt(); i++) {
         final ComplementTempleVisitedDateModel val = ComplementTempleVisitedDateModel.fromJson(
@@ -44,13 +48,25 @@ class ComplementTempleVisitedDate extends _$ComplementTempleVisitedDate {
         );
 
         map[val.id] = val.date;
+
         map2[val.temple] = val.date;
       }
 
-      state = state.copyWith(idBaseComplementTempleVisitedDateMap: map, templeBaseComplementTempleVisitedDateMap: map2);
-      // ignore: always_specify_types
-    }).catchError((error, _) {
+      return state.copyWith(idBaseComplementTempleVisitedDateMap: map, templeBaseComplementTempleVisitedDateMap: map2);
+    } catch (e) {
       utility.showError('予期せぬエラーが発生しました');
-    });
+      rethrow; // これにより呼び出し元でキャッチできる
+    }
   }
+
+  ///
+  Future<void> getAllComplementTempleVisitedDate() async {
+    try {
+      final ComplementTempleVisitedDateState newState = await fetchAllComplementTempleVisitedDateData();
+
+      state = newState;
+    } catch (_) {}
+  }
+
+//============================================== api
 }

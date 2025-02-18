@@ -27,8 +27,10 @@ class TempleLatLng extends _$TempleLatLng {
   @override
   TempleLatLngState build() => const TempleLatLngState();
 
+  //============================================== api
+
   ///
-  Future<TempleLatLngState> fetchTempleLatLngData() async {
+  Future<TempleLatLngState> fetchAllTempleLatLngData() async {
     final HttpClient client = ref.read(httpClientProvider);
 
     try {
@@ -59,9 +61,11 @@ class TempleLatLng extends _$TempleLatLng {
   ///
   Future<void> getAllTempleLatLng() async {
     try {
-      final TempleLatLngState newState = await fetchTempleLatLngData();
+      final TempleLatLngState newState = await fetchAllTempleLatLngData();
 
       state = newState;
     } catch (_) {}
   }
+
+//============================================== api
 }
