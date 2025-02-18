@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="flutter_temple4"
+        android:label="flutter_temple5"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
