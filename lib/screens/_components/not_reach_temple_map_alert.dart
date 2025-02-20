@@ -64,6 +64,8 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
 
   final List<OverlayEntry> _secondEntries = <OverlayEntry>[];
 
+  final List<LatLng> _selectedPoints = <LatLng>[];
+
   ///
   @override
   void initState() {
@@ -90,6 +92,11 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
 
     makeMarker();
 
+    double? distance;
+    if (_selectedPoints.length == 2) {
+      distance = _calculateDistance(_selectedPoints[0], _selectedPoints[1]);
+    }
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
@@ -104,6 +111,13 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
                   appParamNotifier.setCurrentZoom(zoom: position.zoom);
                 }
               },
+              onTap: (TapPosition tapPosition, LatLng latlng) {
+                setState(() {
+                  if (_selectedPoints.length < 2) {
+                    _selectedPoints.add(latlng);
+                  }
+                });
+              },
             ),
             children: <Widget>[
               TileLayer(
@@ -114,6 +128,25 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
               MarkerLayer(markers: markerList),
               // ignore: always_specify_types
               PolylineLayer(polylines: polylineList),
+
+              MarkerLayer(
+                markers: _selectedPoints.map((LatLng point) {
+                  return Marker(
+                    point: point,
+                    width: 40,
+                    height: 40,
+                    child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+                  );
+                }).toList(),
+              ),
+              if (_selectedPoints.length == 2)
+                // ignore: always_specify_types
+                PolylineLayer(
+                  polylines: <Polyline<Object>>[
+                    // ignore: always_specify_types
+                    Polyline(points: _selectedPoints, strokeWidth: 4.0, color: Colors.blue),
+                  ],
+                ),
             ],
           ),
           Positioned(
@@ -123,30 +156,46 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Container(),
-                Container(
-                  decoration:
-                      BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
-                  child: IconButton(
-                    onPressed: () {
-                      appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
+                if (distance != null)
+                  Text('距離: ${distance.toStringAsFixed(2)} m', style: const TextStyle(fontSize: 16))
+                else
+                  Container(),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      decoration:
+                          BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+                      child: IconButton(
+                        onPressed: () => setState(() => _selectedPoints.clear()),
+                        icon: const Icon(Icons.close, color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      decoration:
+                          BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+                      child: IconButton(
+                        onPressed: () {
+                          appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
 
-                      addSecondOverlay(
-                        context: context,
-                        secondEntries: _secondEntries,
-                        setStateCallback: setState,
-                        width: context.screenSize.width,
-                        height: context.screenSize.height * 0.3,
-                        color: Colors.blueGrey.withOpacity(0.3),
-                        initialPosition: Offset(0, context.screenSize.height * 0.7),
-                        widget: NotReachTempleTrainSelectWidget(
-                            tokyoTrainList: widget.tokyoTrainList, setDefaultBoundsMap: setDefaultBoundsMap),
-                        onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
-                        fixedFlag: true,
-                      );
-                    },
-                    icon: const Icon(Icons.train, color: Colors.white),
-                  ),
+                          addSecondOverlay(
+                            context: context,
+                            secondEntries: _secondEntries,
+                            setStateCallback: setState,
+                            width: context.screenSize.width,
+                            height: context.screenSize.height * 0.3,
+                            color: Colors.blueGrey.withOpacity(0.3),
+                            initialPosition: Offset(0, context.screenSize.height * 0.7),
+                            widget: NotReachTempleTrainSelectWidget(
+                                tokyoTrainList: widget.tokyoTrainList, setDefaultBoundsMap: setDefaultBoundsMap),
+                            onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
+                            fixedFlag: true,
+                          );
+                        },
+                        icon: const Icon(Icons.train, color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -155,6 +204,12 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
         ],
       ),
     );
+  }
+
+  ///
+  double _calculateDistance(LatLng p1, LatLng p2) {
+    const Distance distance = Distance();
+    return distance.as(LengthUnit.Meter, p1, p2);
   }
 
   ///
