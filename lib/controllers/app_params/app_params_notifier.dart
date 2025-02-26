@@ -29,4 +29,11 @@ class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
   ///
   void setVisitedTempleMapDisplayFinish({required bool flag}) =>
       state = state.copyWith(visitedTempleMapDisplayFinish: flag);
+
+  ///
+  void setHomeTextFormFieldVisible({required bool flag}) => state = state.copyWith(homeTextFormFieldVisible: flag);
+
+  ///
+  void setNotReachTempleNearStationName({required String name}) =>
+      state = state.copyWith(notReachTempleNearStationName: name);
 }

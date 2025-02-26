@@ -7,7 +7,7 @@ part of 'complement_temple_visited_date.dart';
 // **************************************************************************
 
 String _$complementTempleVisitedDateHash() =>
-    r'9215b83e9a4bd62ece9f32c2b5783d88e82461ed';
+    r'240181b7cad3ddfc11bf3c82ae86688144c11784';
 
 /// See also [ComplementTempleVisitedDate].
 @ProviderFor(ComplementTempleVisitedDate)

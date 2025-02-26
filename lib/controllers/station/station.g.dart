@@ -6,7 +6,7 @@ part of 'station.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$stationHash() => r'bfb23a22ff5775569c41661798a7ffc44a05313d';
+String _$stationHash() => r'1a11d8ff1d208392923fa58310ef18c4c586d3ed';
 
 /// See also [Station].
 @ProviderFor(Station)

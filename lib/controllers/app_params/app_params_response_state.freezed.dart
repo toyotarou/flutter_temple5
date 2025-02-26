@@ -27,6 +27,11 @@ mixin _$AppParamsResponseState {
   ///
   bool get visitedTempleMapDisplayFinish => throw _privateConstructorUsedError;
 
+  ///
+  bool get homeTextFormFieldVisible => throw _privateConstructorUsedError;
+  String get notReachTempleNearStationName =>
+      throw _privateConstructorUsedError;
+
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +51,9 @@ abstract class $AppParamsResponseStateCopyWith<$Res> {
       Offset? overlayPosition,
       List<OverlayEntry>? firstEntries,
       List<OverlayEntry>? secondEntries,
-      bool visitedTempleMapDisplayFinish});
+      bool visitedTempleMapDisplayFinish,
+      bool homeTextFormFieldVisible,
+      String notReachTempleNearStationName});
 }
 
 /// @nodoc
@@ -71,6 +78,8 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
     Object? firstEntries = freezed,
     Object? secondEntries = freezed,
     Object? visitedTempleMapDisplayFinish = null,
+    Object? homeTextFormFieldVisible = null,
+    Object? notReachTempleNearStationName = null,
   }) {
     return _then(_value.copyWith(
       currentZoom: null == currentZoom
@@ -97,6 +106,14 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
           ? _value.visitedTempleMapDisplayFinish
           : visitedTempleMapDisplayFinish // ignore: cast_nullable_to_non_nullable
               as bool,
+      homeTextFormFieldVisible: null == homeTextFormFieldVisible
+          ? _value.homeTextFormFieldVisible
+          : homeTextFormFieldVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      notReachTempleNearStationName: null == notReachTempleNearStationName
+          ? _value.notReachTempleNearStationName
+          : notReachTempleNearStationName // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -116,7 +133,9 @@ abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
       Offset? overlayPosition,
       List<OverlayEntry>? firstEntries,
       List<OverlayEntry>? secondEntries,
-      bool visitedTempleMapDisplayFinish});
+      bool visitedTempleMapDisplayFinish,
+      bool homeTextFormFieldVisible,
+      String notReachTempleNearStationName});
 }
 
 /// @nodoc
@@ -140,6 +159,8 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
     Object? firstEntries = freezed,
     Object? secondEntries = freezed,
     Object? visitedTempleMapDisplayFinish = null,
+    Object? homeTextFormFieldVisible = null,
+    Object? notReachTempleNearStationName = null,
   }) {
     return _then(_$AppParamsResponseStateImpl(
       currentZoom: null == currentZoom
@@ -166,6 +187,14 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
           ? _value.visitedTempleMapDisplayFinish
           : visitedTempleMapDisplayFinish // ignore: cast_nullable_to_non_nullable
               as bool,
+      homeTextFormFieldVisible: null == homeTextFormFieldVisible
+          ? _value.homeTextFormFieldVisible
+          : homeTextFormFieldVisible // ignore: cast_nullable_to_non_nullable
+              as bool,
+      notReachTempleNearStationName: null == notReachTempleNearStationName
+          ? _value.notReachTempleNearStationName
+          : notReachTempleNearStationName // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -179,7 +208,9 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       this.overlayPosition,
       final List<OverlayEntry>? firstEntries,
       final List<OverlayEntry>? secondEntries,
-      this.visitedTempleMapDisplayFinish = false})
+      this.visitedTempleMapDisplayFinish = false,
+      this.homeTextFormFieldVisible = true,
+      this.notReachTempleNearStationName = ''})
       : _firstEntries = firstEntries,
         _secondEntries = secondEntries;
 
@@ -220,9 +251,17 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
   @JsonKey()
   final bool visitedTempleMapDisplayFinish;
 
+  ///
+  @override
+  @JsonKey()
+  final bool homeTextFormFieldVisible;
+  @override
+  @JsonKey()
+  final String notReachTempleNearStationName;
+
   @override
   String toString() {
-    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish)';
+    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName)';
   }
 
   @override
@@ -243,7 +282,14 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
             (identical(other.visitedTempleMapDisplayFinish,
                     visitedTempleMapDisplayFinish) ||
                 other.visitedTempleMapDisplayFinish ==
-                    visitedTempleMapDisplayFinish));
+                    visitedTempleMapDisplayFinish) &&
+            (identical(
+                    other.homeTextFormFieldVisible, homeTextFormFieldVisible) ||
+                other.homeTextFormFieldVisible == homeTextFormFieldVisible) &&
+            (identical(other.notReachTempleNearStationName,
+                    notReachTempleNearStationName) ||
+                other.notReachTempleNearStationName ==
+                    notReachTempleNearStationName));
   }
 
   @override
@@ -254,7 +300,9 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       overlayPosition,
       const DeepCollectionEquality().hash(_firstEntries),
       const DeepCollectionEquality().hash(_secondEntries),
-      visitedTempleMapDisplayFinish);
+      visitedTempleMapDisplayFinish,
+      homeTextFormFieldVisible,
+      notReachTempleNearStationName);
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
@@ -268,12 +316,15 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
 
 abstract class _AppParamsResponseState implements AppParamsResponseState {
   const factory _AppParamsResponseState(
-      {final double currentZoom,
-      final int currentPaddingIndex,
-      final Offset? overlayPosition,
-      final List<OverlayEntry>? firstEntries,
-      final List<OverlayEntry>? secondEntries,
-      final bool visitedTempleMapDisplayFinish}) = _$AppParamsResponseStateImpl;
+          {final double currentZoom,
+          final int currentPaddingIndex,
+          final Offset? overlayPosition,
+          final List<OverlayEntry>? firstEntries,
+          final List<OverlayEntry>? secondEntries,
+          final bool visitedTempleMapDisplayFinish,
+          final bool homeTextFormFieldVisible,
+          final String notReachTempleNearStationName}) =
+      _$AppParamsResponseStateImpl;
 
   @override
   double get currentZoom;
@@ -291,6 +342,12 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
   ///
   @override
   bool get visitedTempleMapDisplayFinish;
+
+  ///
+  @override
+  bool get homeTextFormFieldVisible;
+  @override
+  String get notReachTempleNearStationName;
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/app_params/app_params_notifier.dart';
 import '../../controllers/app_params/app_params_response_state.dart';
 import '../../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../../controllers/near_station/near_station.dart';
@@ -27,6 +28,8 @@ Widget templeInfoDisplayParts({
   required AppParamsResponseState appParamState,
   required WidgetRef ref,
 }) {
+  final AppParamsResponseState appParamState = ref.watch(appParamProvider);
+
   return DefaultTextStyle(
     style: const TextStyle(fontSize: 12),
     child: Column(
@@ -46,6 +49,24 @@ Widget templeInfoDisplayParts({
           ///
           displayNearStation(from: from, ref: ref, temple: temple),
           const SizedBox(height: 10),
+
+          TextButton(
+            onPressed: () {
+              final NearStationResponseStationModel? selectedNearStation =
+                  ref.watch(latLngTempleProvider.select((LatLngTempleState value) => value.selectedNearStation));
+
+              if (selectedNearStation != null) {
+                ref.read(appParamProvider.notifier).setNotReachTempleNearStationName(name: selectedNearStation.name);
+              }
+            },
+            child: const Text('copy to clip board', style: TextStyle(color: Colors.white)),
+          ),
+
+          const SizedBox(height: 10),
+
+          if (appParamState.notReachTempleNearStationName != '') ...<Widget>[
+            const Text('copied near station name', style: TextStyle(color: Colors.yellowAccent)),
+          ],
         ],
 
         //-----------------------------------------------------------//

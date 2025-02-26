@@ -35,6 +35,8 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
     with ControllersMixin<RouteTrainStationListAlert> {
   int reachTempleNum = 0;
 
+  TextEditingController stationFilterEditingController = TextEditingController();
+
   ///
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,48 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
               style: const TextStyle(fontSize: 12),
               child: displaySelectedStation(),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+            Row(
+              children: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    if (appParamState.notReachTempleNearStationName != '') {
+                      stationFilterEditingController.text = appParamState.notReachTempleNearStationName;
+                    }
+                  },
+                  icon: const Icon(Icons.copy, color: Colors.white),
+                ),
+                Expanded(
+                  child: TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: stationFilterEditingController,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.2),
+                      border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                      focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                      enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                    ),
+                    onTapOutside: (PointerDownEvent event) => FocusManager.instance.primaryFocus?.unfocus(),
+                    onChanged: (String value) {},
+                    enabled: false,
+                  ),
+                ),
+                IconButton(onPressed: () => setState(() {}), icon: const Icon(Icons.filter, color: Colors.white)),
+                IconButton(
+                  onPressed: () {
+                    stationFilterEditingController.clear();
+
+                    appParamNotifier.setNotReachTempleNearStationName(name: '');
+                  },
+                  icon: const Icon(Icons.close, color: Colors.white),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
             Expanded(child: displayTokyoTrainList()),
           ],
         ),
@@ -142,7 +185,25 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
   Widget displayTokyoTrainList() {
     final List<Widget> list = <Widget>[];
 
+    final RegExp reg = RegExp(stationFilterEditingController.text.trim());
+
     for (final TokyoTrainModel element in widget.tokyoTrainList) {
+      bool skipList = true;
+
+      if (appParamState.notReachTempleNearStationName != '') {
+        for (final TokyoStationModel element2 in element.station) {
+          if (reg.firstMatch(element2.stationName) != null) {
+            skipList = false;
+          }
+        }
+      } else {
+        skipList = false;
+      }
+
+      if (skipList) {
+        continue;
+      }
+
       list.add(
         ExpansionTile(
           collapsedIconColor: Colors.white,

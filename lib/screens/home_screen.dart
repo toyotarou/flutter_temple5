@@ -196,6 +196,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
               ),
               IconButton(
                 onPressed: () {
+                  appParamNotifier.setHomeTextFormFieldVisible(flag: false);
+
                   TempleDialog(
                     context: context,
                     widget: RouteTrainStationListAlert(
@@ -205,6 +207,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                       dateTempleMap: templeState.dateTempleMap,
                       tokyoTrainIdMap: tokyoTrainState.tokyoTrainIdMap,
                     ),
+                    ref: ref,
+                    from: 'HomeScreen',
                   );
                 },
                 icon: const Icon(Icons.train, color: Colors.white),
@@ -255,22 +259,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
           icon: const Icon(Icons.close, color: Colors.white),
         ),
         Expanded(
-          child: TextFormField(
-            style: const TextStyle(color: Colors.white),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: searchWordEditingController,
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-              filled: true,
-              fillColor: Colors.white.withOpacity(0.2),
-              border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-              focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-              enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-            ),
-            onTapOutside: (PointerDownEvent event) => FocusManager.instance.primaryFocus?.unfocus(),
-            onChanged: (String value) {},
-          ),
+          child: (appParamState.homeTextFormFieldVisible)
+              ? TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: searchWordEditingController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.2),
+                    border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                    focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                    enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                  ),
+                  onTapOutside: (PointerDownEvent event) => FocusManager.instance.primaryFocus?.unfocus(),
+                  onChanged: (String value) {},
+                )
+              : Container(),
         ),
         IconButton(
           onPressed: () => templeNotifier.doSearch(searchWord: searchWordEditingController.text),

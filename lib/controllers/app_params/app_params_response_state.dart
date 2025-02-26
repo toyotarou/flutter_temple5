@@ -16,5 +16,9 @@ class AppParamsResponseState with _$AppParamsResponseState {
 
     ///
     @Default(false) bool visitedTempleMapDisplayFinish,
+
+    ///
+    @Default(true) bool homeTextFormFieldVisible,
+    @Default('') String notReachTempleNearStationName,
   }) = _AppParamsResponseState;
 }
