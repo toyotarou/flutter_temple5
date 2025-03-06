@@ -36,4 +36,7 @@ class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
   ///
   void setNotReachTempleNearStationName({required String name}) =>
       state = state.copyWith(notReachTempleNearStationName: name);
+
+  ///
+  void setVisitedTempleSelectedYear({required int year}) => state = state.copyWith(visitedTempleSelectedYear: year);
 }

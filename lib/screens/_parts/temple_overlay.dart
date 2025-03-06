@@ -32,6 +32,7 @@ OverlayEntry createDraggableOverlayEntry({
   required Widget widget,
   required ValueChanged<Offset> onPositionChanged,
   bool? fixedFlag,
+  bool? scrollStopFlag,
 }) {
   final Size screenSize = MediaQuery.of(context).size;
 
@@ -92,16 +93,25 @@ OverlayEntry createDraggableOverlayEntry({
                   ),
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(width: double.infinity),
-                        widget,
-                      ],
-                    ),
-                  ),
+                  // ignore: use_if_null_to_convert_nulls_to_bools
+                  child: (scrollStopFlag == true)
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(width: double.infinity),
+                            widget,
+                          ],
+                        )
+                      : SingleChildScrollView(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(width: double.infinity),
+                              widget,
+                            ],
+                          ),
+                        ),
                 ),
               ],
             ),
@@ -193,6 +203,7 @@ void addSecondOverlay({
   required Widget widget,
   required ValueChanged<Offset> onPositionChanged,
   bool? fixedFlag,
+  bool? scrollStopFlag,
 }) {
   if (secondEntries.isNotEmpty) {
     for (final OverlayEntry e in secondEntries) {
@@ -215,6 +226,7 @@ void addSecondOverlay({
     widget: widget,
     onPositionChanged: onPositionChanged,
     fixedFlag: fixedFlag,
+    scrollStopFlag: scrollStopFlag,
   );
 
   setStateCallback(() => secondEntries.add(entry));

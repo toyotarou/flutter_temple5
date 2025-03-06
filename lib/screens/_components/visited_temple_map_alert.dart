@@ -131,17 +131,19 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
                         secondEntries: _secondEntries,
                         setStateCallback: setState,
                         width: context.screenSize.width,
-                        height: context.screenSize.height * 0.3,
+                        height: context.screenSize.height * 0.4,
                         color: Colors.blueGrey.withOpacity(0.3),
-                        initialPosition: Offset(0, context.screenSize.height * 0.7),
+                        initialPosition: Offset(0, context.screenSize.height * 0.6),
                         widget: Consumer(
                           builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
                             ref: ref,
                             templeLatLngMap: templeLatLngState.templeLatLngMap,
+                            listHeight: context.screenSize.height * 0.25,
                           ),
                         ),
                         onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
                         fixedFlag: true,
+                        scrollStopFlag: true,
                       );
                     },
                     icon: const Icon(FontAwesomeIcons.toriiGate, color: Colors.white),
