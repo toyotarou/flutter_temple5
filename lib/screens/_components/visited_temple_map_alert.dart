@@ -126,6 +126,8 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
                     onPressed: () {
                       appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
 
+                      appParamNotifier.setVisitedTempleSelectedYear(year: 0);
+
                       addSecondOverlay(
                         context: context,
                         secondEntries: _secondEntries,
@@ -138,7 +140,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
                           builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
                             ref: ref,
                             templeLatLngMap: templeLatLngState.templeLatLngMap,
-                            listHeight: context.screenSize.height * 0.25,
+                            listHeight: context.screenSize.height * 0.28,
                           ),
                         ),
                         onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
@@ -285,7 +287,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
               backgroundColor: (templeState.selectTempleName == templeDataList[i].name &&
                       templeState.selectTempleLat == templeDataList[i].latitude &&
                       templeState.selectTempleLng == templeDataList[i].longitude)
-                  ? Colors.redAccent.withOpacity(0.5)
+                  ? Colors.blueAccent.withOpacity(0.5)
                   : Colors.pinkAccent.withOpacity(0.5),
               child: const Text('', style: TextStyle(fontSize: 10, color: Colors.black)),
             ),

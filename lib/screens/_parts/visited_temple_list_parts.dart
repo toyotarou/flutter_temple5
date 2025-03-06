@@ -32,7 +32,6 @@ Widget visitedTempleListParts(
 
   String keepYear = '';
 
-  int i = 0;
   for (final TempleModel element in roopList) {
     if (visitedTempleSelectedYear == 0 || visitedTempleSelectedYear == element.date.yyyymmdd.split('-')[0].toInt()) {
       final List<String> templeList = <String>[element.temple];
@@ -45,7 +44,6 @@ Widget visitedTempleListParts(
         list.add(
           Container(
             decoration: BoxDecoration(color: Colors.white.withOpacity(0.2)),
-            margin: (i == 0) ? null : const EdgeInsets.only(top: 20),
             padding: const EdgeInsets.all(5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,8 +102,6 @@ Widget visitedTempleListParts(
     }
 
     keepYear = element.date.yyyymmdd.split('-')[0];
-
-    i++;
   }
 
   return DefaultTextStyle(
@@ -120,12 +116,12 @@ Widget visitedTempleListParts(
                 children: yearList.map(
                   (String e) {
                     return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: GestureDetector(
                         onTap: () => ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: e.toInt()),
                         child: CircleAvatar(
-                          backgroundColor: Colors.greenAccent.withOpacity(0.4),
-                          child: Text(e, style: const TextStyle(color: Colors.white)),
+                          backgroundColor: Colors.blueAccent.withOpacity(0.4),
+                          child: Text(e, style: const TextStyle(color: Colors.white, fontSize: 12)),
                         ),
                       ),
                     );
