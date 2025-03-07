@@ -23,5 +23,6 @@ class AppParamsResponseState with _$AppParamsResponseState {
 
     ///
     @Default(0) int visitedTempleSelectedYear,
+    @Default('') String visitedTempleSelectedDate,
   }) = _AppParamsResponseState;
 }

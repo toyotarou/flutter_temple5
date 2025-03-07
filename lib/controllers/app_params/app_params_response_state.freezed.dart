@@ -34,6 +34,7 @@ mixin _$AppParamsResponseState {
 
   ///
   int get visitedTempleSelectedYear => throw _privateConstructorUsedError;
+  String get visitedTempleSelectedDate => throw _privateConstructorUsedError;
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
@@ -57,7 +58,8 @@ abstract class $AppParamsResponseStateCopyWith<$Res> {
       bool visitedTempleMapDisplayFinish,
       bool homeTextFormFieldVisible,
       String notReachTempleNearStationName,
-      int visitedTempleSelectedYear});
+      int visitedTempleSelectedYear,
+      String visitedTempleSelectedDate});
 }
 
 /// @nodoc
@@ -85,6 +87,7 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
     Object? homeTextFormFieldVisible = null,
     Object? notReachTempleNearStationName = null,
     Object? visitedTempleSelectedYear = null,
+    Object? visitedTempleSelectedDate = null,
   }) {
     return _then(_value.copyWith(
       currentZoom: null == currentZoom
@@ -123,6 +126,10 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
           ? _value.visitedTempleSelectedYear
           : visitedTempleSelectedYear // ignore: cast_nullable_to_non_nullable
               as int,
+      visitedTempleSelectedDate: null == visitedTempleSelectedDate
+          ? _value.visitedTempleSelectedDate
+          : visitedTempleSelectedDate // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -145,7 +152,8 @@ abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
       bool visitedTempleMapDisplayFinish,
       bool homeTextFormFieldVisible,
       String notReachTempleNearStationName,
-      int visitedTempleSelectedYear});
+      int visitedTempleSelectedYear,
+      String visitedTempleSelectedDate});
 }
 
 /// @nodoc
@@ -172,6 +180,7 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
     Object? homeTextFormFieldVisible = null,
     Object? notReachTempleNearStationName = null,
     Object? visitedTempleSelectedYear = null,
+    Object? visitedTempleSelectedDate = null,
   }) {
     return _then(_$AppParamsResponseStateImpl(
       currentZoom: null == currentZoom
@@ -210,6 +219,10 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
           ? _value.visitedTempleSelectedYear
           : visitedTempleSelectedYear // ignore: cast_nullable_to_non_nullable
               as int,
+      visitedTempleSelectedDate: null == visitedTempleSelectedDate
+          ? _value.visitedTempleSelectedDate
+          : visitedTempleSelectedDate // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -226,7 +239,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       this.visitedTempleMapDisplayFinish = false,
       this.homeTextFormFieldVisible = true,
       this.notReachTempleNearStationName = '',
-      this.visitedTempleSelectedYear = 0})
+      this.visitedTempleSelectedYear = 0,
+      this.visitedTempleSelectedDate = ''})
       : _firstEntries = firstEntries,
         _secondEntries = secondEntries;
 
@@ -279,10 +293,13 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
   @override
   @JsonKey()
   final int visitedTempleSelectedYear;
+  @override
+  @JsonKey()
+  final String visitedTempleSelectedDate;
 
   @override
   String toString() {
-    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear)';
+    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate)';
   }
 
   @override
@@ -313,7 +330,10 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
                     notReachTempleNearStationName) &&
             (identical(other.visitedTempleSelectedYear,
                     visitedTempleSelectedYear) ||
-                other.visitedTempleSelectedYear == visitedTempleSelectedYear));
+                other.visitedTempleSelectedYear == visitedTempleSelectedYear) &&
+            (identical(other.visitedTempleSelectedDate,
+                    visitedTempleSelectedDate) ||
+                other.visitedTempleSelectedDate == visitedTempleSelectedDate));
   }
 
   @override
@@ -327,7 +347,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       visitedTempleMapDisplayFinish,
       homeTextFormFieldVisible,
       notReachTempleNearStationName,
-      visitedTempleSelectedYear);
+      visitedTempleSelectedYear,
+      visitedTempleSelectedDate);
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
@@ -349,7 +370,8 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
       final bool visitedTempleMapDisplayFinish,
       final bool homeTextFormFieldVisible,
       final String notReachTempleNearStationName,
-      final int visitedTempleSelectedYear}) = _$AppParamsResponseStateImpl;
+      final int visitedTempleSelectedYear,
+      final String visitedTempleSelectedDate}) = _$AppParamsResponseStateImpl;
 
   @override
   double get currentZoom;
@@ -377,6 +399,8 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
   ///
   @override
   int get visitedTempleSelectedYear;
+  @override
+  String get visitedTempleSelectedDate;
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.

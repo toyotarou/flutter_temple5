@@ -111,49 +111,51 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
               MarkerLayer(markers: markerList),
             ],
           ),
-          Positioned(
-            top: 5,
-            right: 5,
-            left: 5,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(),
-                Container(
-                  decoration:
-                      BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
-                  child: IconButton(
-                    onPressed: () {
-                      appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
+          if (!isLoading) ...<Widget>[
+            Positioned(
+              top: 5,
+              right: 5,
+              left: 5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(),
+                  Container(
+                    decoration:
+                        BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+                    child: IconButton(
+                      onPressed: () {
+                        appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
 
-                      appParamNotifier.setVisitedTempleSelectedYear(year: 0);
+                        appParamNotifier.setVisitedTempleSelectedYear(year: 0);
 
-                      addSecondOverlay(
-                        context: context,
-                        secondEntries: _secondEntries,
-                        setStateCallback: setState,
-                        width: context.screenSize.width,
-                        height: context.screenSize.height * 0.4,
-                        color: Colors.blueGrey.withOpacity(0.3),
-                        initialPosition: Offset(0, context.screenSize.height * 0.6),
-                        widget: Consumer(
-                          builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
-                            ref: ref,
-                            templeLatLngMap: templeLatLngState.templeLatLngMap,
-                            listHeight: context.screenSize.height * 0.28,
+                        addSecondOverlay(
+                          context: context,
+                          secondEntries: _secondEntries,
+                          setStateCallback: setState,
+                          width: context.screenSize.width,
+                          height: context.screenSize.height * 0.4,
+                          color: Colors.blueGrey.withOpacity(0.3),
+                          initialPosition: Offset(0, context.screenSize.height * 0.6),
+                          widget: Consumer(
+                            builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
+                              ref: ref,
+                              templeLatLngMap: templeLatLngState.templeLatLngMap,
+                              listHeight: context.screenSize.height * 0.28,
+                            ),
                           ),
-                        ),
-                        onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
-                        fixedFlag: true,
-                        scrollStopFlag: true,
-                      );
-                    },
-                    icon: const Icon(FontAwesomeIcons.toriiGate, color: Colors.white),
+                          onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
+                          fixedFlag: true,
+                          scrollStopFlag: true,
+                        );
+                      },
+                      icon: const Icon(FontAwesomeIcons.toriiGate, color: Colors.white),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
           if (isLoading) ...<Widget>[const Center(child: CircularProgressIndicator())],
         ],
       ),
@@ -235,6 +237,48 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
       initialPosition = appParamState.overlayPosition!;
     }
 
+    // ===================================
+
+    final List<TempleData> selectedTempleDateList = <TempleData>[];
+
+    if (appParamState.visitedTempleSelectedDate == '') {
+      selectedTempleDateList.add(
+        TempleData(
+          name: templeState.selectTempleName,
+          address: '',
+          latitude: templeState.selectTempleLat,
+          longitude: templeState.selectTempleLng,
+        ),
+      );
+    } else {
+      final List<TempleModel> roopList = List<TempleModel>.from(templeState.templeList);
+
+      for (final TempleModel element in roopList) {
+        if (element.date.yyyymmdd == appParamState.visitedTempleSelectedDate) {
+          final List<String> templeList = <String>[element.temple];
+
+          if (element.memo.isNotEmpty) {
+            element.memo.split('、').forEach((String e2) => templeList.add(e2));
+          }
+
+          for (final String element2 in templeList) {
+            if (templeLatLngState.templeLatLngMap[element2] != null) {
+              selectedTempleDateList.add(
+                TempleData(
+                  name: templeLatLngState.templeLatLngMap[element2]!.temple,
+                  address: templeLatLngState.templeLatLngMap[element2]!.address,
+                  latitude: templeLatLngState.templeLatLngMap[element2]!.lat,
+                  longitude: templeLatLngState.templeLatLngMap[element2]!.lng,
+                ),
+              );
+            }
+          }
+        }
+      }
+    }
+
+    // ===================================
+
     markerList = <Marker>[];
 
     for (int i = 0; i < templeDataList.length; i++) {
@@ -284,16 +328,29 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
                     );
                   },
             child: CircleAvatar(
-              backgroundColor: (templeState.selectTempleName == templeDataList[i].name &&
-                      templeState.selectTempleLat == templeDataList[i].latitude &&
-                      templeState.selectTempleLng == templeDataList[i].longitude)
-                  ? Colors.blueAccent.withOpacity(0.5)
-                  : Colors.pinkAccent.withOpacity(0.5),
+              backgroundColor: getVisitedTempleCircleAvatarBgColor(
+                  templeData: templeDataList[i], selectedTempleDateList: selectedTempleDateList),
               child: const Text('', style: TextStyle(fontSize: 10, color: Colors.black)),
             ),
           ),
         ),
       );
     }
+  }
+
+  ///
+  Color getVisitedTempleCircleAvatarBgColor(
+      {required TempleData templeData, required List<TempleData> selectedTempleDateList}) {
+    Color color = Colors.pinkAccent.withOpacity(0.5);
+
+    for (final TempleData element in selectedTempleDateList) {
+      if (element.name == templeData.name &&
+          element.latitude == templeData.latitude &&
+          element.longitude == templeData.longitude) {
+        color = Colors.blueAccent.withOpacity(0.5);
+      }
+    }
+
+    return color;
   }
 }

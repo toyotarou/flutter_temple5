@@ -13,6 +13,8 @@ import '../../models/temple_model.dart';
 ///
 Widget visitedTempleListParts(
     {required WidgetRef ref, required Map<String, TempleLatLngModel> templeLatLngMap, required double listHeight}) {
+  final ScrollController scrollController = ScrollController();
+
   final List<Widget> list = <Widget>[];
 
   final TempleState templeState = ref.watch(templeProvider);
@@ -65,7 +67,22 @@ Widget visitedTempleListParts(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(width: 80, child: Text(element.date.yyyymmdd)),
+              SizedBox(
+                width: 120,
+                child: Row(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () =>
+                          ref.read(appParamProvider.notifier).setVisitedTempleSelectedDate(date: element.date.yyyymmdd),
+                      child: const Padding(
+                        padding: EdgeInsets.only(top: 5, bottom: 5, right: 15),
+                        child: Icon(Icons.location_on, color: Colors.white),
+                      ),
+                    ),
+                    Text(element.date.yyyymmdd),
+                  ],
+                ),
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,28 +127,51 @@ Widget visitedTempleListParts(
       children: <Widget>[
         SizedBox(
             height: 60,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: yearList.map(
-                  (String e) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: GestureDetector(
-                        onTap: () => ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: e.toInt()),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.blueAccent.withOpacity(0.4),
-                          child: Text(e, style: const TextStyle(color: Colors.white, fontSize: 12)),
-                        ),
-                      ),
-                    );
-                  },
-                ).toList(),
-              ),
+            child: Row(
+              children: <Widget>[
+                IconButton(
+                  onPressed: () => ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: 0),
+                  icon: const Icon(Icons.list, color: Colors.white),
+                ),
+                IconButton(
+                    onPressed: () {
+                      ref.read(appParamProvider.notifier).setVisitedTempleSelectedDate(date: '');
+
+                      ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: true);
+
+                      ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+                    },
+                    icon: const Icon(Icons.square_outlined, color: Colors.white)),
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: yearList.map(
+                        (String e) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: GestureDetector(
+                              onTap: () {
+                                ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: e.toInt());
+
+                                scrollController.jumpTo(0);
+                              },
+                              child: CircleAvatar(
+                                backgroundColor: Colors.blueAccent.withOpacity(0.4),
+                                child: Text(e, style: const TextStyle(color: Colors.white, fontSize: 12)),
+                              ),
+                            ),
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  ),
+                ),
+              ],
             )),
         SizedBox(
           height: listHeight,
-          child: SingleChildScrollView(primary: true, child: Column(children: list)),
+          child: SingleChildScrollView(controller: scrollController, child: Column(children: list)),
         ),
       ],
     ),

@@ -39,4 +39,7 @@ class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
 
   ///
   void setVisitedTempleSelectedYear({required int year}) => state = state.copyWith(visitedTempleSelectedYear: year);
+
+  ///
+  void setVisitedTempleSelectedDate({required String date}) => state = state.copyWith(visitedTempleSelectedDate: date);
 }
