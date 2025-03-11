@@ -7,9 +7,10 @@ import '../../models/common/temple_data.dart';
 import '../function.dart';
 
 class TempleRankInputAlert extends ConsumerStatefulWidget {
-  const TempleRankInputAlert({super.key, required this.data});
+  const TempleRankInputAlert({super.key, required this.data, required this.templeRankDefaultValueMap});
 
   final List<TempleData> data;
+  final Map<String, String> templeRankDefaultValueMap;
 
   @override
   ConsumerState<TempleRankInputAlert> createState() => _TempleRankInputAlertState();
@@ -95,7 +96,9 @@ class _TempleRankInputAlertState extends ConsumerState<TempleRankInputAlert>
                                         pos: element.mark.toInt(), name: element.name, rank: e),
                                     child: CircleAvatar(
                                       radius: 15,
-                                      backgroundColor: (templeRankState.templeRankRankList[element.mark.toInt()] == e)
+                                      backgroundColor: (templeRankState.templeRankRankList[element.mark.toInt()] == e ||
+                                              (widget.templeRankDefaultValueMap[element.name] != null &&
+                                                  widget.templeRankDefaultValueMap[element.name] == e))
                                           ? Colors.yellowAccent.withOpacity(0.3)
                                           : Colors.white.withOpacity(0.3),
                                       child: Text(e, style: const TextStyle(color: Colors.black)),

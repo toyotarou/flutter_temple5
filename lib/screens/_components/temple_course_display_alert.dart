@@ -19,6 +19,8 @@ class TempleCourseDisplayAlert extends ConsumerStatefulWidget {
 
 class _TempleCourseDisplayAlertState extends ConsumerState<TempleCourseDisplayAlert>
     with ControllersMixin<TempleCourseDisplayAlert> {
+  Map<String, String> templeRankDefaultValueMap = <String, String>{};
+
   ///
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,10 @@ class _TempleCourseDisplayAlertState extends ConsumerState<TempleCourseDisplayAl
 
                         TempleDialog(
                           context: context,
-                          widget: TempleRankInputAlert(data: widget.data),
+                          widget: TempleRankInputAlert(
+                            data: widget.data,
+                            templeRankDefaultValueMap: templeRankDefaultValueMap,
+                          ),
                           paddingTop: context.screenSize.height * 0.4,
                           clearBarrierColor: true,
                           executeFunctionWhenDialogClose: true,
@@ -77,6 +82,10 @@ class _TempleCourseDisplayAlertState extends ConsumerState<TempleCourseDisplayAl
 
   ///
   Widget displayCourseData({required TempleData data}) {
+    if (templeLatLngState.templeLatLngMap[data.name] != null) {
+      templeRankDefaultValueMap[data.name] = templeLatLngState.templeLatLngMap[data.name]!.rank;
+    }
+
     return Column(
       children: <Widget>[
         Stack(
