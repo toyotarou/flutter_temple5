@@ -343,6 +343,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
   ///
   Widget displayHomeCard({required TempleModel data, required String selectYear}) {
+    final List<String> templeNameList = <String>[data.temple];
+    if (data.memo != '') {
+      final List<String> exMemo = data.memo.split('、');
+      // ignore: prefer_foreach
+      for (final String element in exMemo) {
+        templeNameList.add(element);
+      }
+    }
+
     return Card(
       color: Colors.black.withOpacity(0.3),
       child: ListTile(
@@ -360,22 +369,47 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
           style: const TextStyle(fontSize: 12),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: context.screenSize.height / 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[Container(), Text(data.date.yyyymmdd)],
+                Positioned(
+                  bottom: 5,
+                  child: Row(
+                      children: templeNameList.map(
+                    (String e) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.pinkAccent.withOpacity(0.3),
+                          radius: 10,
+                          child: Text(
+                            (templeLatLngState.templeLatLngMap[e] != null)
+                                ? templeLatLngState.templeLatLngMap[e]!.rank
+                                : '',
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList()),
                 ),
-                Text(data.temple),
-                const SizedBox(height: 5),
-                Text(data.address),
-                const SizedBox(height: 5),
-                Text(
-                  data.memo,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.grey),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[Container(), Text(data.date.yyyymmdd)],
+                    ),
+                    Text(data.temple),
+                    const SizedBox(height: 5),
+                    Text(data.address),
+                    const SizedBox(height: 5),
+                    Text(
+                      data.memo,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  ],
                 ),
               ],
             ),
