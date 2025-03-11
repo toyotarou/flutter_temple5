@@ -11,6 +11,7 @@ import 'station/station.dart';
 import 'temple/temple.dart';
 import 'temple_lat_lng/temple_lat_lng.dart';
 import 'temple_list/temple_list.dart';
+import 'temple_rank/temple_rank.dart';
 import 'tokyo_train/tokyo_train.dart';
 
 mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
@@ -78,6 +79,12 @@ mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   TokyoTrainState get tokyoTrainState => ref.watch(tokyoTrainProvider);
 
   TokyoTrain get tokyoTrainNotifier => ref.read(tokyoTrainProvider.notifier);
+
+//==========================================//
+
+  TempleRankState get templeRankState => ref.watch(templeRankProvider);
+
+  TempleRank get templeRankNotifier => ref.read(templeRankProvider.notifier);
 
 //==========================================//
 }

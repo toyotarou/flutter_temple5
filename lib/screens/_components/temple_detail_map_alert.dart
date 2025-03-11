@@ -154,6 +154,7 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
                       child: Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Text(widget.date.yyyymmdd),
                             Text(temple.temple),
