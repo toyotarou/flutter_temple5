@@ -52,6 +52,9 @@ class _TempleCourseDisplayAlertState extends ConsumerState<TempleCourseDisplayAl
                           widget: TempleRankInputAlert(data: widget.data),
                           paddingTop: context.screenSize.height * 0.4,
                           clearBarrierColor: true,
+                          executeFunctionWhenDialogClose: true,
+                          ref: ref,
+                          from: 'TempleCourseDisplayAlert',
                         );
                       },
                       icon: Icon(

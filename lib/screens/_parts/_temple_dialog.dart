@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/app_params/app_params_notifier.dart';
+import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import 'temple_overlay.dart';
 
 Future<void> TempleDialog({
@@ -43,13 +44,19 @@ Future<void> TempleDialog({
           closeAllOverlays(ref: ref!);
         }
       });
-    }
 
-    if (from == 'HomeScreen') {
-      if (ref != null) {
-        ref.read(appParamProvider.notifier).setHomeTextFormFieldVisible(flag: true);
+      if (from == 'HomeScreen') {
+        if (ref != null) {
+          ref.read(appParamProvider.notifier).setHomeTextFormFieldVisible(flag: true);
 
-        ref.read(appParamProvider.notifier).setNotReachTempleNearStationName(name: '');
+          ref.read(appParamProvider.notifier).setNotReachTempleNearStationName(name: '');
+        }
+      }
+
+      if (from == 'TempleCourseDisplayAlert') {
+        if (ref != null) {
+          ref.read(templeLatLngProvider.notifier).getAllTempleLatLng();
+        }
       }
     }
   });

@@ -207,6 +207,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                       dateTempleMap: templeState.dateTempleMap,
                       tokyoTrainIdMap: tokyoTrainState.tokyoTrainIdMap,
                     ),
+                    executeFunctionWhenDialogClose: true,
                     ref: ref,
                     from: 'HomeScreen',
                   );
