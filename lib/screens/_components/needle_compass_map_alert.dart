@@ -75,7 +75,7 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
   }
 
   ///
-  void _spinPointer() {
+  void spinNeedle() {
     setState(() => _insideMarkers.clear());
 
     final Random random = Random();
@@ -141,7 +141,7 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
   // }
 
   ///
-  void _checkMarkersInPolygon() {
+  void getSelectedTemple() {
     const double widgetSize = 200.0;
 
     const Offset widgetCenter = Offset(widgetSize / 2, widgetSize / 2);
@@ -287,8 +287,9 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
                     point: latlng,
                     width: 20,
                     height: 20,
-                    child: Container(
-                      decoration: BoxDecoration(color: isInside ? Colors.red : Colors.blue, shape: BoxShape.circle),
+                    child: CircleAvatar(
+                      radius: 10,
+                      backgroundColor: isInside ? Colors.green.withOpacity(0.3) : Colors.orangeAccent.withOpacity(0.3),
                     ),
                   );
                 }).toList(),
@@ -379,14 +380,14 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
             right: 0,
             child: Center(
               child: ElevatedButton(
-                onPressed: _checkMarkersInPolygon,
+                onPressed: getSelectedTemple,
                 child: const Text('ポリゴン内のマーカーをチェック'),
               ),
             ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: _spinPointer, child: const Icon(Icons.refresh)),
+      floatingActionButton: FloatingActionButton(onPressed: spinNeedle, child: const Icon(Icons.refresh)),
     );
   }
 
