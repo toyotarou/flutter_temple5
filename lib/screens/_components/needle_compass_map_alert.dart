@@ -189,16 +189,6 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
     makeMarker();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('地図上で針が回るサンプル'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(_showRectangle ? Icons.visibility : Icons.visibility_off),
-            tooltip: '長方形（ポリゴン）の表示切替',
-            onPressed: _toggleRectangle,
-          ),
-        ],
-      ),
       body: Stack(
         children: <Widget>[
           FlutterMap(
@@ -245,6 +235,20 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
               ),
             ],
           ),
+
+          /////
+
+          Positioned(
+            top: 50,
+            child: IconButton(
+              icon: Icon(_showRectangle ? Icons.visibility : Icons.visibility_off),
+              tooltip: '長方形（ポリゴン）の表示切替',
+              onPressed: _toggleRectangle,
+            ),
+          ),
+
+          /////
+
           Positioned(
             bottom: 20,
             left: 0,
@@ -258,6 +262,9 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
                     ),
             ),
           ),
+
+          /////
+
           Positioned(
             bottom: 90,
             left: 10,
@@ -269,6 +276,9 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
               ],
             ),
           ),
+
+          /////
+
           Positioned(
             bottom: 90,
             right: 10,
@@ -292,6 +302,9 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
               ],
             ),
           ),
+
+          /////
+
           Positioned(
             bottom: 90,
             left: 0,
@@ -300,6 +313,8 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
               child: ElevatedButton(onPressed: _checkMarkersInPolygon, child: const Text('ポリゴン内のマーカーをチェック')),
             ),
           ),
+
+          /////
         ],
       ),
       floatingActionButton: FloatingActionButton(onPressed: _spinPointer, child: const Icon(Icons.refresh)),
