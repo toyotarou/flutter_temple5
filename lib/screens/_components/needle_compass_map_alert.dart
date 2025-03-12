@@ -445,7 +445,7 @@ class PointerPainter extends CustomPainter {
     final Offset needleEnd = Offset(center.dx, center.dy - needleLength);
 
     final Paint needlePaint = Paint()
-      ..color = Colors.red
+      ..color = Colors.transparent
       ..strokeWidth = 4.0
       ..strokeCap = StrokeCap.round;
 
@@ -464,7 +464,7 @@ class PointerPainter extends CustomPainter {
       );
 
       final Paint basePaint = Paint()
-        ..color = Colors.blue
+        ..color = Colors.green
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2.0;
 
@@ -473,7 +473,7 @@ class PointerPainter extends CustomPainter {
       final Rect outerRect = baseRect.inflate(selectionMarginPixels);
 
       final Paint outerPaint = Paint()
-        ..color = Colors.purple.withOpacity(0.3)
+        ..color = Colors.greenAccent.withOpacity(0.3)
         ..style = PaintingStyle.fill;
 
       canvas.drawRect(outerRect, outerPaint);
