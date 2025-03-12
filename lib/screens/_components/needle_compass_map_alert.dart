@@ -7,6 +7,8 @@ import 'package:latlong2/latlong.dart';
 import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../models/temple_lat_lng_model.dart';
+import '../_parts/_temple_dialog.dart';
+import 'needle_compass_selected_list_alert.dart';
 
 class NeedleCompassMapAlert extends ConsumerStatefulWidget {
   const NeedleCompassMapAlert({super.key});
@@ -184,25 +186,26 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
 
     setState(() => _insideMarkers = insideMarkers);
 
-    // ignore: inference_failure_on_function_invocation
-    showModalBottomSheet(
+    if (insideMarkers.isEmpty) {
+      // ignore: inference_failure_on_function_invocation
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            padding: const EdgeInsets.all(16),
+            child: const Text('ポリゴン内にはマーカーがありません。'),
+          );
+        },
+      );
+
+      return;
+    }
+
+    TempleDialog(
       context: context,
-      builder: (BuildContext context) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          child: insideMarkers.isEmpty
-              ? const Text('ポリゴン内にはマーカーがありません。')
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text('ポリゴン内のマーカー：', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 10),
-                    ...insideMarkers.map((LatLng m) => Text('Lat: ${m.latitude}, Lng: ${m.longitude}'))
-                  ],
-                ),
-        );
-      },
+      widget: NeedleCompassSelectedListAlert(selectedGeoloc: insideMarkers),
+      paddingLeft: context.screenSize.width * 0.3,
+      clearBarrierColor: true,
     );
   }
 
@@ -296,19 +299,50 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
               ),
             ],
           ),
+
           Positioned(
-            bottom: 20,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: finalPointerAngleDegrees == null
-                  ? Container()
-                  : Text(
-                      '針先の向き: ${finalPointerAngleDegrees!.toStringAsFixed(2)}° (${getCompassDirection(finalPointerAngleDegrees!)})',
-                      style: const TextStyle(fontSize: 20, color: Colors.black, backgroundColor: Colors.white70),
+            top: 5,
+            right: 5,
+            left: 5,
+            child: Container(
+              width: context.screenSize.width,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () => spinNeedle(),
+                    icon: const Icon(Icons.refresh, size: 30, color: Colors.white),
+                  ),
+                  DefaultTextStyle(
+                    style: const TextStyle(color: Colors.white),
+                    child: Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                            child: finalPointerAngleDegrees == null
+                                ? Container()
+                                : Text(
+                                    '${finalPointerAngleDegrees!.toStringAsFixed(2)}° (${getCompassDirection(finalPointerAngleDegrees!)})',
+                                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                                  ),
+                          ),
+                        ],
+                      ),
                     ),
+                  ),
+                  IconButton(
+                    onPressed: () => getSelectedTemple(),
+                    icon: const Icon(Icons.pages, size: 30, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
+
           // Positioned(
           //   bottom: 200,
           //   left: 10,
@@ -374,20 +408,9 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
           //     ],
           //   ),
           // ),
-          Positioned(
-            bottom: 90,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: ElevatedButton(
-                onPressed: getSelectedTemple,
-                child: const Text('ポリゴン内のマーカーをチェック'),
-              ),
-            ),
-          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: spinNeedle, child: const Icon(Icons.refresh)),
+//      floatingActionButton: FloatingActionButton(onPressed: spinNeedle, child: const Icon(Icons.refresh)),
     );
   }
 
