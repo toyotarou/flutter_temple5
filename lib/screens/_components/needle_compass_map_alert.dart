@@ -1,16 +1,22 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
-class NeedleCompassMapAlert extends StatefulWidget {
+import '../../controllers/controllers_mixin.dart';
+import '../../extensions/extensions.dart';
+import '../../models/temple_lat_lng_model.dart';
+
+class NeedleCompassMapAlert extends ConsumerStatefulWidget {
   const NeedleCompassMapAlert({super.key});
 
   @override
-  State<NeedleCompassMapAlert> createState() => _NeedleCompassMapAlertState();
+  ConsumerState<NeedleCompassMapAlert> createState() => _NeedleCompassMapAlertState();
 }
 
-class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with SingleTickerProviderStateMixin {
+class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
+    with SingleTickerProviderStateMixin, ControllersMixin<NeedleCompassMapAlert> {
   final GlobalKey _mapKey = GlobalKey();
 
   late AnimationController _controller;
@@ -21,19 +27,24 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
 
   double? finalPointerAngleDegrees;
 
-  double _needleFactor = 0.8;
+  final double _needleFactor = 2;
 
-  bool _showRectangle = true;
+  final bool _showRectangle = true;
 
   final double _tolerance = 0.000001;
 
+  final double _selectionMargin = 0.000000;
+
   final MapController _mapController = MapController();
 
-  double _currentZoom = 16.0;
+  final double _currentZoom = 10.0;
 
+  // 中心座標
   final LatLng _centerCoord = const LatLng(35.718532, 139.586639);
 
-  List<LatLng> _additionalMarkers = <LatLng>[];
+  final List<LatLng> _additionalMarkers = <LatLng>[];
+
+  Set<LatLng> _insideMarkers = <LatLng>{};
 
   ///
   @override
@@ -60,21 +71,21 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
   @override
   void dispose() {
     _controller.dispose();
-
     super.dispose();
   }
 
   ///
   void _spinPointer() {
+    setState(() => _insideMarkers.clear());
+
     final Random random = Random();
 
     final double randomTurns = random.nextDouble() * 3 + 2;
 
     final double newAngle = _currentPointerAngle + (2 * pi * randomTurns);
 
-    _animation = Tween<double>(begin: _currentPointerAngle, end: newAngle).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
+    _animation = Tween<double>(begin: _currentPointerAngle, end: newAngle)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     setState(() => finalPointerAngleDegrees = null);
 
@@ -85,30 +96,49 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
     _currentPointerAngle = newAngle;
   }
 
-  ///
-  void _zoomIn() {
-    setState(() {
-      _currentZoom += 1;
-      _mapController.move(_centerCoord, _currentZoom);
-    });
-  }
+  // void _zoomIn() {
+  //   setState(() {
+  //     _currentZoom += 1;
+  //     _mapController.move(_centerCoord, _currentZoom);
+  //   });
+  // }
+  //
+  // void _zoomOut() {
+  //   setState(() {
+  //     _currentZoom -= 1;
+  //     _mapController.move(_centerCoord, _currentZoom);
+  //   });
+  // }
 
-  ///
-  void _zoomOut() {
-    setState(() {
-      _currentZoom -= 1;
-      _mapController.move(_centerCoord, _currentZoom);
-    });
-  }
+  // void _increaseNeedle() {
+  //   setState(() {
+  //     _needleFactor += 0.05;
+  //   });
+  // }
+  //
+  // void _decreaseNeedle() {
+  //   setState(() {
+  //     _needleFactor = max(0.05, _needleFactor - 0.05);
+  //   });
+  // }
 
-  ///
-  void _increaseNeedle() => setState(() => _needleFactor += 0.5);
+  // void _toggleRectangle() {
+  //   setState(() {
+  //     _showRectangle = !_showRectangle;
+  //   });
+  // }
 
-  ///
-  void _decreaseNeedle() => setState(() => _needleFactor = max(0.5, _needleFactor - 0.5));
-
-  ///
-  void _toggleRectangle() => setState(() => _showRectangle = !_showRectangle);
+  // void _increaseSelectionMargin() {
+  //   setState(() {
+  //     _selectionMargin += 0.000001;
+  //   });
+  // }
+  //
+  // void _decreaseSelectionMargin() {
+  //   setState(() {
+  //     _selectionMargin = max(0.0, _selectionMargin - 0.000001);
+  //   });
+  // }
 
   ///
   void _checkMarkersInPolygon() {
@@ -142,13 +172,17 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
       return pixelToLatLng(pixel, _currentZoom);
     }).toList();
 
-    final List<LatLng> insideMarkers = <LatLng>[];
+    final double effectiveTolerance = _tolerance + _selectionMargin;
+
+    final Set<LatLng> insideMarkers = <LatLng>{};
 
     for (final LatLng marker in _additionalMarkers) {
-      if (isPointInsidePolygonWithTolerance(marker, polygonLatLng, _tolerance)) {
+      if (isPointInsidePolygonWithTolerance(marker, polygonLatLng, effectiveTolerance)) {
         insideMarkers.add(marker);
       }
     }
+
+    setState(() => _insideMarkers = insideMarkers);
 
     // ignore: inference_failure_on_function_invocation
     showModalBottomSheet(
@@ -184,11 +218,29 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
     return rotated + center;
   }
 
+  ///
   @override
   Widget build(BuildContext context) {
     makeMarker();
 
+    final Offset centerPixel = latLngToPixel(_centerCoord, _currentZoom);
+
+    final Offset offsetPixel =
+        latLngToPixel(LatLng(_centerCoord.latitude + _selectionMargin, _centerCoord.longitude), _currentZoom);
+
+    final double selectionMarginPixels = (offsetPixel - centerPixel).dy.abs();
+
     return Scaffold(
+      // appBar: AppBar(
+      //   title: const Text('地図上で針が回るサンプル'),
+      //   actions: <Widget>[
+      //     IconButton(
+      //       icon: Icon(_showRectangle ? Icons.visibility : Icons.visibility_off),
+      //       tooltip: '長方形（ポリゴン）の表示切替',
+      //       onPressed: _toggleRectangle,
+      //     ),
+      //   ],
+      // ),
       body: Stack(
         children: <Widget>[
           FlutterMap(
@@ -214,10 +266,15 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
                     height: 200,
                     child: AnimatedBuilder(
                       animation: _animation,
-                      builder: (BuildContext context, Widget? child) =>
-                          Transform.rotate(angle: _animation.value, child: child),
+                      builder: (BuildContext context, Widget? child) {
+                        return Transform.rotate(angle: _animation.value, child: child);
+                      },
                       child: CustomPaint(
-                        painter: PointerPainter(needleFactor: _needleFactor, showRectangle: _showRectangle),
+                        painter: PointerPainter(
+                          needleFactor: _needleFactor,
+                          showRectangle: _showRectangle,
+                          selectionMarginPixels: selectionMarginPixels,
+                        ),
                       ),
                     ),
                   ),
@@ -225,30 +282,19 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
               ),
               MarkerLayer(
                 markers: _additionalMarkers.map((LatLng latlng) {
+                  final bool isInside = _insideMarkers.contains(latlng);
                   return Marker(
                     point: latlng,
                     width: 20,
                     height: 20,
-                    child: Container(decoration: const BoxDecoration(color: Colors.blue, shape: BoxShape.circle)),
+                    child: Container(
+                      decoration: BoxDecoration(color: isInside ? Colors.red : Colors.blue, shape: BoxShape.circle),
+                    ),
                   );
                 }).toList(),
               ),
             ],
           ),
-
-          /////
-
-          Positioned(
-            top: 50,
-            child: IconButton(
-              icon: Icon(_showRectangle ? Icons.visibility : Icons.visibility_off),
-              tooltip: '長方形（ポリゴン）の表示切替',
-              onPressed: _toggleRectangle,
-            ),
-          ),
-
-          /////
-
           Positioned(
             bottom: 20,
             left: 0,
@@ -262,59 +308,82 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
                     ),
             ),
           ),
-
-          /////
-
-          Positioned(
-            bottom: 90,
-            left: 10,
-            child: Column(
-              children: <Widget>[
-                FloatingActionButton(onPressed: _zoomIn, mini: true, child: const Icon(Icons.add)),
-                const SizedBox(height: 10),
-                FloatingActionButton(onPressed: _zoomOut, mini: true, child: const Icon(Icons.remove)),
-              ],
-            ),
-          ),
-
-          /////
-
-          Positioned(
-            bottom: 90,
-            right: 10,
-            child: Column(
-              children: <Widget>[
-                FloatingActionButton(
-                  onPressed: _increaseNeedle,
-                  mini: true,
-                  backgroundColor: Colors.green,
-                  tooltip: '針を長くする',
-                  child: const Icon(Icons.arrow_upward),
-                ),
-                const SizedBox(height: 10),
-                FloatingActionButton(
-                  onPressed: _decreaseNeedle,
-                  mini: true,
-                  backgroundColor: Colors.orange,
-                  tooltip: '針を短くする',
-                  child: const Icon(Icons.arrow_downward),
-                ),
-              ],
-            ),
-          ),
-
-          /////
-
+          // Positioned(
+          //   bottom: 200,
+          //   left: 10,
+          //   child: Column(
+          //     children: <Widget>[
+          //       FloatingActionButton(
+          //         onPressed: _zoomIn,
+          //         mini: true,
+          //         child: const Icon(Icons.add),
+          //       ),
+          //       const SizedBox(height: 10),
+          //       FloatingActionButton(
+          //         onPressed: _zoomOut,
+          //         mini: true,
+          //         child: const Icon(Icons.remove),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 90,
+          //   right: 10,
+          //   child: Column(
+          //     children: <Widget>[
+          //       FloatingActionButton(
+          //         onPressed: _increaseNeedle,
+          //         mini: true,
+          //         backgroundColor: Colors.green,
+          //         tooltip: '針を長くする',
+          //         child: const Icon(Icons.arrow_upward),
+          //       ),
+          //       const SizedBox(height: 10),
+          //       FloatingActionButton(
+          //         onPressed: _decreaseNeedle,
+          //         mini: true,
+          //         backgroundColor: Colors.orange,
+          //         tooltip: '針を短くする',
+          //         child: const Icon(Icons.arrow_downward),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // Positioned(
+          //   bottom: 200,
+          //   right: 10,
+          //   child: Column(
+          //     children: <Widget>[
+          //       FloatingActionButton(
+          //         onPressed: _increaseSelectionMargin,
+          //         mini: true,
+          //         backgroundColor: Colors.purple,
+          //         tooltip: '選択余裕を増やす',
+          //         child: const Icon(Icons.arrow_forward),
+          //       ),
+          //       const SizedBox(height: 10),
+          //       FloatingActionButton(
+          //         onPressed: _decreaseSelectionMargin,
+          //         mini: true,
+          //         backgroundColor: Colors.purpleAccent,
+          //         tooltip: '選択余裕を減らす',
+          //         child: const Icon(Icons.arrow_back),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Positioned(
             bottom: 90,
             left: 0,
             right: 0,
             child: Center(
-              child: ElevatedButton(onPressed: _checkMarkersInPolygon, child: const Text('ポリゴン内のマーカーをチェック')),
+              child: ElevatedButton(
+                onPressed: _checkMarkersInPolygon,
+                child: const Text('ポリゴン内のマーカーをチェック'),
+              ),
             ),
           ),
-
-          /////
         ],
       ),
       floatingActionButton: FloatingActionButton(onPressed: _spinPointer, child: const Icon(Icons.refresh)),
@@ -323,16 +392,11 @@ class _NeedleCompassMapAlertState extends State<NeedleCompassMapAlert> with Sing
 
   ///
   void makeMarker() {
-    // ignore: always_specify_types
-    _additionalMarkers = List.generate(20, (int index) {
-      final Random rand = Random(index);
-
-      final double offsetLat = 35.718532 + (rand.nextDouble() - 0.5) * 0.0004;
-
-      final double offsetLng = 139.586639 + (rand.nextDouble() - 0.5) * 0.0004;
-
-      return LatLng(offsetLat, offsetLng);
-    });
+    for (final TempleLatLngModel element in templeLatLngState.templeLatLngList) {
+      if (<String>['S', 'A'].contains(element.rank)) {
+        _additionalMarkers.add(LatLng(element.lat.toDouble(), element.lng.toDouble()));
+      }
+    }
   }
 }
 
@@ -364,10 +428,12 @@ String getCompassDirection(double degrees) {
 
 ///
 class PointerPainter extends CustomPainter {
-  const PointerPainter({required this.needleFactor, required this.showRectangle});
+  const PointerPainter({required this.needleFactor, required this.showRectangle, required this.selectionMarginPixels});
 
   final double needleFactor;
   final bool showRectangle;
+
+  final double selectionMarginPixels;
 
   ///
   @override
@@ -390,21 +456,36 @@ class PointerPainter extends CustomPainter {
     if (showRectangle) {
       final double rectWidth = needleLength * 0.2;
 
-      final Rect rect = Rect.fromLTWH(center.dx - rectWidth / 2, center.dy - needleLength, rectWidth, needleLength);
+      final Rect baseRect = Rect.fromLTWH(
+        center.dx - rectWidth / 2,
+        center.dy - needleLength,
+        rectWidth,
+        needleLength,
+      );
 
-      final Paint rectPaint = Paint()
+      final Paint basePaint = Paint()
         ..color = Colors.blue
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2.0;
 
-      canvas.drawRect(rect, rectPaint);
+      canvas.drawRect(baseRect, basePaint);
+
+      final Rect outerRect = baseRect.inflate(selectionMarginPixels);
+
+      final Paint outerPaint = Paint()
+        ..color = Colors.purple.withOpacity(0.3)
+        ..style = PaintingStyle.fill;
+
+      canvas.drawRect(outerRect, outerPaint);
     }
   }
 
   ///
   @override
   bool shouldRepaint(covariant PointerPainter oldDelegate) =>
-      oldDelegate.needleFactor != needleFactor || oldDelegate.showRectangle != showRectangle;
+      oldDelegate.needleFactor != needleFactor ||
+      oldDelegate.showRectangle != showRectangle ||
+      oldDelegate.selectionMarginPixels != selectionMarginPixels;
 }
 
 ///
@@ -458,13 +539,11 @@ double distancePointToSegment(LatLng p, LatLng a, LatLng b) {
 }
 
 ///
-bool isPointInsidePolygonWithTolerance(LatLng point, List<LatLng> polygon, double tolerance) {
+bool isPointInsidePolygonWithTolerance(LatLng point, List<LatLng> polygon, double effectiveTolerance) {
   for (int i = 0; i < polygon.length; i++) {
     final LatLng a = polygon[i];
-
     final LatLng b = polygon[(i + 1) % polygon.length];
-
-    if (distancePointToSegment(point, a, b) <= tolerance) {
+    if (distancePointToSegment(point, a, b) <= effectiveTolerance) {
       return true;
     }
   }
