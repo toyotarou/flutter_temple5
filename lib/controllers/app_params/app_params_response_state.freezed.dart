@@ -35,6 +35,7 @@ mixin _$AppParamsResponseState {
   ///
   int get visitedTempleSelectedYear => throw _privateConstructorUsedError;
   String get visitedTempleSelectedDate => throw _privateConstructorUsedError;
+  String get visitedTempleSelectedRank => throw _privateConstructorUsedError;
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
@@ -59,7 +60,8 @@ abstract class $AppParamsResponseStateCopyWith<$Res> {
       bool homeTextFormFieldVisible,
       String notReachTempleNearStationName,
       int visitedTempleSelectedYear,
-      String visitedTempleSelectedDate});
+      String visitedTempleSelectedDate,
+      String visitedTempleSelectedRank});
 }
 
 /// @nodoc
@@ -88,6 +90,7 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
     Object? notReachTempleNearStationName = null,
     Object? visitedTempleSelectedYear = null,
     Object? visitedTempleSelectedDate = null,
+    Object? visitedTempleSelectedRank = null,
   }) {
     return _then(_value.copyWith(
       currentZoom: null == currentZoom
@@ -130,6 +133,10 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
           ? _value.visitedTempleSelectedDate
           : visitedTempleSelectedDate // ignore: cast_nullable_to_non_nullable
               as String,
+      visitedTempleSelectedRank: null == visitedTempleSelectedRank
+          ? _value.visitedTempleSelectedRank
+          : visitedTempleSelectedRank // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -153,7 +160,8 @@ abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
       bool homeTextFormFieldVisible,
       String notReachTempleNearStationName,
       int visitedTempleSelectedYear,
-      String visitedTempleSelectedDate});
+      String visitedTempleSelectedDate,
+      String visitedTempleSelectedRank});
 }
 
 /// @nodoc
@@ -181,6 +189,7 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
     Object? notReachTempleNearStationName = null,
     Object? visitedTempleSelectedYear = null,
     Object? visitedTempleSelectedDate = null,
+    Object? visitedTempleSelectedRank = null,
   }) {
     return _then(_$AppParamsResponseStateImpl(
       currentZoom: null == currentZoom
@@ -223,6 +232,10 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
           ? _value.visitedTempleSelectedDate
           : visitedTempleSelectedDate // ignore: cast_nullable_to_non_nullable
               as String,
+      visitedTempleSelectedRank: null == visitedTempleSelectedRank
+          ? _value.visitedTempleSelectedRank
+          : visitedTempleSelectedRank // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -240,7 +253,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       this.homeTextFormFieldVisible = true,
       this.notReachTempleNearStationName = '',
       this.visitedTempleSelectedYear = 0,
-      this.visitedTempleSelectedDate = ''})
+      this.visitedTempleSelectedDate = '',
+      this.visitedTempleSelectedRank = ''})
       : _firstEntries = firstEntries,
         _secondEntries = secondEntries;
 
@@ -296,10 +310,13 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
   @override
   @JsonKey()
   final String visitedTempleSelectedDate;
+  @override
+  @JsonKey()
+  final String visitedTempleSelectedRank;
 
   @override
   String toString() {
-    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate)';
+    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate, visitedTempleSelectedRank: $visitedTempleSelectedRank)';
   }
 
   @override
@@ -333,7 +350,10 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
                 other.visitedTempleSelectedYear == visitedTempleSelectedYear) &&
             (identical(other.visitedTempleSelectedDate,
                     visitedTempleSelectedDate) ||
-                other.visitedTempleSelectedDate == visitedTempleSelectedDate));
+                other.visitedTempleSelectedDate == visitedTempleSelectedDate) &&
+            (identical(other.visitedTempleSelectedRank,
+                    visitedTempleSelectedRank) ||
+                other.visitedTempleSelectedRank == visitedTempleSelectedRank));
   }
 
   @override
@@ -348,7 +368,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       homeTextFormFieldVisible,
       notReachTempleNearStationName,
       visitedTempleSelectedYear,
-      visitedTempleSelectedDate);
+      visitedTempleSelectedDate,
+      visitedTempleSelectedRank);
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
@@ -371,7 +392,8 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
       final bool homeTextFormFieldVisible,
       final String notReachTempleNearStationName,
       final int visitedTempleSelectedYear,
-      final String visitedTempleSelectedDate}) = _$AppParamsResponseStateImpl;
+      final String visitedTempleSelectedDate,
+      final String visitedTempleSelectedRank}) = _$AppParamsResponseStateImpl;
 
   @override
   double get currentZoom;
@@ -401,6 +423,8 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
   int get visitedTempleSelectedYear;
   @override
   String get visitedTempleSelectedDate;
+  @override
+  String get visitedTempleSelectedRank;
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.

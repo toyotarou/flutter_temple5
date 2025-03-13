@@ -12,6 +12,7 @@ import '_components/not_reach_temple_map_alert.dart';
 import '_components/route_train_station_list_alert.dart';
 import '_components/temple_detail_map_alert.dart';
 import '_components/tokyo_jinjachou_temple_list_alert.dart';
+import '_components/visited_temple_list_alert.dart';
 import '_components/visited_temple_map_alert.dart';
 import '_parts/_temple_dialog.dart';
 import 'function.dart';
@@ -153,25 +154,65 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
       children: <Widget>[
         Row(
           children: <Widget>[
-            IconButton(
-              onPressed: () {
-                templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration:
+                  BoxDecoration(color: Colors.greenAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () {
+                      templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
 
-                templeNotifier.setSelectVisitedTempleListKey(key: -1);
+                      templeNotifier.setSelectVisitedTempleListKey(key: -1);
 
-                TempleDialog(
-                  context: context,
-                  widget: VisitedTempleMapAlert(
-                    templeList: templeState.templeList,
-                    templeVisitDateMap: templeState.templeVisitDateMap,
-                    dateTempleMap: templeState.dateTempleMap,
+                      TempleDialog(
+                        context: context,
+                        widget: VisitedTempleMapAlert(
+                          templeList: templeState.templeList,
+                          templeVisitDateMap: templeState.templeVisitDateMap,
+                          dateTempleMap: templeState.dateTempleMap,
+                        ),
+                        clearBarrierColor: true,
+                        executeFunctionWhenDialogClose: true,
+                        ref: ref,
+                      );
+                    },
+                    icon: const Icon(Icons.map, color: Colors.white),
                   ),
-                  clearBarrierColor: true,
-                  executeFunctionWhenDialogClose: true,
-                  ref: ref,
-                );
-              },
-              icon: const Icon(Icons.map, color: Colors.white),
+                  IconButton(
+                    onPressed: () {
+                      templeRankNotifier.clearTempleRankNameAndRank();
+
+                      appParamNotifier.setVisitedTempleSelectedRank(rank: '');
+
+                      TempleDialog(
+                        context: context,
+                        widget: const VisitedTempleListAlert(),
+                      );
+                    },
+                    icon: const Icon(Icons.list, color: Colors.white),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      TempleDialog(
+                        context: context,
+                        widget: TokyoJinjachouTempleListAlert(
+                          templeVisitDateMap: templeState.templeVisitDateMap,
+                          idBaseComplementTempleVisitedDateMap:
+                              complementTempleVisitedDateState.idBaseComplementTempleVisitedDateMap,
+                          dateTempleMap: templeState.dateTempleMap,
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.ac_unit, color: Colors.white),
+                  ),
+                  IconButton(
+                    onPressed: () => TempleDialog(context: context, widget: const NeedleCompassMapAlert()),
+                    icon: const Icon(Icons.nearby_error, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -181,29 +222,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
               BoxDecoration(color: Colors.orangeAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: <Widget>[
-              IconButton(
-                onPressed: () {
-                  TempleDialog(
-                    context: context,
-                    widget: const NeedleCompassMapAlert(),
-                  );
-                },
-                icon: const Icon(Icons.nearby_error, color: Colors.white),
-              ),
-              IconButton(
-                onPressed: () {
-                  TempleDialog(
-                    context: context,
-                    widget: TokyoJinjachouTempleListAlert(
-                      templeVisitDateMap: templeState.templeVisitDateMap,
-                      idBaseComplementTempleVisitedDateMap:
-                          complementTempleVisitedDateState.idBaseComplementTempleVisitedDateMap,
-                      dateTempleMap: templeState.dateTempleMap,
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.ac_unit, color: Colors.white),
-              ),
               IconButton(
                 onPressed: () {
                   appParamNotifier.setHomeTextFormFieldVisible(flag: false);

@@ -26,9 +26,9 @@ class TempleRank extends _$TempleRank {
   TempleRankState build() {
     return TempleRankState(
       // ignore: always_specify_types
-      templeRankNameList: List.generate(100, (int index) => ''),
+      templeRankNameList: List.generate(1000, (int index) => ''),
       // ignore: always_specify_types
-      templeRankRankList: List.generate(100, (int index) => ''),
+      templeRankRankList: List.generate(1000, (int index) => ''),
     );
   }
 
@@ -49,9 +49,9 @@ class TempleRank extends _$TempleRank {
   void clearTempleRankNameAndRank() {
     state = state.copyWith(
       // ignore: always_specify_types
-      templeRankNameList: List.generate(100, (int index) => ''),
+      templeRankNameList: List.generate(1000, (int index) => ''),
       // ignore: always_specify_types
-      templeRankRankList: List.generate(100, (int index) => ''),
+      templeRankRankList: List.generate(1000, (int index) => ''),
     );
   }
 

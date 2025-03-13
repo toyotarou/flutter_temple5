@@ -337,7 +337,7 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
                   ),
                   IconButton(
                     onPressed: () => getSelectedTemple(),
-                    icon: const Icon(Icons.pages, size: 30, color: Colors.white),
+                    icon: const Icon(Icons.list, size: 30, color: Colors.white),
                   ),
                 ],
               ),
