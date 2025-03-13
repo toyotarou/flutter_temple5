@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../const/const.dart';
 import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
@@ -92,7 +93,7 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
           FlutterMap(
             mapController: mapController,
             options: MapOptions(
-              initialCenter: const LatLng(35.718532, 139.586639),
+              initialCenter: const LatLng(zenpukujiLat, zenpukujiLng),
               initialZoom: currentZoomEightTeen,
               onPositionChanged: (MapCamera position, bool isMoving) {
                 if (isMoving) {
@@ -301,8 +302,8 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
             TempleData(
               name: point,
               address: '千葉県船橋市二子町492-25-101',
-              latitude: '35.7102009',
-              longitude: '139.9490672',
+              latitude: funabashiLat.toString(),
+              longitude: funabashiLng.toString(),
               mark: (flag == 'end')
                   ? (temple.startPoint == temple.endPoint)
                       ? 'S/E'
@@ -318,8 +319,8 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
             TempleData(
               name: point,
               address: '東京都杉並区善福寺4-22-11',
-              latitude: '35.7185071',
-              longitude: '139.5869534',
+              latitude: zenpukujiLat.toString(),
+              longitude: zenpukujiLng.toString(),
               mark: (flag == 'end')
                   ? (temple.startPoint == temple.endPoint)
                       ? 'S/E'

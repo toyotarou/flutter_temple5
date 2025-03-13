@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../const/const.dart';
 import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../models/temple_lat_lng_model.dart';
@@ -42,7 +43,7 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
   final double _currentZoom = 10.0;
 
   // 中心座標
-  final LatLng _centerCoord = const LatLng(35.718532, 139.586639);
+  final LatLng _centerCoord = const LatLng(zenpukujiLat, zenpukujiLng);
 
   final List<LatLng> _additionalMarkers = <LatLng>[];
 

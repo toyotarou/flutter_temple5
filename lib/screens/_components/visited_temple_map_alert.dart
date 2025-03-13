@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../const/const.dart';
 import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
@@ -61,9 +62,6 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
 
     makeMarker();
 
-    const double pinpointLat = 35.718532;
-    const double pinpointLng = 139.586639;
-
     if (!appParamState.visitedTempleMapDisplayFinish) {
       if (templeState.selectTempleLat != '' && templeState.selectTempleLng != '') {
         // ignore: always_specify_types
@@ -94,7 +92,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
           FlutterMap(
             mapController: mapController,
             options: MapOptions(
-              initialCenter: const LatLng(pinpointLat, pinpointLng),
+              initialCenter: const LatLng(zenpukujiLat, zenpukujiLng),
               initialZoom: currentZoomEightTeen,
               onPositionChanged: (MapCamera position, bool isMoving) {
                 if (isMoving) {

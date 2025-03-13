@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import '../extensions/extensions.dart';
 
 class Utility {
   ///
   void showError(String msg) {
-    ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!)
-        .showSnackBar(
+    ScaffoldMessenger.of(NavigationService.navigatorKey.currentContext!).showSnackBar(
       SnackBar(
         content: Text(msg),
         duration: const Duration(seconds: 5),
@@ -14,10 +14,7 @@ class Utility {
   }
 
   ///
-  Color getYoubiColor(
-      {required DateTime date,
-      required String youbiStr,
-      required List<DateTime> holiday}) {
+  Color getYoubiColor({required DateTime date, required String youbiStr, required List<DateTime> holiday}) {
     Color color = Colors.black.withOpacity(0.2);
 
     switch (youbiStr) {
@@ -75,6 +72,12 @@ class Utility {
       const Color(0xffdc2f81),
       const Color(0xffdb2f5c),
     ];
+  }
+
+  ///
+  double calculateDistance(LatLng p1, LatLng p2) {
+    const Distance distance = Distance();
+    return distance.as(LengthUnit.Meter, p1, p2);
   }
 }
 

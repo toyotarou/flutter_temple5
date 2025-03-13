@@ -16,6 +16,7 @@ class TempleLatLngState with _$TempleLatLngState {
   const factory TempleLatLngState({
     @Default(<TempleLatLngModel>[]) List<TempleLatLngModel> templeLatLngList,
     @Default(<String, TempleLatLngModel>{}) Map<String, TempleLatLngModel> templeLatLngMap,
+    @Default(<String, TempleLatLngModel>{}) Map<String, TempleLatLngModel> templeLatLngLatLngMap,
   }) = _TempleLatLngState;
 }
 
@@ -40,6 +41,8 @@ class TempleLatLng extends _$TempleLatLng {
 
       final Map<String, TempleLatLngModel> map = <String, TempleLatLngModel>{};
 
+      final Map<String, TempleLatLngModel> map2 = <String, TempleLatLngModel>{};
+
       // ignore: avoid_dynamic_calls
       for (int i = 0; i < value['list'].length.toString().toInt(); i++) {
         final TempleLatLngModel val = TempleLatLngModel.fromJson(
@@ -49,9 +52,11 @@ class TempleLatLng extends _$TempleLatLng {
 
         list.add(val);
         map[val.temple] = val;
+
+        map2['${val.lat}|${val.lng}'] = val;
       }
 
-      return state.copyWith(templeLatLngList: list, templeLatLngMap: map);
+      return state.copyWith(templeLatLngList: list, templeLatLngMap: map, templeLatLngLatLngMap: map2);
     } catch (e) {
       utility.showError('予期せぬエラーが発生しました');
       rethrow; // これにより呼び出し元でキャッチできる

@@ -20,6 +20,8 @@ mixin _$TempleLatLngState {
       throw _privateConstructorUsedError;
   Map<String, TempleLatLngModel> get templeLatLngMap =>
       throw _privateConstructorUsedError;
+  Map<String, TempleLatLngModel> get templeLatLngLatLngMap =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of TempleLatLngState
   /// with the given fields replaced by the non-null parameter values.
@@ -36,7 +38,8 @@ abstract class $TempleLatLngStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<TempleLatLngModel> templeLatLngList,
-      Map<String, TempleLatLngModel> templeLatLngMap});
+      Map<String, TempleLatLngModel> templeLatLngMap,
+      Map<String, TempleLatLngModel> templeLatLngLatLngMap});
 }
 
 /// @nodoc
@@ -56,6 +59,7 @@ class _$TempleLatLngStateCopyWithImpl<$Res, $Val extends TempleLatLngState>
   $Res call({
     Object? templeLatLngList = null,
     Object? templeLatLngMap = null,
+    Object? templeLatLngLatLngMap = null,
   }) {
     return _then(_value.copyWith(
       templeLatLngList: null == templeLatLngList
@@ -65,6 +69,10 @@ class _$TempleLatLngStateCopyWithImpl<$Res, $Val extends TempleLatLngState>
       templeLatLngMap: null == templeLatLngMap
           ? _value.templeLatLngMap
           : templeLatLngMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, TempleLatLngModel>,
+      templeLatLngLatLngMap: null == templeLatLngLatLngMap
+          ? _value.templeLatLngLatLngMap
+          : templeLatLngLatLngMap // ignore: cast_nullable_to_non_nullable
               as Map<String, TempleLatLngModel>,
     ) as $Val);
   }
@@ -80,7 +88,8 @@ abstract class _$$TempleLatLngStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {List<TempleLatLngModel> templeLatLngList,
-      Map<String, TempleLatLngModel> templeLatLngMap});
+      Map<String, TempleLatLngModel> templeLatLngMap,
+      Map<String, TempleLatLngModel> templeLatLngLatLngMap});
 }
 
 /// @nodoc
@@ -98,6 +107,7 @@ class __$$TempleLatLngStateImplCopyWithImpl<$Res>
   $Res call({
     Object? templeLatLngList = null,
     Object? templeLatLngMap = null,
+    Object? templeLatLngLatLngMap = null,
   }) {
     return _then(_$TempleLatLngStateImpl(
       templeLatLngList: null == templeLatLngList
@@ -107,6 +117,10 @@ class __$$TempleLatLngStateImplCopyWithImpl<$Res>
       templeLatLngMap: null == templeLatLngMap
           ? _value._templeLatLngMap
           : templeLatLngMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, TempleLatLngModel>,
+      templeLatLngLatLngMap: null == templeLatLngLatLngMap
+          ? _value._templeLatLngLatLngMap
+          : templeLatLngLatLngMap // ignore: cast_nullable_to_non_nullable
               as Map<String, TempleLatLngModel>,
     ));
   }
@@ -119,9 +133,12 @@ class _$TempleLatLngStateImpl implements _TempleLatLngState {
       {final List<TempleLatLngModel> templeLatLngList =
           const <TempleLatLngModel>[],
       final Map<String, TempleLatLngModel> templeLatLngMap =
+          const <String, TempleLatLngModel>{},
+      final Map<String, TempleLatLngModel> templeLatLngLatLngMap =
           const <String, TempleLatLngModel>{}})
       : _templeLatLngList = templeLatLngList,
-        _templeLatLngMap = templeLatLngMap;
+        _templeLatLngMap = templeLatLngMap,
+        _templeLatLngLatLngMap = templeLatLngLatLngMap;
 
   final List<TempleLatLngModel> _templeLatLngList;
   @override
@@ -142,9 +159,19 @@ class _$TempleLatLngStateImpl implements _TempleLatLngState {
     return EqualUnmodifiableMapView(_templeLatLngMap);
   }
 
+  final Map<String, TempleLatLngModel> _templeLatLngLatLngMap;
+  @override
+  @JsonKey()
+  Map<String, TempleLatLngModel> get templeLatLngLatLngMap {
+    if (_templeLatLngLatLngMap is EqualUnmodifiableMapView)
+      return _templeLatLngLatLngMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_templeLatLngLatLngMap);
+  }
+
   @override
   String toString() {
-    return 'TempleLatLngState(templeLatLngList: $templeLatLngList, templeLatLngMap: $templeLatLngMap)';
+    return 'TempleLatLngState(templeLatLngList: $templeLatLngList, templeLatLngMap: $templeLatLngMap, templeLatLngLatLngMap: $templeLatLngLatLngMap)';
   }
 
   @override
@@ -155,14 +182,17 @@ class _$TempleLatLngStateImpl implements _TempleLatLngState {
             const DeepCollectionEquality()
                 .equals(other._templeLatLngList, _templeLatLngList) &&
             const DeepCollectionEquality()
-                .equals(other._templeLatLngMap, _templeLatLngMap));
+                .equals(other._templeLatLngMap, _templeLatLngMap) &&
+            const DeepCollectionEquality()
+                .equals(other._templeLatLngLatLngMap, _templeLatLngLatLngMap));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_templeLatLngList),
-      const DeepCollectionEquality().hash(_templeLatLngMap));
+      const DeepCollectionEquality().hash(_templeLatLngMap),
+      const DeepCollectionEquality().hash(_templeLatLngLatLngMap));
 
   /// Create a copy of TempleLatLngState
   /// with the given fields replaced by the non-null parameter values.
@@ -177,13 +207,16 @@ class _$TempleLatLngStateImpl implements _TempleLatLngState {
 abstract class _TempleLatLngState implements TempleLatLngState {
   const factory _TempleLatLngState(
           {final List<TempleLatLngModel> templeLatLngList,
-          final Map<String, TempleLatLngModel> templeLatLngMap}) =
+          final Map<String, TempleLatLngModel> templeLatLngMap,
+          final Map<String, TempleLatLngModel> templeLatLngLatLngMap}) =
       _$TempleLatLngStateImpl;
 
   @override
   List<TempleLatLngModel> get templeLatLngList;
   @override
   Map<String, TempleLatLngModel> get templeLatLngMap;
+  @override
+  Map<String, TempleLatLngModel> get templeLatLngLatLngMap;
 
   /// Create a copy of TempleLatLngState
   /// with the given fields replaced by the non-null parameter values.

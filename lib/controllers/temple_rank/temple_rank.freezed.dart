@@ -110,8 +110,8 @@ class __$$TempleRankStateImplCopyWithImpl<$Res>
 
 class _$TempleRankStateImpl implements _TempleRankState {
   const _$TempleRankStateImpl(
-      {final List<String> templeRankNameList = const [],
-      final List<String> templeRankRankList = const []})
+      {final List<String> templeRankNameList = const <String>[],
+      final List<String> templeRankRankList = const <String>[]})
       : _templeRankNameList = templeRankNameList,
         _templeRankRankList = templeRankRankList;
 

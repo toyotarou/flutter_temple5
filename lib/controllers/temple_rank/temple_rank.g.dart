@@ -6,7 +6,7 @@ part of 'temple_rank.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$templeRankHash() => r'e324ad225b7eb4b33a3b950bb54e988316c50f73';
+String _$templeRankHash() => r'705907bd83bae1600c26cbddb8ef2a778b1203fd';
 
 /// See also [TempleRank].
 @ProviderFor(TempleRank)
