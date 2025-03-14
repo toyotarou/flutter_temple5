@@ -3,9 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
+import '../../models/common/temple_data.dart';
+import '../../models/temple_model.dart';
+import '../_parts/_temple_dialog.dart';
+import 'visited_temple_photo_alert.dart';
 
 class VisitedTempleListAlert extends ConsumerStatefulWidget {
-  const VisitedTempleListAlert({super.key});
+  const VisitedTempleListAlert({super.key, required this.templeVisitDateMap, required this.dateTempleMap});
+
+  final Map<String, List<String>> templeVisitDateMap;
+  final Map<String, TempleModel> dateTempleMap;
 
   @override
   ConsumerState<VisitedTempleListAlert> createState() => _VisitedTempleListAlertState();
@@ -99,8 +106,26 @@ class _VisitedTempleListAlertState extends ConsumerState<VisitedTempleListAlert>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Container(
+                  width: 40,
+                  child: Text((i + 1).toString().padLeft(4, '0')),
+                ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    TempleDialog(
+                      context: context,
+                      widget: VisitedTemplePhotoAlert(
+                        templeVisitDateMap: widget.templeVisitDateMap,
+                        dateTempleMap: widget.dateTempleMap,
+                        temple: TempleData(
+                          name: templeLatLngState.templeLatLngList[i].temple,
+                          address: templeLatLngState.templeLatLngList[i].address,
+                          latitude: templeLatLngState.templeLatLngList[i].lat,
+                          longitude: templeLatLngState.templeLatLngList[i].lng,
+                        ),
+                      ),
+                    );
+                  },
                   icon: Icon(Icons.info, color: Colors.white.withOpacity(0.3)),
                 ),
                 Expanded(

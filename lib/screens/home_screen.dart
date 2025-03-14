@@ -188,7 +188,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
                       TempleDialog(
                         context: context,
-                        widget: const VisitedTempleListAlert(),
+                        widget:  VisitedTempleListAlert(
+
+
+
+
+
+                          templeVisitDateMap: templeState.templeVisitDateMap,
+                          dateTempleMap: templeState.dateTempleMap,
+
+
+
+
+                        ),
                         executeFunctionWhenDialogClose: true,
                         ref: ref,
                         from: 'VisitedTempleListAlert',
