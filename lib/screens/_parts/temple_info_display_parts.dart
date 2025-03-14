@@ -238,8 +238,7 @@ Widget displayVisitedTemplePhoto(
         onTap: () {
           TempleDialog(
             context: context,
-            widget: VisitedTemplePhotoListAlert(
-                templeVisitDateMap: templeVisitDateMap, temple: temple, dateTempleMap: dateTempleMap),
+            widget: VisitedTemplePhotoListAlert(temple: temple),
             paddingTop: context.screenSize.height * 0.5,
           );
         },

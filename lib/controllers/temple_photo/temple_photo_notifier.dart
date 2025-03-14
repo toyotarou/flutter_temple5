@@ -45,13 +45,11 @@ class TemplePhotoNotifier extends StateNotifier<TemplePhotoResponseState> {
       for (int i = 0; i < (templePhoto['data'] as List<dynamic>).length; i++) {
         final TemplePhotoModel value = TemplePhotoModel.fromJson(templePhoto['data'][i] as Map<String, dynamic>);
 
-        if (value.date.isAfter(DateTime(2023, 3))) {
-          list.add(value);
+        list.add(value);
 
-          map[value.date.yyyymmdd]?.add(value);
+        map[value.date.yyyymmdd]?.add(value);
 
-          map2[value.temple]?.add(value);
-        }
+        map2[value.temple]?.add(value);
       }
 
       state = state.copyWith(

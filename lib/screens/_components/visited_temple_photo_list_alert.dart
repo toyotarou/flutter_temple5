@@ -2,23 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
-import '../../models/temple_model.dart';
+import '../../models/temple_photo_model.dart';
 
 class VisitedTemplePhotoListAlert extends ConsumerStatefulWidget {
-  const VisitedTemplePhotoListAlert(
-      {super.key, required this.templeVisitDateMap, required this.temple, required this.dateTempleMap});
+  const VisitedTemplePhotoListAlert({super.key, required this.temple});
 
-  final Map<String, List<String>> templeVisitDateMap;
   final TempleData temple;
-  final Map<String, TempleModel> dateTempleMap;
 
   @override
   ConsumerState<VisitedTemplePhotoListAlert> createState() => _VisitedTemplePhotoListAlertState();
 }
 
-class _VisitedTemplePhotoListAlertState extends ConsumerState<VisitedTemplePhotoListAlert> {
+class _VisitedTemplePhotoListAlertState extends ConsumerState<VisitedTemplePhotoListAlert>
+    with ControllersMixin<VisitedTemplePhotoListAlert> {
+  Map<String, List<TemplePhotoModel>> templePhotoTempleMap = <String, List<TemplePhotoModel>>{};
+
   ///
   @override
   Widget build(BuildContext context) {
@@ -45,40 +46,37 @@ class _VisitedTemplePhotoListAlertState extends ConsumerState<VisitedTemplePhoto
   Widget displayVisitedTemplePhoto() {
     final List<Widget> list = <Widget>[];
 
-    widget.templeVisitDateMap[widget.temple.name]?.forEach((String element) {
-      list.add(
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: <Color>[Colors.white.withOpacity(0.1), Colors.transparent],
-              stops: const <double>[0.7, 1],
+    if (templePhotoState.templePhotoDateMap.value != null) {
+      templePhotoTempleMap = templePhotoState.templePhotoTempleMap.value!;
+    }
+
+    templePhotoTempleMap[widget.temple.name]?.forEach((TemplePhotoModel element) {
+      list.add(DefaultTextStyle(
+        style: const TextStyle(fontSize: 12, color: Colors.white),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: context.screenSize.width),
+            Text(element.date.yyyymmdd),
+            const SizedBox(height: 10),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  children: element.templephotos.map((String e) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  width: 50,
+                  child: CachedNetworkImage(
+                    imageUrl: e,
+                    placeholder: (BuildContext context, String url) => Image.asset('assets/images/no_image.png'),
+                    errorWidget: (BuildContext context, String url, Object error) => const Icon(Icons.error),
+                  ),
+                );
+              }).toList()),
             ),
-          ),
-          padding: const EdgeInsets.all(5),
-          child: Text(element, style: const TextStyle(color: Colors.white)),
+            const SizedBox(height: 20),
+          ],
         ),
-      );
-
-      final List<Widget> list2 = <Widget>[];
-
-      widget.dateTempleMap[element]?.photo.forEach((String element2) {
-        list2.add(
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            width: 50,
-            child: CachedNetworkImage(
-              imageUrl: element2,
-              placeholder: (BuildContext context, String url) => Image.asset('assets/images/no_image.png'),
-              errorWidget: (BuildContext context, String url, Object error) => const Icon(Icons.error),
-            ),
-          ),
-        );
-      });
-
-      list.add(SizedBox(
-        height: 100,
-        child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: Row(children: list2)),
       ));
     });
 

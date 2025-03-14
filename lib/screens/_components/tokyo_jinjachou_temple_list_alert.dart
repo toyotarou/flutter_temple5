@@ -153,8 +153,6 @@ class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTe
                     TempleDialog(
                       context: context,
                       widget: VisitedTemplePhotoListAlert(
-                        templeVisitDateMap: widget.templeVisitDateMap,
-                        dateTempleMap: widget.dateTempleMap,
                         temple: TempleData(
                           name: templeListState.templeListList[i].name,
                           address: templeListState.templeListList[i].address,

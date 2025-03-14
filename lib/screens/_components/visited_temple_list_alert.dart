@@ -106,17 +106,12 @@ class _VisitedTempleListAlertState extends ConsumerState<VisitedTempleListAlert>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  width: 40,
-                  child: Text((i + 1).toString().padLeft(4, '0')),
-                ),
+                SizedBox(width: 40, child: Text((i + 1).toString().padLeft(4, '0'))),
                 IconButton(
                   onPressed: () {
                     TempleDialog(
                       context: context,
                       widget: VisitedTemplePhotoListAlert(
-                        templeVisitDateMap: widget.templeVisitDateMap,
-                        dateTempleMap: widget.dateTempleMap,
                         temple: TempleData(
                           name: templeLatLngState.templeLatLngList[i].temple,
                           address: templeLatLngState.templeLatLngList[i].address,
