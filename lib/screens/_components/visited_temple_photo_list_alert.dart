@@ -6,8 +6,8 @@ import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/temple_model.dart';
 
-class VisitedTemplePhotoAlert extends ConsumerStatefulWidget {
-  const VisitedTemplePhotoAlert(
+class VisitedTemplePhotoListAlert extends ConsumerStatefulWidget {
+  const VisitedTemplePhotoListAlert(
       {super.key, required this.templeVisitDateMap, required this.temple, required this.dateTempleMap});
 
   final Map<String, List<String>> templeVisitDateMap;
@@ -15,10 +15,10 @@ class VisitedTemplePhotoAlert extends ConsumerStatefulWidget {
   final Map<String, TempleModel> dateTempleMap;
 
   @override
-  ConsumerState<VisitedTemplePhotoAlert> createState() => _VisitedTemplePhotoAlertState();
+  ConsumerState<VisitedTemplePhotoListAlert> createState() => _VisitedTemplePhotoListAlertState();
 }
 
-class _VisitedTemplePhotoAlertState extends ConsumerState<VisitedTemplePhotoAlert> {
+class _VisitedTemplePhotoListAlertState extends ConsumerState<VisitedTemplePhotoListAlert> {
   ///
   @override
   Widget build(BuildContext context) {

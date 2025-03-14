@@ -11,6 +11,8 @@ import 'station/station.dart';
 import 'temple/temple.dart';
 import 'temple_lat_lng/temple_lat_lng.dart';
 import 'temple_list/temple_list.dart';
+import 'temple_photo/temple_photo_notifier.dart';
+import 'temple_photo/temple_photo_response_state.dart';
 import 'temple_rank/temple_rank.dart';
 import 'tokyo_train/tokyo_train.dart';
 
@@ -85,6 +87,12 @@ mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   TempleRankState get templeRankState => ref.watch(templeRankProvider);
 
   TempleRank get templeRankNotifier => ref.read(templeRankProvider.notifier);
+
+//==========================================//
+
+  TemplePhotoResponseState get templePhotoState => ref.watch(templePhotoProvider);
+
+  TemplePhotoNotifier get templePhotoNotifier => ref.read(templePhotoProvider.notifier);
 
 //==========================================//
 }

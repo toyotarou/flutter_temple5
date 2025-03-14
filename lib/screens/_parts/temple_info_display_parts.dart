@@ -13,7 +13,7 @@ import '../../models/near_station_model.dart';
 import '../../models/temple_model.dart';
 import '../../models/tokyo_station_model.dart';
 import '../../models/tokyo_train_model.dart';
-import '../_components/visited_temple_photo_alert.dart';
+import '../_components/visited_temple_photo_list_alert.dart';
 import '_temple_dialog.dart';
 
 ///
@@ -238,7 +238,7 @@ Widget displayVisitedTemplePhoto(
         onTap: () {
           TempleDialog(
             context: context,
-            widget: VisitedTemplePhotoAlert(
+            widget: VisitedTemplePhotoListAlert(
                 templeVisitDateMap: templeVisitDateMap, temple: temple, dateTempleMap: dateTempleMap),
             paddingTop: context.screenSize.height * 0.5,
           );

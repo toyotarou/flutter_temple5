@@ -7,7 +7,7 @@ import '../../models/common/temple_data.dart';
 import '../../models/temple_lat_lng_model.dart';
 import '../../models/temple_model.dart';
 import '../_parts/_temple_dialog.dart';
-import 'visited_temple_photo_alert.dart';
+import 'visited_temple_photo_list_alert.dart';
 
 class TokyoJinjachouTempleListAlert extends ConsumerStatefulWidget {
   const TokyoJinjachouTempleListAlert(
@@ -152,7 +152,7 @@ class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTe
                   onTap: () {
                     TempleDialog(
                       context: context,
-                      widget: VisitedTemplePhotoAlert(
+                      widget: VisitedTemplePhotoListAlert(
                         templeVisitDateMap: widget.templeVisitDateMap,
                         dateTempleMap: widget.dateTempleMap,
                         temple: TempleData(

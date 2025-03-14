@@ -6,7 +6,7 @@ import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/temple_model.dart';
 import '../_parts/_temple_dialog.dart';
-import 'visited_temple_photo_alert.dart';
+import 'visited_temple_photo_list_alert.dart';
 
 class VisitedTempleListAlert extends ConsumerStatefulWidget {
   const VisitedTempleListAlert({super.key, required this.templeVisitDateMap, required this.dateTempleMap});
@@ -114,7 +114,7 @@ class _VisitedTempleListAlertState extends ConsumerState<VisitedTempleListAlert>
                   onPressed: () {
                     TempleDialog(
                       context: context,
-                      widget: VisitedTemplePhotoAlert(
+                      widget: VisitedTemplePhotoListAlert(
                         templeVisitDateMap: widget.templeVisitDateMap,
                         dateTempleMap: widget.dateTempleMap,
                         temple: TempleData(
