@@ -6,11 +6,14 @@ import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/temple_photo_model.dart';
+import '../_parts/_temple_dialog.dart';
+import 'visited_temple_photo_alert.dart';
 
 class VisitedTemplePhotoListAlert extends ConsumerStatefulWidget {
-  const VisitedTemplePhotoListAlert({super.key, required this.temple});
+  const VisitedTemplePhotoListAlert({super.key, required this.temple, required this.templePhotoTempleMap});
 
   final TempleData temple;
+  final Map<String, List<TemplePhotoModel>> templePhotoTempleMap;
 
   @override
   ConsumerState<VisitedTemplePhotoListAlert> createState() => _VisitedTemplePhotoListAlertState();
@@ -18,8 +21,6 @@ class VisitedTemplePhotoListAlert extends ConsumerStatefulWidget {
 
 class _VisitedTemplePhotoListAlertState extends ConsumerState<VisitedTemplePhotoListAlert>
     with ControllersMixin<VisitedTemplePhotoListAlert> {
-  Map<String, List<TemplePhotoModel>> templePhotoTempleMap = <String, List<TemplePhotoModel>>{};
-
   ///
   @override
   Widget build(BuildContext context) {
@@ -46,11 +47,7 @@ class _VisitedTemplePhotoListAlertState extends ConsumerState<VisitedTemplePhoto
   Widget displayVisitedTemplePhoto() {
     final List<Widget> list = <Widget>[];
 
-    if (templePhotoState.templePhotoDateMap.value != null) {
-      templePhotoTempleMap = templePhotoState.templePhotoTempleMap.value!;
-    }
-
-    templePhotoTempleMap[widget.temple.name]?.forEach((TemplePhotoModel element) {
+    widget.templePhotoTempleMap[widget.temple.name]?.forEach((TemplePhotoModel element) {
       list.add(DefaultTextStyle(
         style: const TextStyle(fontSize: 12, color: Colors.white),
         child: Column(
@@ -63,13 +60,21 @@ class _VisitedTemplePhotoListAlertState extends ConsumerState<VisitedTemplePhoto
               scrollDirection: Axis.horizontal,
               child: Row(
                   children: element.templephotos.map((String e) {
-                return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  width: 50,
-                  child: CachedNetworkImage(
-                    imageUrl: e,
-                    placeholder: (BuildContext context, String url) => Image.asset('assets/images/no_image.png'),
-                    errorWidget: (BuildContext context, String url, Object error) => const Icon(Icons.error),
+                return GestureDetector(
+                  onTap: () {
+                    TempleDialog(context: context, widget: VisitedTemplePhotoAlert(url: e));
+                  },
+                  child: Hero(
+                    tag: e.split('/').last.split('.')[0],
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      width: 50,
+                      child: CachedNetworkImage(
+                        imageUrl: e,
+                        placeholder: (BuildContext context, String url) => Image.asset('assets/images/no_image.png'),
+                        errorWidget: (BuildContext context, String url, Object error) => const Icon(Icons.error),
+                      ),
+                    ),
                   ),
                 );
               }).toList()),

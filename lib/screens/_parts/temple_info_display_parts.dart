@@ -7,10 +7,13 @@ import '../../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../../controllers/near_station/near_station.dart';
 import '../../controllers/routing/routing.dart';
 import '../../controllers/temple/temple.dart';
+import '../../controllers/temple_photo/temple_photo_notifier.dart';
+import '../../controllers/temple_photo/temple_photo_response_state.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/near_station_model.dart';
 import '../../models/temple_model.dart';
+import '../../models/temple_photo_model.dart';
 import '../../models/tokyo_station_model.dart';
 import '../../models/tokyo_train_model.dart';
 import '../_components/visited_temple_photo_list_alert.dart';
@@ -95,6 +98,7 @@ Widget templeInfoDisplayParts({
             templeVisitDateMap: templeVisitDateMap,
             temple: temple,
             dateTempleMap: dateTempleMap,
+            ref: ref,
           ),
         ],
 
@@ -229,7 +233,16 @@ Widget displayVisitedTemplePhoto(
     required String from,
     required Map<String, List<String>> templeVisitDateMap,
     required TempleData temple,
-    required Map<String, TempleModel> dateTempleMap}) {
+    required Map<String, TempleModel> dateTempleMap,
+    required WidgetRef ref}) {
+  final TemplePhotoResponseState templePhotoState = ref.watch(templePhotoProvider);
+
+  Map<String, List<TemplePhotoModel>> templePhotoTempleMap = <String, List<TemplePhotoModel>>{};
+
+  if (templePhotoState.templePhotoDateMap.value != null) {
+    templePhotoTempleMap = templePhotoState.templePhotoTempleMap.value!;
+  }
+
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
@@ -238,7 +251,7 @@ Widget displayVisitedTemplePhoto(
         onTap: () {
           TempleDialog(
             context: context,
-            widget: VisitedTemplePhotoListAlert(temple: temple),
+            widget: VisitedTemplePhotoListAlert(temple: temple, templePhotoTempleMap: templePhotoTempleMap),
             paddingTop: context.screenSize.height * 0.5,
           );
         },

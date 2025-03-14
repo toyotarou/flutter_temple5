@@ -6,6 +6,7 @@ import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/temple_lat_lng_model.dart';
 import '../../models/temple_model.dart';
+import '../../models/temple_photo_model.dart';
 import '../_parts/_temple_dialog.dart';
 import 'visited_temple_photo_list_alert.dart';
 
@@ -27,6 +28,8 @@ class TokyoJinjachouTempleListAlert extends ConsumerStatefulWidget {
 class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTempleListAlert>
     with ControllersMixin<TokyoJinjachouTempleListAlert> {
   List<int> idList = <int>[];
+
+  Map<String, List<TemplePhotoModel>> templePhotoTempleMap = <String, List<TemplePhotoModel>>{};
 
   ///
   @override
@@ -52,6 +55,10 @@ class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTe
   ///
   Widget _displayTokyoJinjachouTempleList() {
     final List<Widget> list = <Widget>[];
+
+    if (templePhotoState.templePhotoDateMap.value != null) {
+      templePhotoTempleMap = templePhotoState.templePhotoTempleMap.value!;
+    }
 
     final List<String> jogaiTempleNameList = <String>[];
     final List<String> jogaiTempleAddressList = <String>[];
@@ -159,6 +166,7 @@ class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTe
                           latitude: templeListState.templeListList[i].lat,
                           longitude: templeListState.templeListList[i].lng,
                         ),
+                        templePhotoTempleMap: templePhotoTempleMap,
                       ),
                     );
                   },

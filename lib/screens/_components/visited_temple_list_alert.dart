@@ -5,6 +5,7 @@ import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/temple_model.dart';
+import '../../models/temple_photo_model.dart';
 import '../_parts/_temple_dialog.dart';
 import 'visited_temple_photo_list_alert.dart';
 
@@ -20,6 +21,9 @@ class VisitedTempleListAlert extends ConsumerStatefulWidget {
 
 class _VisitedTempleListAlertState extends ConsumerState<VisitedTempleListAlert>
     with ControllersMixin<VisitedTempleListAlert> {
+  Map<String, List<TemplePhotoModel>> templePhotoTempleMap = <String, List<TemplePhotoModel>>{};
+
+  ///
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,10 +33,7 @@ class _VisitedTempleListAlertState extends ConsumerState<VisitedTempleListAlert>
         children: <Widget>[
           Container(width: context.screenSize.width),
           displayTempleRankSelect(),
-          Divider(
-            color: Colors.white.withOpacity(0.3),
-            thickness: 5,
-          ),
+          Divider(color: Colors.white.withOpacity(0.3), thickness: 5),
           Expanded(child: displayVisitedTempleList()),
         ],
       )),
@@ -88,6 +89,10 @@ class _VisitedTempleListAlertState extends ConsumerState<VisitedTempleListAlert>
   Widget displayVisitedTempleList() {
     final List<Widget> list = <Widget>[];
 
+    if (templePhotoState.templePhotoDateMap.value != null) {
+      templePhotoTempleMap = templePhotoState.templePhotoTempleMap.value!;
+    }
+
     for (int i = 0; i < templeLatLngState.templeLatLngList.length; i++) {
       if (appParamState.visitedTempleSelectedRank != '') {
         if (templeLatLngState.templeLatLngList[i].rank != appParamState.visitedTempleSelectedRank) {
@@ -106,7 +111,16 @@ class _VisitedTempleListAlertState extends ConsumerState<VisitedTempleListAlert>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(width: 40, child: Text((i + 1).toString().padLeft(4, '0'))),
+                SizedBox(
+                  width: 40,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text((i + 1).toString().padLeft(4, '0')),
+                      Text('${templePhotoTempleMap[templeLatLngState.templeLatLngList[i].temple]?.length ?? 0} times'),
+                    ],
+                  ),
+                ),
                 IconButton(
                   onPressed: () {
                     TempleDialog(
@@ -118,10 +132,11 @@ class _VisitedTempleListAlertState extends ConsumerState<VisitedTempleListAlert>
                           latitude: templeLatLngState.templeLatLngList[i].lat,
                           longitude: templeLatLngState.templeLatLngList[i].lng,
                         ),
+                        templePhotoTempleMap: templePhotoTempleMap,
                       ),
                     );
                   },
-                  icon: Icon(Icons.info, color: Colors.white.withOpacity(0.3)),
+                  icon: Icon(Icons.photo, color: Colors.white.withOpacity(0.3)),
                 ),
                 Expanded(
                   child: Column(
