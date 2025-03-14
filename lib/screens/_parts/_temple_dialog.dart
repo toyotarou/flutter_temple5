@@ -39,25 +39,28 @@ Future<void> TempleDialog({
     // ignore: use_if_null_to_convert_nulls_to_bools
     if (executeFunctionWhenDialogClose == true) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        //-------------------------//
         final ModalRoute<Object?>? route = ModalRoute.of(context);
         if (route != null && route.isCurrent) {
           closeAllOverlays(ref: ref!);
         }
+
+        //-------------------------//
+
+        if (from == 'RouteTrainStationListAlert') {
+          if (ref != null) {
+            ref.read(appParamProvider.notifier).setHomeTextFormFieldVisible(flag: true);
+
+            ref.read(appParamProvider.notifier).setNotReachTempleNearStationName(name: '');
+          }
+        }
+
+        if (from == 'TempleRankInputAlert' || from == 'VisitedTempleListAlert') {
+          if (ref != null) {
+            ref.read(templeLatLngProvider.notifier).getAllTempleLatLng();
+          }
+        }
       });
-
-      if (from == 'HomeScreen') {
-        if (ref != null) {
-          ref.read(appParamProvider.notifier).setHomeTextFormFieldVisible(flag: true);
-
-          ref.read(appParamProvider.notifier).setNotReachTempleNearStationName(name: '');
-        }
-      }
-
-      if (from == 'TempleCourseDisplayAlert') {
-        if (ref != null) {
-          ref.read(templeLatLngProvider.notifier).getAllTempleLatLng();
-        }
-      }
     }
   });
 }

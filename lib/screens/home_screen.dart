@@ -189,6 +189,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                       TempleDialog(
                         context: context,
                         widget: const VisitedTempleListAlert(),
+                        executeFunctionWhenDialogClose: true,
+                        ref: ref,
+                        from: 'VisitedTempleListAlert',
                       );
                     },
                     icon: const Icon(Icons.list, color: Colors.white),
@@ -237,7 +240,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     ),
                     executeFunctionWhenDialogClose: true,
                     ref: ref,
-                    from: 'HomeScreen',
+                    from: 'RouteTrainStationListAlert',
                   );
                 },
                 icon: const Icon(Icons.train, color: Colors.white),

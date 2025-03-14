@@ -59,7 +59,7 @@ class _TempleCourseDisplayAlertState extends ConsumerState<TempleCourseDisplayAl
                           clearBarrierColor: true,
                           executeFunctionWhenDialogClose: true,
                           ref: ref,
-                          from: 'TempleCourseDisplayAlert',
+                          from: 'TempleRankInputAlert',
                         );
                       },
                       icon: Icon(
