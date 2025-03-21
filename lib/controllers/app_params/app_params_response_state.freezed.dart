@@ -37,6 +37,9 @@ mixin _$AppParamsResponseState {
   String get visitedTempleSelectedDate => throw _privateConstructorUsedError;
   String get visitedTempleSelectedRank => throw _privateConstructorUsedError;
 
+  ///
+  LatLng? get visitedTempleFromHomeLatLng => throw _privateConstructorUsedError;
+
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -61,7 +64,8 @@ abstract class $AppParamsResponseStateCopyWith<$Res> {
       String notReachTempleNearStationName,
       int visitedTempleSelectedYear,
       String visitedTempleSelectedDate,
-      String visitedTempleSelectedRank});
+      String visitedTempleSelectedRank,
+      LatLng? visitedTempleFromHomeLatLng});
 }
 
 /// @nodoc
@@ -91,6 +95,7 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
     Object? visitedTempleSelectedYear = null,
     Object? visitedTempleSelectedDate = null,
     Object? visitedTempleSelectedRank = null,
+    Object? visitedTempleFromHomeLatLng = freezed,
   }) {
     return _then(_value.copyWith(
       currentZoom: null == currentZoom
@@ -137,6 +142,10 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
           ? _value.visitedTempleSelectedRank
           : visitedTempleSelectedRank // ignore: cast_nullable_to_non_nullable
               as String,
+      visitedTempleFromHomeLatLng: freezed == visitedTempleFromHomeLatLng
+          ? _value.visitedTempleFromHomeLatLng
+          : visitedTempleFromHomeLatLng // ignore: cast_nullable_to_non_nullable
+              as LatLng?,
     ) as $Val);
   }
 }
@@ -161,7 +170,8 @@ abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
       String notReachTempleNearStationName,
       int visitedTempleSelectedYear,
       String visitedTempleSelectedDate,
-      String visitedTempleSelectedRank});
+      String visitedTempleSelectedRank,
+      LatLng? visitedTempleFromHomeLatLng});
 }
 
 /// @nodoc
@@ -190,6 +200,7 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
     Object? visitedTempleSelectedYear = null,
     Object? visitedTempleSelectedDate = null,
     Object? visitedTempleSelectedRank = null,
+    Object? visitedTempleFromHomeLatLng = freezed,
   }) {
     return _then(_$AppParamsResponseStateImpl(
       currentZoom: null == currentZoom
@@ -236,6 +247,10 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
           ? _value.visitedTempleSelectedRank
           : visitedTempleSelectedRank // ignore: cast_nullable_to_non_nullable
               as String,
+      visitedTempleFromHomeLatLng: freezed == visitedTempleFromHomeLatLng
+          ? _value.visitedTempleFromHomeLatLng
+          : visitedTempleFromHomeLatLng // ignore: cast_nullable_to_non_nullable
+              as LatLng?,
     ));
   }
 }
@@ -254,7 +269,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       this.notReachTempleNearStationName = '',
       this.visitedTempleSelectedYear = 0,
       this.visitedTempleSelectedDate = '',
-      this.visitedTempleSelectedRank = ''})
+      this.visitedTempleSelectedRank = '',
+      this.visitedTempleFromHomeLatLng})
       : _firstEntries = firstEntries,
         _secondEntries = secondEntries;
 
@@ -314,9 +330,13 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
   @JsonKey()
   final String visitedTempleSelectedRank;
 
+  ///
+  @override
+  final LatLng? visitedTempleFromHomeLatLng;
+
   @override
   String toString() {
-    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate, visitedTempleSelectedRank: $visitedTempleSelectedRank)';
+    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate, visitedTempleSelectedRank: $visitedTempleSelectedRank, visitedTempleFromHomeLatLng: $visitedTempleFromHomeLatLng)';
   }
 
   @override
@@ -345,15 +365,17 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
                     notReachTempleNearStationName) ||
                 other.notReachTempleNearStationName ==
                     notReachTempleNearStationName) &&
-            (identical(other.visitedTempleSelectedYear,
-                    visitedTempleSelectedYear) ||
+            (identical(other.visitedTempleSelectedYear, visitedTempleSelectedYear) ||
                 other.visitedTempleSelectedYear == visitedTempleSelectedYear) &&
-            (identical(other.visitedTempleSelectedDate,
-                    visitedTempleSelectedDate) ||
+            (identical(other.visitedTempleSelectedDate, visitedTempleSelectedDate) ||
                 other.visitedTempleSelectedDate == visitedTempleSelectedDate) &&
             (identical(other.visitedTempleSelectedRank,
                     visitedTempleSelectedRank) ||
-                other.visitedTempleSelectedRank == visitedTempleSelectedRank));
+                other.visitedTempleSelectedRank == visitedTempleSelectedRank) &&
+            (identical(other.visitedTempleFromHomeLatLng,
+                    visitedTempleFromHomeLatLng) ||
+                other.visitedTempleFromHomeLatLng ==
+                    visitedTempleFromHomeLatLng));
   }
 
   @override
@@ -369,7 +391,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       notReachTempleNearStationName,
       visitedTempleSelectedYear,
       visitedTempleSelectedDate,
-      visitedTempleSelectedRank);
+      visitedTempleSelectedRank,
+      visitedTempleFromHomeLatLng);
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
@@ -383,17 +406,19 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
 
 abstract class _AppParamsResponseState implements AppParamsResponseState {
   const factory _AppParamsResponseState(
-      {final double currentZoom,
-      final int currentPaddingIndex,
-      final Offset? overlayPosition,
-      final List<OverlayEntry>? firstEntries,
-      final List<OverlayEntry>? secondEntries,
-      final bool visitedTempleMapDisplayFinish,
-      final bool homeTextFormFieldVisible,
-      final String notReachTempleNearStationName,
-      final int visitedTempleSelectedYear,
-      final String visitedTempleSelectedDate,
-      final String visitedTempleSelectedRank}) = _$AppParamsResponseStateImpl;
+          {final double currentZoom,
+          final int currentPaddingIndex,
+          final Offset? overlayPosition,
+          final List<OverlayEntry>? firstEntries,
+          final List<OverlayEntry>? secondEntries,
+          final bool visitedTempleMapDisplayFinish,
+          final bool homeTextFormFieldVisible,
+          final String notReachTempleNearStationName,
+          final int visitedTempleSelectedYear,
+          final String visitedTempleSelectedDate,
+          final String visitedTempleSelectedRank,
+          final LatLng? visitedTempleFromHomeLatLng}) =
+      _$AppParamsResponseStateImpl;
 
   @override
   double get currentZoom;
@@ -425,6 +450,10 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
   String get visitedTempleSelectedDate;
   @override
   String get visitedTempleSelectedRank;
+
+  ///
+  @override
+  LatLng? get visitedTempleFromHomeLatLng;
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.

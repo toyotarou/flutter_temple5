@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:latlong2/latlong.dart';
 
 part 'app_params_response_state.freezed.dart';
 
@@ -25,5 +26,8 @@ class AppParamsResponseState with _$AppParamsResponseState {
     @Default(0) int visitedTempleSelectedYear,
     @Default('') String visitedTempleSelectedDate,
     @Default('') String visitedTempleSelectedRank,
+
+    ///
+    LatLng? visitedTempleFromHomeLatLng,
   }) = _AppParamsResponseState;
 }

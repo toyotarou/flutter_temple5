@@ -12,6 +12,7 @@ import '_components/not_reach_temple_map_alert.dart';
 import '_components/route_train_station_list_alert.dart';
 import '_components/temple_detail_map_alert.dart';
 import '_components/tokyo_jinjachou_temple_list_alert.dart';
+import '_components/visited_temple_from_home_map_alert.dart';
 import '_components/visited_temple_list_alert.dart';
 import '_components/visited_temple_map_alert.dart';
 import '_parts/_temple_dialog.dart';
@@ -188,18 +189,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
                       TempleDialog(
                         context: context,
-                        widget:  VisitedTempleListAlert(
-
-
-
-
-
+                        widget: VisitedTempleListAlert(
                           templeVisitDateMap: templeState.templeVisitDateMap,
                           dateTempleMap: templeState.dateTempleMap,
-
-
-
-
                         ),
                         executeFunctionWhenDialogClose: true,
                         ref: ref,
@@ -225,6 +217,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                   IconButton(
                     onPressed: () => TempleDialog(context: context, widget: const NeedleCompassMapAlert()),
                     icon: const Icon(Icons.nearby_error, color: Colors.white),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      TempleDialog(
+                        context: context,
+                        widget: const VisitedTempleFromHomeMapAlert(),
+                      );
+                    },
+                    icon: const Icon(Icons.home, color: Colors.white),
                   ),
                 ],
               ),

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 
+import '../../const/const.dart';
 import 'app_params_response_state.dart';
 
 final AutoDisposeStateNotifierProvider<AppParamNotifier, AppParamsResponseState> appParamProvider =
     StateNotifierProvider.autoDispose<AppParamNotifier, AppParamsResponseState>(
         (AutoDisposeStateNotifierProviderRef<AppParamNotifier, AppParamsResponseState> ref) {
-  return AppParamNotifier(const AppParamsResponseState());
+  return AppParamNotifier(
+      const AppParamsResponseState(visitedTempleFromHomeLatLng: LatLng(zenpukujiLat, zenpukujiLng)));
 });
 
 class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
@@ -45,4 +48,8 @@ class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
 
   ///
   void setVisitedTempleSelectedRank({required String rank}) => state = state.copyWith(visitedTempleSelectedRank: rank);
+
+  ///
+  void setVisitedTempleFromHomeLatLng({required LatLng latlng}) =>
+      state = state.copyWith(visitedTempleFromHomeLatLng: latlng);
 }
