@@ -223,6 +223,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                       TempleDialog(
                         context: context,
                         widget: const VisitedTempleFromHomeMapAlert(),
+                        executeFunctionWhenDialogClose: true,
+                        ref: ref,
                       );
                     },
                     icon: const Icon(Icons.home, color: Colors.white),

@@ -137,9 +137,11 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
                           initialPosition: Offset(0, context.screenSize.height * 0.6),
                           widget: Consumer(
                             builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
+                              context: context,
                               ref: ref,
                               templeLatLngMap: templeLatLngState.templeLatLngMap,
                               listHeight: context.screenSize.height * 0.28,
+                              from: 'VisitedTempleMapAlert',
                             ),
                           ),
                           onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),

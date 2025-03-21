@@ -7,6 +7,8 @@ import '../../const/const.dart';
 import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../utility/tile_provider.dart';
+import '../_parts/temple_overlay.dart';
+import '../_parts/visited_temple_list_parts.dart';
 
 class VisitedTempleFromHomeMapAlert extends ConsumerStatefulWidget {
   const VisitedTempleFromHomeMapAlert({super.key});
@@ -19,9 +21,19 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
     with ControllersMixin<VisitedTempleFromHomeMapAlert> {
   final MapController mapController = MapController();
 
+  final List<OverlayEntry> _secondEntries = <OverlayEntry>[];
+
+  List<Marker> markerList = <Marker>[];
+
+  List<Polyline<Object>> polylineList = <Polyline<Object>>[];
+
   ///
   @override
   Widget build(BuildContext context) {
+    makeMarker();
+
+    makePolyline();
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -50,6 +62,8 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                   ),
                 ],
               ),
+              // ignore: always_specify_types
+              PolylineLayer(polylines: polylineList),
             ],
           ),
           displayMapStackPartsUpper(),
@@ -133,15 +147,144 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
+
+                      addSecondOverlay(
+                        context: context,
+                        secondEntries: _secondEntries,
+                        setStateCallback: setState,
+                        width: context.screenSize.width,
+                        height: context.screenSize.height * 0.4,
+                        color: Colors.blueGrey.withOpacity(0.3),
+                        initialPosition: Offset(0, context.screenSize.height * 0.6),
+                        widget: Consumer(
+                          builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
+                            context: context,
+                            ref: ref,
+                            templeLatLngMap: templeLatLngState.templeLatLngMap,
+                            listHeight: context.screenSize.height * 0.28,
+                            from: 'VisitedTempleFromHomeMapAlert',
+                          ),
+                        ),
+                        onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
+                        fixedFlag: true,
+                        scrollStopFlag: true,
+                      );
+                    },
                     icon: const Icon(Icons.calendar_month, color: Colors.white),
                   ),
                 ),
               ],
             ),
           ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const SizedBox.shrink(),
+              Row(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        final num zoom = appParamState.currentZoom == 0 ? 10 : appParamState.currentZoom;
+                        final double newZoom = zoom + 0.5;
+
+                        appParamNotifier.setCurrentZoom(zoom: newZoom);
+
+                        mapController.move(appParamState.visitedTempleFromHomeLatLng!, newZoom);
+                      },
+                      icon: const Icon(Icons.add, color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        final num zoom = appParamState.currentZoom == 0 ? 10 : appParamState.currentZoom;
+
+                        double newZoom = zoom - 0.5;
+                        if (newZoom < 0) {
+                          newZoom = 0;
+                        }
+
+                        appParamNotifier.setCurrentZoom(zoom: newZoom);
+
+                        mapController.move(appParamState.visitedTempleFromHomeLatLng!, newZoom);
+                      },
+                      icon: const Icon(Icons.remove, color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );
+  }
+
+  ///
+  void makeMarker() {
+    final List<LatLng> latLngList = makeLatLngList();
+
+    print(latLngList);
+  }
+
+  ///
+  void makePolyline() {
+    polylineList = <Polyline<Object>>[];
+
+    final List<LatLng> latLngList = makeLatLngList();
+
+    if (latLngList.isNotEmpty && latLngList.length > 1) {
+      polylineList.add(
+        // ignore: always_specify_types
+        Polyline(points: latLngList.map((LatLng e) => e).toList(), color: Colors.redAccent, strokeWidth: 5),
+      );
+    }
+  }
+
+  ///
+  List<LatLng> makeLatLngList() {
+    final List<LatLng> latLngList = <LatLng>[];
+
+    if (appParamState.visitedTempleSelectedDate != '') {
+      final List<String> templeList = <String>[];
+
+      if (templeState.dateTempleMap[appParamState.visitedTempleSelectedDate] != null) {
+        templeList.add(templeState.dateTempleMap[appParamState.visitedTempleSelectedDate]!.temple);
+
+        if (templeState.dateTempleMap[appParamState.visitedTempleSelectedDate]!.memo.isNotEmpty) {
+          templeState.dateTempleMap[appParamState.visitedTempleSelectedDate]!.memo
+              .split('、')
+              .forEach((String e) => templeList.add(e));
+        }
+      }
+
+      if (templeList.isNotEmpty) {
+        for (final String element in templeList) {
+          if (templeLatLngState.templeLatLngMap[element] != null) {
+            latLngList.add(
+              LatLng(
+                templeLatLngState.templeLatLngMap[element]!.lat.toDouble(),
+                templeLatLngState.templeLatLngMap[element]!.lng.toDouble(),
+              ),
+            );
+          }
+        }
+      }
+    }
+
+    return latLngList;
   }
 }

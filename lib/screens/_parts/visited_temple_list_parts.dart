@@ -11,8 +11,13 @@ import '../../models/temple_lat_lng_model.dart';
 import '../../models/temple_model.dart';
 
 ///
-Widget visitedTempleListParts(
-    {required WidgetRef ref, required Map<String, TempleLatLngModel> templeLatLngMap, required double listHeight}) {
+Widget visitedTempleListParts({
+  required WidgetRef ref,
+  required Map<String, TempleLatLngModel> templeLatLngMap,
+  required double listHeight,
+  required String from,
+  required BuildContext context,
+}) {
   final ScrollController scrollController = ScrollController();
 
   final List<Widget> list = <Widget>[];
@@ -90,22 +95,26 @@ Widget visitedTempleListParts(
                   children: templeList.map((String element2) {
                     return Row(
                       children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            if (templeLatLngMap[element2] != null) {
-                              ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: false);
+                        if (from == 'VisitedTempleMapAlert') ...<Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              if (templeLatLngMap[element2] != null) {
+                                ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: false);
 
-                              ref.read(templeProvider.notifier).setSelectTemple(
-                                  name: element2,
-                                  lat: templeLatLngMap[element2]!.lat,
-                                  lng: templeLatLngMap[element2]!.lng);
-                            }
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(top: 5, bottom: 5, right: 15),
-                            child: Icon(Icons.all_out, color: Colors.white),
+                                ref.read(templeProvider.notifier).setSelectTemple(
+                                    name: element2,
+                                    lat: templeLatLngMap[element2]!.lat,
+                                    lng: templeLatLngMap[element2]!.lng);
+                              }
+                            },
+                            child: Container(
+                              width: 40,
+                              alignment: Alignment.topLeft,
+                              child: const Icon(Icons.all_out, color: Colors.white),
+                            ),
                           ),
-                        ),
+                        ],
+                        if (from == 'VisitedTempleFromHomeMapAlert') ...<Widget>[const SizedBox(width: 40)],
                         Expanded(child: Text(element2)),
                       ],
                     );
@@ -126,49 +135,54 @@ Widget visitedTempleListParts(
     child: Column(
       children: <Widget>[
         SizedBox(
-            height: 60,
-            child: Row(
-              children: <Widget>[
-                IconButton(
-                  onPressed: () => ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: 0),
-                  icon: const Icon(Icons.list, color: Colors.white),
-                ),
-                IconButton(
-                    onPressed: () {
-                      ref.read(appParamProvider.notifier).setVisitedTempleSelectedDate(date: '');
+          height: 60,
+          child: Row(
+            children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: 0);
+                },
+                child: const Text('YEAR\nCLEAR', style: TextStyle(color: Colors.white, fontSize: 12)),
+              ),
+              TextButton(
+                onPressed: () {
+                  ref.read(appParamProvider.notifier).setVisitedTempleSelectedDate(date: '');
 
-                      ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: true);
+                  ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: true);
 
-                      ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
-                    },
-                    icon: const Icon(Icons.square_outlined, color: Colors.white)),
-                Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: yearList.map(
-                        (String e) {
-                          return Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: GestureDetector(
-                              onTap: () {
-                                ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: e.toInt());
+                  ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+                },
+                child: const Text('SELECT\nCLEAR', style: TextStyle(color: Colors.white, fontSize: 12)),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: yearList.map(
+                      (String e) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: e.toInt());
 
-                                scrollController.jumpTo(0);
-                              },
-                              child: CircleAvatar(
-                                backgroundColor: Colors.blueAccent.withOpacity(0.4),
-                                child: Text(e, style: const TextStyle(color: Colors.white, fontSize: 12)),
-                              ),
+                              scrollController.jumpTo(0);
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: Colors.blueAccent.withOpacity(0.4),
+                              child: Text(e, style: const TextStyle(color: Colors.white, fontSize: 12)),
                             ),
-                          );
-                        },
-                      ).toList(),
-                    ),
+                          ),
+                        );
+                      },
+                    ).toList(),
                   ),
                 ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
         SizedBox(
           height: listHeight,
           child: SingleChildScrollView(controller: scrollController, child: Column(children: list)),
