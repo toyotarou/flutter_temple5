@@ -7,6 +7,7 @@ import '../../const/const.dart';
 import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
 import '../../utility/tile_provider.dart';
+
 import '../_parts/temple_overlay.dart';
 import '../_parts/visited_temple_list_parts.dart';
 
@@ -235,56 +236,103 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
 
   ///
   void makeMarker() {
-    final List<LatLng> latLngList = makeLatLngList();
-
-    print(latLngList);
+    // final List<LatLng> latLngList = makeLatLngList();
+    //
+    // print(latLngList);
   }
 
   ///
   void makePolyline() {
     polylineList = <Polyline<Object>>[];
 
-    final List<LatLng> latLngList = makeLatLngList();
+    final Map<String, List<LatLng>> latLngMap = makeLatLngMap();
 
-    if (latLngList.isNotEmpty && latLngList.length > 1) {
-      polylineList.add(
-        // ignore: always_specify_types
-        Polyline(points: latLngList.map((LatLng e) => e).toList(), color: Colors.redAccent, strokeWidth: 5),
-      );
+    if (latLngMap.isNotEmpty) {
+      latLngMap.forEach((String key, List<LatLng> value) {
+        polylineList.add(
+          // ignore: always_specify_types
+          Polyline(points: value.map((LatLng e) => e).toList(), color: Colors.redAccent, strokeWidth: 5),
+        );
+      });
     }
   }
 
   ///
-  List<LatLng> makeLatLngList() {
-    final List<LatLng> latLngList = <LatLng>[];
+  Map<String, List<LatLng>> makeLatLngMap() {
+    final Map<String, List<LatLng>> latLngMap = <String, List<LatLng>>{};
 
-    if (appParamState.visitedTempleSelectedDate != '') {
-      final List<String> templeList = <String>[];
-
-      if (templeState.dateTempleMap[appParamState.visitedTempleSelectedDate] != null) {
-        templeList.add(templeState.dateTempleMap[appParamState.visitedTempleSelectedDate]!.temple);
-
-        if (templeState.dateTempleMap[appParamState.visitedTempleSelectedDate]!.memo.isNotEmpty) {
-          templeState.dateTempleMap[appParamState.visitedTempleSelectedDate]!.memo
-              .split('、')
-              .forEach((String e) => templeList.add(e));
-        }
+    if (appParamState.visitedTempleFromHomeSelectedDateList.isNotEmpty) {
+      for (final String element in appParamState.visitedTempleFromHomeSelectedDateList) {
+        latLngMap[element] = <LatLng>[];
       }
 
-      if (templeList.isNotEmpty) {
-        for (final String element in templeList) {
-          if (templeLatLngState.templeLatLngMap[element] != null) {
-            latLngList.add(
+      for (final String element in appParamState.visitedTempleFromHomeSelectedDateList) {
+        //////////////// start
+        if (templeState.dateTempleMap[element] != null) {
+          if (stationState.stationMap[templeState.dateTempleMap[element]!.startPoint] != null) {
+            latLngMap[element]?.add(
               LatLng(
-                templeLatLngState.templeLatLngMap[element]!.lat.toDouble(),
-                templeLatLngState.templeLatLngMap[element]!.lng.toDouble(),
+                stationState.stationMap[templeState.dateTempleMap[element]!.startPoint]!.lat.toDouble(),
+                stationState.stationMap[templeState.dateTempleMap[element]!.startPoint]!.lng.toDouble(),
               ),
             );
+          } else {
+            switch (templeState.dateTempleMap[element]!.startPoint) {
+              case '自宅':
+                latLngMap[element]?.add(const LatLng(funabashiLat, funabashiLng));
+              case '実家':
+                latLngMap[element]?.add(const LatLng(zenpukujiLat, zenpukujiLng));
+            }
           }
         }
+        //////////////// start
+
+        //////////////// temple
+        final List<String> templeList = <String>[];
+        if (templeState.dateTempleMap[element] != null) {
+          templeList.add(templeState.dateTempleMap[element]!.temple);
+
+          if (templeState.dateTempleMap[element]!.memo.isNotEmpty) {
+            templeState.dateTempleMap[element]!.memo.split('、').forEach((String e) {
+              templeList.add(e);
+            });
+          }
+        }
+
+        if (templeList.isNotEmpty) {
+          for (final String element2 in templeList) {
+            if (templeLatLngState.templeLatLngMap[element2] != null) {
+              latLngMap[element]?.add(LatLng(
+                templeLatLngState.templeLatLngMap[element2]!.lat.toDouble(),
+                templeLatLngState.templeLatLngMap[element2]!.lng.toDouble(),
+              ));
+            }
+          }
+        }
+        //////////////// temple
+
+        //////////////// goal
+        if (templeState.dateTempleMap[element] != null) {
+          if (stationState.stationMap[templeState.dateTempleMap[element]!.endPoint] != null) {
+            latLngMap[element]?.add(
+              LatLng(
+                stationState.stationMap[templeState.dateTempleMap[element]!.endPoint]!.lat.toDouble(),
+                stationState.stationMap[templeState.dateTempleMap[element]!.endPoint]!.lng.toDouble(),
+              ),
+            );
+          } else {
+            switch (templeState.dateTempleMap[element]!.endPoint) {
+              case '自宅':
+                latLngMap[element]?.add(const LatLng(funabashiLat, funabashiLng));
+              case '実家':
+                latLngMap[element]?.add(const LatLng(zenpukujiLat, zenpukujiLng));
+            }
+          }
+        }
+        //////////////// goal
       }
     }
 
-    return latLngList;
+    return latLngMap;
   }
 }

@@ -52,4 +52,15 @@ class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
   ///
   void setVisitedTempleFromHomeLatLng({required LatLng latlng}) =>
       state = state.copyWith(visitedTempleFromHomeLatLng: latlng);
+
+  ///
+  void setVisitedTempleFromHomeSelectedDateList({required String date}) {
+    final List<String> dateList = <String>[...state.visitedTempleFromHomeSelectedDateList];
+    (dateList.contains(date)) ? dateList.remove(date) : dateList.add(date);
+    state = state.copyWith(visitedTempleFromHomeSelectedDateList: dateList);
+  }
+
+  ///
+  void clearVisitedTempleFromHomeSelectedDateList() =>
+      state = state.copyWith(visitedTempleFromHomeSelectedDateList: <String>[]);
 }

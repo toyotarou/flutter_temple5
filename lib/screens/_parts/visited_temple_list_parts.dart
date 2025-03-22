@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/app_params/app_params_notifier.dart';
 import '../../controllers/app_params/app_params_response_state.dart';
+import '../../controllers/station/station.dart';
 import '../../controllers/temple/temple.dart';
 
 import '../../extensions/extensions.dart';
 
+import '../../models/station_model.dart';
 import '../../models/temple_lat_lng_model.dart';
 import '../../models/temple_model.dart';
 
@@ -33,6 +35,9 @@ Widget visitedTempleListParts({
       yearList.add(element.date.yyyymmdd.split('-')[0]);
     }
   }
+
+  final List<String> visitedTempleFromHomeSelectedDateList =
+      ref.watch(appParamProvider.select((AppParamsResponseState value) => value.visitedTempleFromHomeSelectedDateList));
 
   final int visitedTempleSelectedYear =
       ref.watch(appParamProvider.select((AppParamsResponseState value) => value.visitedTempleSelectedYear));
@@ -77,11 +82,23 @@ Widget visitedTempleListParts({
                 child: Row(
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () =>
-                          ref.read(appParamProvider.notifier).setVisitedTempleSelectedDate(date: element.date.yyyymmdd),
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 5, bottom: 5, right: 15),
-                        child: Icon(Icons.location_on, color: Colors.white),
+                      onTap: () {
+                        if (from == 'VisitedTempleMapAlert') {
+                          ref.read(appParamProvider.notifier).setVisitedTempleSelectedDate(date: element.date.yyyymmdd);
+                        } else if (from == 'VisitedTempleFromHomeMapAlert') {
+                          ref
+                              .read(appParamProvider.notifier)
+                              .setVisitedTempleFromHomeSelectedDateList(date: element.date.yyyymmdd);
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 5, bottom: 5, right: 15),
+                        child: Icon(
+                          Icons.location_on,
+                          color: (visitedTempleFromHomeSelectedDateList.contains(element.date.yyyymmdd))
+                              ? Colors.yellowAccent
+                              : Colors.white,
+                        ),
                       ),
                     ),
                     Text(element.date.yyyymmdd),
@@ -90,35 +107,49 @@ Widget visitedTempleListParts({
               ),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: templeList.map((String element2) {
-                    return Row(
-                      children: <Widget>[
-                        if (from == 'VisitedTempleMapAlert') ...<Widget>[
-                          GestureDetector(
-                            onTap: () {
-                              if (templeLatLngMap[element2] != null) {
-                                ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: false);
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: templeList.map((String element2) {
+                        return Row(
+                          children: <Widget>[
+                            if (from == 'VisitedTempleMapAlert') ...<Widget>[
+                              GestureDetector(
+                                onTap: () {
+                                  if (templeLatLngMap[element2] != null) {
+                                    ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: false);
 
-                                ref.read(templeProvider.notifier).setSelectTemple(
-                                    name: element2,
-                                    lat: templeLatLngMap[element2]!.lat,
-                                    lng: templeLatLngMap[element2]!.lng);
-                              }
-                            },
-                            child: Container(
-                              width: 40,
-                              alignment: Alignment.topLeft,
-                              child: const Icon(Icons.all_out, color: Colors.white),
-                            ),
-                          ),
-                        ],
-                        if (from == 'VisitedTempleFromHomeMapAlert') ...<Widget>[const SizedBox(width: 40)],
-                        Expanded(child: Text(element2)),
-                      ],
-                    );
-                  }).toList(),
+                                    ref.read(templeProvider.notifier).setSelectTemple(
+                                        name: element2,
+                                        lat: templeLatLngMap[element2]!.lat,
+                                        lng: templeLatLngMap[element2]!.lng);
+                                  }
+                                },
+                                child: Container(
+                                  width: 40,
+                                  alignment: Alignment.topLeft,
+                                  child: const Icon(Icons.all_out, color: Colors.white),
+                                ),
+                              ),
+                            ],
+                            if (from == 'VisitedTempleFromHomeMapAlert') ...<Widget>[const SizedBox(width: 40)],
+                            Expanded(child: Text(element2)),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                    if (from == 'VisitedTempleFromHomeMapAlert') ...<Widget>[
+                      Container(
+                        width: double.infinity,
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          '${displayStartEndPoint(ref: ref, point: element.startPoint)} - ${displayStartEndPoint(ref: ref, point: element.endPoint)}',
+                          style: TextStyle(fontSize: 12, color: getStartEndPointColor(element)),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
             ],
@@ -139,18 +170,20 @@ Widget visitedTempleListParts({
           child: Row(
             children: <Widget>[
               TextButton(
-                onPressed: () {
-                  ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: 0);
-                },
+                onPressed: () => ref.read(appParamProvider.notifier).setVisitedTempleSelectedYear(year: 0),
                 child: const Text('YEAR\nCLEAR', style: TextStyle(color: Colors.white, fontSize: 12)),
               ),
               TextButton(
                 onPressed: () {
-                  ref.read(appParamProvider.notifier).setVisitedTempleSelectedDate(date: '');
+                  if (from == 'VisitedTempleMapAlert') {
+                    ref.read(appParamProvider.notifier).setVisitedTempleSelectedDate(date: '');
 
-                  ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: true);
+                    ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: true);
 
-                  ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+                    ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+                  } else if (from == 'VisitedTempleFromHomeMapAlert') {
+                    ref.read(appParamProvider.notifier).clearVisitedTempleFromHomeSelectedDateList();
+                  }
                 },
                 child: const Text('SELECT\nCLEAR', style: TextStyle(color: Colors.white, fontSize: 12)),
               ),
@@ -190,4 +223,29 @@ Widget visitedTempleListParts({
       ],
     ),
   );
+}
+
+///
+String displayStartEndPoint({required WidgetRef ref, required String point}) {
+  final Map<String, StationModel> stationMap =
+      ref.watch(stationProvider.select((StationState value) => value.stationMap));
+
+  if (stationMap[point] != null) {
+    return stationMap[point]!.stationName;
+  } else {
+    return point;
+  }
+}
+
+///
+Color getStartEndPointColor(TempleModel element) {
+  if ('自宅' == element.startPoint || '自宅' == element.endPoint) {
+    return Colors.pinkAccent;
+  } else if ('実家' == element.startPoint || '実家' == element.endPoint) {
+    return Colors.greenAccent;
+  } else if (element.startPoint == element.endPoint) {
+    return Colors.blueAccent;
+  } else {
+    return Colors.white;
+  }
 }

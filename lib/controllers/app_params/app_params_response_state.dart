@@ -29,5 +29,6 @@ class AppParamsResponseState with _$AppParamsResponseState {
 
     ///
     LatLng? visitedTempleFromHomeLatLng,
+    @Default(<String>[]) List<String> visitedTempleFromHomeSelectedDateList,
   }) = _AppParamsResponseState;
 }
