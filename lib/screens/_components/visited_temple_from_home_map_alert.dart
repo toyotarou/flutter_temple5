@@ -21,14 +21,13 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
     with ControllersMixin<VisitedTempleFromHomeMapAlert> {
   final MapController mapController = MapController();
 
-  final List<OverlayEntry> _firstEntries = <OverlayEntry>[];
-
   final List<OverlayEntry> _secondEntries = <OverlayEntry>[];
 
   List<Marker> markerList = <Marker>[];
 
   List<Polyline<Object>> polylineList = <Polyline<Object>>[];
 
+  bool searchAddressAreaDisplayFlag = false;
   TextEditingController searchAddressEditingController = TextEditingController();
 
   ///
@@ -99,6 +98,53 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                       ),
                       child: IconButton(
                         onPressed: () {
+                          appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
+
+                          addSecondOverlay(
+                            context: context,
+                            secondEntries: _secondEntries,
+                            setStateCallback: setState,
+                            width: context.screenSize.width,
+                            height: context.screenSize.height * 0.4,
+                            color: Colors.blueGrey.withOpacity(0.3),
+                            initialPosition: Offset(0, context.screenSize.height * 0.6),
+                            widget: Consumer(
+                              builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
+                                context: context,
+                                ref: ref,
+                                templeLatLngMap: templeLatLngState.templeLatLngMap,
+                                listHeight: context.screenSize.height * 0.28,
+                                from: 'VisitedTempleFromHomeMapAlert',
+                              ),
+                            ),
+                            onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
+                            fixedFlag: true,
+                            scrollStopFlag: true,
+                          );
+                        },
+                        icon: const Icon(Icons.calendar_month, color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      decoration:
+                          BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+                      child: IconButton(
+                        onPressed: () => setState(() => searchAddressAreaDisplayFlag = !searchAddressAreaDisplayFlag),
+                        icon: const Icon(Icons.search, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: IconButton(
+                        onPressed: () {
                           appParamNotifier.setVisitedTempleFromHomeLatLng(
                             latlng: const LatLng(zenpukujiLat, zenpukujiLng),
                           );
@@ -141,161 +187,119 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                     ),
                   ],
                 ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          appParamNotifier.setFirstOverlayParams(firstEntries: _firstEntries);
-
-                          addFirstOverlay(
-                            context: context,
-                            firstEntries: _firstEntries,
-                            setStateCallback: setState,
-                            width: context.screenSize.width * 0.7,
-                            height: 100,
-                            color: Colors.blueGrey.withOpacity(0.3),
-                            initialPosition: Offset(0, context.screenSize.height * 0.45),
-                            widget: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: TextField(
-                                    controller: searchAddressEditingController,
-                                    decoration: const InputDecoration(
-                                      isDense: true,
-                                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                                      hintText: '住所',
-                                      filled: true,
-                                      border: OutlineInputBorder(),
-                                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
-                                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
-                                    ),
-                                    style: const TextStyle(fontSize: 13, color: Colors.white),
-                                    onTapOutside: (PointerDownEvent event) =>
-                                        FocusManager.instance.primaryFocus?.unfocus(),
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    if (searchAddressEditingController.text.trim() != '') {
-                                      appParamNotifier.setVisitedTempleFromHomeSearchAddress(
-                                        str: searchAddressEditingController.text.trim(),
-                                      );
-                                    }
-                                  },
-                                  icon: const Icon(Icons.input, color: Colors.white),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    searchAddressEditingController.clear();
-
-                                    appParamNotifier.setVisitedTempleFromHomeSearchAddress(str: '');
-                                  },
-                                  icon: const Icon(Icons.close, color: Colors.white),
-                                ),
-                              ],
-                            ),
-                            onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
-                            secondEntries: _secondEntries,
-                            ref: ref,
-                            from: 'VisitedTempleFromHomeMapAlert',
-                            fixedFlag: true,
-                          );
-                        },
-                        icon: const Icon(Icons.search, color: Colors.white),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
-
-                          addSecondOverlay(
-                            context: context,
-                            secondEntries: _secondEntries,
-                            setStateCallback: setState,
-                            width: context.screenSize.width,
-                            height: context.screenSize.height * 0.4,
-                            color: Colors.blueGrey.withOpacity(0.3),
-                            initialPosition: Offset(0, context.screenSize.height * 0.6),
-                            widget: Consumer(
-                              builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
-                                context: context,
-                                ref: ref,
-                                templeLatLngMap: templeLatLngState.templeLatLngMap,
-                                listHeight: context.screenSize.height * 0.28,
-                                from: 'VisitedTempleFromHomeMapAlert',
-                              ),
-                            ),
-                            onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
-                            fixedFlag: true,
-                            scrollStopFlag: true,
-                          );
-                        },
-                        icon: const Icon(Icons.calendar_month, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
           const SizedBox(height: 10),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox.shrink(),
-              Row(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(10),
+              Container(
+                decoration:
+                    BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+                child: IconButton(
+                  onPressed: () => mapController.rotate(0),
+                  icon: const Icon(Icons.compass_calibration, color: Colors.white),
+                ),
+              ),
+              const SizedBox(width: 20),
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    if (searchAddressAreaDisplayFlag) ...<Widget>[
+                      Container(
+                        height: 50,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.blueAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: TextField(
+                                controller: searchAddressEditingController,
+                                decoration: const InputDecoration(
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                                  hintText: '住所',
+                                  filled: true,
+                                  border: OutlineInputBorder(),
+                                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
+                                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
+                                ),
+                                style: const TextStyle(fontSize: 13, color: Colors.white),
+                                onTapOutside: (PointerDownEvent event) => FocusManager.instance.primaryFocus?.unfocus(),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                if (searchAddressEditingController.text.trim() != '') {
+                                  appParamNotifier.setVisitedTempleFromHomeSearchAddress(
+                                    str: searchAddressEditingController.text.trim(),
+                                  );
+                                }
+                              },
+                              icon: const Icon(Icons.input),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                searchAddressEditingController.clear();
+
+                                appParamNotifier.setVisitedTempleFromHomeSearchAddress(str: '');
+                              },
+                              icon: const Icon(Icons.close),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        const SizedBox.shrink(),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+                              child: IconButton(
+                                onPressed: () {
+                                  final num zoom = appParamState.currentZoom == 0 ? 10 : appParamState.currentZoom;
+                                  final double newZoom = zoom + 0.5;
+
+                                  appParamNotifier.setCurrentZoom(zoom: newZoom);
+
+                                  mapController.move(appParamState.visitedTempleFromHomeLatLng!, newZoom);
+                                },
+                                icon: const Icon(Icons.add, color: Colors.white),
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+                              child: IconButton(
+                                onPressed: () {
+                                  final num zoom = appParamState.currentZoom == 0 ? 10 : appParamState.currentZoom;
+
+                                  double newZoom = zoom - 0.5;
+                                  if (newZoom < 0) {
+                                    newZoom = 0;
+                                  }
+
+                                  appParamNotifier.setCurrentZoom(zoom: newZoom);
+
+                                  mapController.move(appParamState.visitedTempleFromHomeLatLng!, newZoom);
+                                },
+                                icon: const Icon(Icons.remove, color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    child: IconButton(
-                      onPressed: () {
-                        final num zoom = appParamState.currentZoom == 0 ? 10 : appParamState.currentZoom;
-                        final double newZoom = zoom + 0.5;
-
-                        appParamNotifier.setCurrentZoom(zoom: newZoom);
-
-                        mapController.move(appParamState.visitedTempleFromHomeLatLng!, newZoom);
-                      },
-                      icon: const Icon(Icons.add, color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        final num zoom = appParamState.currentZoom == 0 ? 10 : appParamState.currentZoom;
-
-                        double newZoom = zoom - 0.5;
-                        if (newZoom < 0) {
-                          newZoom = 0;
-                        }
-
-                        appParamNotifier.setCurrentZoom(zoom: newZoom);
-
-                        mapController.move(appParamState.visitedTempleFromHomeLatLng!, newZoom);
-                      },
-                      icon: const Icon(Icons.remove, color: Colors.white),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
