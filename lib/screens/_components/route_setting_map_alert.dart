@@ -165,11 +165,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
               },
             ),
             children: <Widget>[
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                tileProvider: CachedTileProvider(),
-                userAgentPackageName: 'com.example.app',
-              ),
+              TileLayer(urlTemplate: 'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png'),
 
               // ignore: always_specify_types
               PolylineLayer(

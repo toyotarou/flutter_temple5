@@ -121,11 +121,7 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
               },
             ),
             children: <Widget>[
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                tileProvider: CachedTileProvider(),
-                userAgentPackageName: 'com.example.app',
-              ),
+              TileLayer(urlTemplate: 'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png'),
               MarkerLayer(markers: markerList),
               // ignore: always_specify_types
               PolylineLayer(polylines: polylineList),

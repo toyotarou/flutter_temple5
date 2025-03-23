@@ -258,10 +258,7 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
               onPositionChanged: (MapCamera position, bool hasGesture) => _mapController.rotate(0),
             ),
             children: <Widget>[
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.example.myapp',
-              ),
+              TileLayer(urlTemplate: 'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png'),
               MarkerLayer(
                 markers: <Marker>[
                   Marker(
