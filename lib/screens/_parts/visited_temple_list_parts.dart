@@ -6,6 +6,7 @@ import '../../controllers/app_params/app_params_response_state.dart';
 import '../../controllers/station/station.dart';
 import '../../controllers/temple/temple.dart';
 
+import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../extensions/extensions.dart';
 
 import '../../models/station_model.dart';
@@ -39,6 +40,18 @@ Widget visitedTempleListParts({
   final List<String> visitedTempleFromHomeSelectedDateList =
       ref.watch(appParamProvider.select((AppParamsResponseState value) => value.visitedTempleFromHomeSelectedDateList));
 
+  final Map<String, TempleLatLngModel> templeLatLngMap =
+      ref.watch(templeLatLngProvider.select((TempleLatLngState value) => value.templeLatLngMap));
+
+  final String visitedTempleFromHomeSearchAddress =
+      ref.watch(appParamProvider.select((AppParamsResponseState value) => value.visitedTempleFromHomeSearchAddress));
+
+  RegExp? reg;
+
+  if (visitedTempleFromHomeSearchAddress != '') {
+    reg = RegExp(visitedTempleFromHomeSearchAddress);
+  }
+
   final int visitedTempleSelectedYear =
       ref.watch(appParamProvider.select((AppParamsResponseState value) => value.visitedTempleSelectedYear));
 
@@ -51,6 +64,19 @@ Widget visitedTempleListParts({
       if (element.memo.isNotEmpty) {
         element.memo.split('、').forEach((String e2) => templeList.add(e2));
       }
+
+      // ========================= // SearchAddress Background color
+      Color listBackgroundColor = Colors.white.withOpacity(0.1);
+      for (final String element2 in templeList) {
+        if (templeLatLngMap[element2] != null) {
+          if (visitedTempleFromHomeSearchAddress != '' && reg != null) {
+            if (reg.firstMatch(templeLatLngMap[element2]!.address) != null) {
+              listBackgroundColor = Colors.pinkAccent.withOpacity(0.1);
+            }
+          }
+        }
+      }
+      // ========================= // SearchAddress Background color
 
       if (keepYear != element.date.yyyymmdd.split('-')[0]) {
         list.add(
@@ -73,6 +99,7 @@ Widget visitedTempleListParts({
           padding: const EdgeInsets.symmetric(vertical: 3),
           decoration: BoxDecoration(
             border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3))),
+            color: listBackgroundColor,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

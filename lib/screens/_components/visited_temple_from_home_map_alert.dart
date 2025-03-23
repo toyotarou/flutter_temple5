@@ -29,6 +29,8 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
 
   List<Polyline<Object>> polylineList = <Polyline<Object>>[];
 
+  TextEditingController searchAddressEditingController = TextEditingController();
+
   ///
   @override
   Widget build(BuildContext context) {
@@ -148,14 +150,6 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                       ),
                       child: IconButton(
                         onPressed: () {
-                          //
-                          //
-                          // templeNotifier.setSelectTemple(
-                          //     name: templeDataList[i].name, lat: templeDataList[i].latitude, lng: templeDataList[i].longitude);
-                          //
-                          //
-                          //
-
                           appParamNotifier.setFirstOverlayParams(firstEntries: _firstEntries);
 
                           addFirstOverlay(
@@ -163,30 +157,53 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                             firstEntries: _firstEntries,
                             setStateCallback: setState,
                             width: context.screenSize.width * 0.7,
-                            height: 80,
+                            height: 100,
                             color: Colors.blueGrey.withOpacity(0.3),
-                            initialPosition: Offset(0, context.screenSize.height * 0.5),
-                            // widget: Consumer(
-                            //   builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                            //     return templeInfoDisplayParts(
-                            //       context: context,
-                            //       temple: templeDataList[i],
-                            //       from: 'NotReachTempleMapAlert',
-                            //       templeVisitDateMap: widget.templeVisitDateMap,
-                            //       dateTempleMap: widget.dateTempleMap,
-                            //       tokyoTrainList: widget.tokyoTrainList,
-                            //       appParamState: appParamState,
-                            //       ref: ref,
-                            //     );
-                            //   },
-                            // ),
+                            initialPosition: Offset(0, context.screenSize.height * 0.45),
+                            widget: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: TextField(
+                                    controller: searchAddressEditingController,
+                                    decoration: const InputDecoration(
+                                      isDense: true,
+                                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                                      hintText: '住所',
+                                      filled: true,
+                                      border: OutlineInputBorder(),
+                                      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
+                                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
+                                    ),
+                                    style: const TextStyle(fontSize: 13, color: Colors.white),
+                                    onTapOutside: (PointerDownEvent event) =>
+                                        FocusManager.instance.primaryFocus?.unfocus(),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    if (searchAddressEditingController.text.trim() != '') {
+                                      appParamNotifier.setVisitedTempleFromHomeSearchAddress(
+                                        str: searchAddressEditingController.text.trim(),
+                                      );
+                                    }
+                                  },
+                                  icon: const Icon(Icons.input, color: Colors.white),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    searchAddressEditingController.clear();
 
-                            widget: Text('aaa'),
-
+                                    appParamNotifier.setVisitedTempleFromHomeSearchAddress(str: '');
+                                  },
+                                  icon: const Icon(Icons.close, color: Colors.white),
+                                ),
+                              ],
+                            ),
                             onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
                             secondEntries: _secondEntries,
                             ref: ref,
                             from: 'VisitedTempleFromHomeMapAlert',
+                            fixedFlag: true,
                           );
                         },
                         icon: const Icon(Icons.search, color: Colors.white),
