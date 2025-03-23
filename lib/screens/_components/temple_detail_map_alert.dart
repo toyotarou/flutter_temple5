@@ -12,7 +12,6 @@ import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/temple_lat_lng_model.dart';
 import '../../models/temple_model.dart';
-import '../../utility/tile_provider.dart';
 import '../_parts/_temple_dialog.dart';
 import '../function.dart';
 import 'temple_course_display_alert.dart';

@@ -6,7 +6,6 @@ import 'package:latlong2/latlong.dart';
 import '../../const/const.dart';
 import '../../controllers/controllers_mixin.dart';
 import '../../extensions/extensions.dart';
-import '../../utility/tile_provider.dart';
 
 import '../_parts/temple_overlay.dart';
 import '../_parts/visited_temple_list_parts.dart';
@@ -21,6 +20,8 @@ class VisitedTempleFromHomeMapAlert extends ConsumerStatefulWidget {
 class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFromHomeMapAlert>
     with ControllersMixin<VisitedTempleFromHomeMapAlert> {
   final MapController mapController = MapController();
+
+  final List<OverlayEntry> _firstEntries = <OverlayEntry>[];
 
   final List<OverlayEntry> _secondEntries = <OverlayEntry>[];
 
@@ -138,39 +139,95 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                     ),
                   ],
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
+                Row(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          //
+                          //
+                          // templeNotifier.setSelectTemple(
+                          //     name: templeDataList[i].name, lat: templeDataList[i].latitude, lng: templeDataList[i].longitude);
+                          //
+                          //
+                          //
 
-                      addSecondOverlay(
-                        context: context,
-                        secondEntries: _secondEntries,
-                        setStateCallback: setState,
-                        width: context.screenSize.width,
-                        height: context.screenSize.height * 0.4,
-                        color: Colors.blueGrey.withOpacity(0.3),
-                        initialPosition: Offset(0, context.screenSize.height * 0.6),
-                        widget: Consumer(
-                          builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
+                          appParamNotifier.setFirstOverlayParams(firstEntries: _firstEntries);
+
+                          addFirstOverlay(
                             context: context,
+                            firstEntries: _firstEntries,
+                            setStateCallback: setState,
+                            width: context.screenSize.width * 0.7,
+                            height: 80,
+                            color: Colors.blueGrey.withOpacity(0.3),
+                            initialPosition: Offset(0, context.screenSize.height * 0.5),
+                            // widget: Consumer(
+                            //   builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                            //     return templeInfoDisplayParts(
+                            //       context: context,
+                            //       temple: templeDataList[i],
+                            //       from: 'NotReachTempleMapAlert',
+                            //       templeVisitDateMap: widget.templeVisitDateMap,
+                            //       dateTempleMap: widget.dateTempleMap,
+                            //       tokyoTrainList: widget.tokyoTrainList,
+                            //       appParamState: appParamState,
+                            //       ref: ref,
+                            //     );
+                            //   },
+                            // ),
+
+                            widget: Text('aaa'),
+
+                            onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
+                            secondEntries: _secondEntries,
                             ref: ref,
-                            templeLatLngMap: templeLatLngState.templeLatLngMap,
-                            listHeight: context.screenSize.height * 0.28,
                             from: 'VisitedTempleFromHomeMapAlert',
-                          ),
-                        ),
-                        onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
-                        fixedFlag: true,
-                        scrollStopFlag: true,
-                      );
-                    },
-                    icon: const Icon(Icons.calendar_month, color: Colors.white),
-                  ),
+                          );
+                        },
+                        icon: const Icon(Icons.search, color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          appParamNotifier.setSecondOverlayParams(secondEntries: _secondEntries);
+
+                          addSecondOverlay(
+                            context: context,
+                            secondEntries: _secondEntries,
+                            setStateCallback: setState,
+                            width: context.screenSize.width,
+                            height: context.screenSize.height * 0.4,
+                            color: Colors.blueGrey.withOpacity(0.3),
+                            initialPosition: Offset(0, context.screenSize.height * 0.6),
+                            widget: Consumer(
+                              builder: (BuildContext context, WidgetRef ref, Widget? child) => visitedTempleListParts(
+                                context: context,
+                                ref: ref,
+                                templeLatLngMap: templeLatLngState.templeLatLngMap,
+                                listHeight: context.screenSize.height * 0.28,
+                                from: 'VisitedTempleFromHomeMapAlert',
+                              ),
+                            ),
+                            onPositionChanged: (Offset newPos) => appParamNotifier.updateOverlayPosition(newPos),
+                            fixedFlag: true,
+                            scrollStopFlag: true,
+                          );
+                        },
+                        icon: const Icon(Icons.calendar_month, color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

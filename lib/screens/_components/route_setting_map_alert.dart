@@ -13,7 +13,6 @@ import '../../models/lat_lng_temple_model.dart';
 import '../../models/temple_model.dart';
 import '../../models/tokyo_station_model.dart';
 import '../../models/tokyo_train_model.dart';
-import '../../utility/tile_provider.dart';
 import '../_parts/_caution_dialog.dart';
 import '../_parts/_temple_dialog.dart';
 import '../_parts/temple_info_display_parts.dart';
