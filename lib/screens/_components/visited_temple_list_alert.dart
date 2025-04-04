@@ -134,6 +134,7 @@ class _VisitedTempleListAlertState extends ConsumerState<VisitedTempleListAlert>
                         ),
                         templePhotoTempleMap: templePhotoTempleMap,
                       ),
+                      rotate: 0,
                     );
                   },
                   icon: Icon(Icons.photo, color: Colors.white.withOpacity(0.3)),

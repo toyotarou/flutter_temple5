@@ -253,6 +253,7 @@ Widget displayVisitedTemplePhoto(
             context: context,
             widget: VisitedTemplePhotoListAlert(temple: temple, templePhotoTempleMap: templePhotoTempleMap),
             paddingTop: context.screenSize.height * 0.5,
+            rotate: 0,
           );
         },
         child: const Icon(Icons.photo, color: Colors.white),

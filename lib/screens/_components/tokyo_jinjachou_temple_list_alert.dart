@@ -168,6 +168,7 @@ class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTe
                         ),
                         templePhotoTempleMap: templePhotoTempleMap,
                       ),
+                      rotate: 0,
                     );
                   },
                   child: const Icon(Icons.call_made, color: Colors.white)),

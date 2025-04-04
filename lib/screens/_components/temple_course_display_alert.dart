@@ -60,6 +60,7 @@ class _TempleCourseDisplayAlertState extends ConsumerState<TempleCourseDisplayAl
                           executeFunctionWhenDialogClose: true,
                           ref: ref,
                           from: 'TempleRankInputAlert',
+                          rotate: 0,
                         );
                       },
                       icon: Icon(

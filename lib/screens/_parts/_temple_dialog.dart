@@ -18,6 +18,7 @@ Future<void> TempleDialog({
   bool? executeFunctionWhenDialogClose,
   WidgetRef? ref,
   String? from,
+  required int rotate,
 }) {
   // ignore: inference_failure_on_function_invocation
   return showDialog(
@@ -30,7 +31,7 @@ Future<void> TempleDialog({
           backgroundColor: Colors.blueGrey.withOpacity(0.3),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           insetPadding: const EdgeInsets.all(30),
-          child: widget,
+          child: RotatedBox(quarterTurns: rotate, child: widget),
         ),
       );
     },

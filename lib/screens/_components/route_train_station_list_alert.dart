@@ -138,6 +138,7 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
                 ),
                 executeFunctionWhenDialogClose: true,
                 ref: ref,
+                rotate: 0,
               );
             },
       icon: Icon(

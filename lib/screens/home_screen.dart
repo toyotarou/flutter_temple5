@@ -177,6 +177,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                         clearBarrierColor: true,
                         executeFunctionWhenDialogClose: true,
                         ref: ref,
+                        rotate: 0,
                       );
                     },
                     icon: const Icon(Icons.map, color: Colors.white),
@@ -196,6 +197,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                         executeFunctionWhenDialogClose: true,
                         ref: ref,
                         from: 'VisitedTempleListAlert',
+                        rotate: 0,
                       );
                     },
                     icon: const Icon(Icons.list, color: Colors.white),
@@ -210,12 +212,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                               complementTempleVisitedDateState.idBaseComplementTempleVisitedDateMap,
                           dateTempleMap: templeState.dateTempleMap,
                         ),
+                        rotate: 0,
                       );
                     },
                     icon: const Icon(Icons.ac_unit, color: Colors.white),
                   ),
                   IconButton(
-                    onPressed: () => TempleDialog(context: context, widget: const NeedleCompassMapAlert()),
+                    onPressed: () => TempleDialog(
+                      context: context,
+                      widget: const NeedleCompassMapAlert(),
+                      rotate: 0,
+                    ),
                     icon: const Icon(Icons.nearby_error, color: Colors.white),
                   ),
                   IconButton(
@@ -225,6 +232,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                         widget: const VisitedTempleFromHomeMapAlert(),
                         executeFunctionWhenDialogClose: true,
                         ref: ref,
+                        rotate: 0,
                       );
                     },
                     icon: const Icon(Icons.home, color: Colors.white),
@@ -256,6 +264,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     executeFunctionWhenDialogClose: true,
                     ref: ref,
                     from: 'RouteTrainStationListAlert',
+                    rotate: 0,
                   );
                 },
                 icon: const Icon(Icons.train, color: Colors.white),
@@ -281,6 +290,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     ),
                     executeFunctionWhenDialogClose: true,
                     ref: ref,
+                    rotate: 0,
                   );
                 },
                 icon: const Icon(FontAwesomeIcons.toriiGate, color: Colors.white),
@@ -467,10 +477,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
             GestureDetector(
               onTap: () => TempleDialog(
                 context: context,
-                widget: TempleDetailMapAlert(
-                  date: data.date,
-                  data: data,
-                ),
+                widget: TempleDetailMapAlert(date: data.date, data: data),
+                rotate: 0,
               ),
               child: const Icon(Icons.call_made, color: Colors.white),
             ),

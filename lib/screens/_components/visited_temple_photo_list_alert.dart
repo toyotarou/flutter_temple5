@@ -62,7 +62,11 @@ class _VisitedTemplePhotoListAlertState extends ConsumerState<VisitedTemplePhoto
                   children: element.templephotos.map((String e) {
                 return GestureDetector(
                   onTap: () {
-                    TempleDialog(context: context, widget: VisitedTemplePhotoAlert(url: e));
+                    TempleDialog(
+                      context: context,
+                      widget: VisitedTemplePhotoAlert(url: e),
+                      rotate: 0,
+                    );
                   },
                   child: Hero(
                     tag: e.split('/').last.split('.')[0],

@@ -294,6 +294,7 @@ class RouteDisplaySettingAlert extends ConsumerWidget {
                       // ignore: use_build_context_synchronously
                       context: context,
                       widget: const RouteDisplayAlert(),
+                      rotate: 0,
                     );
                   },
                   child: Container(

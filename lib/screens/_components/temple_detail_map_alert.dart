@@ -138,6 +138,7 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
                         widget: TempleCourseDisplayAlert(data: templeDataList),
                         paddingLeft: context.screenSize.width * 0.2,
                         clearBarrierColor: true,
+                        rotate: 0,
                       );
                     },
                     icon: const Icon(Icons.info_outline, size: 30, color: Colors.white),
@@ -195,8 +196,11 @@ class _TempleDetailMapAlertState extends ConsumerState<TempleDetailMapAlert>
         for (int i = 0; i < temple.photo.length; i++) {
           list.add(
             GestureDetector(
-              onTap: () =>
-                  TempleDialog(context: context, widget: TemplePhotoGalleryAlert(photoList: temple.photo, number: i)),
+              onTap: () => TempleDialog(
+                context: context,
+                widget: TemplePhotoGalleryAlert(photoList: temple.photo, number: i),
+                rotate: 0,
+              ),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 width: 50,

@@ -235,6 +235,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                                           tokyoTrainList: widget.tokyoTrainList),
                                       paddingTop: context.screenSize.height * 0.6,
                                       clearBarrierColor: true,
+                                      rotate: 0,
                                     );
                                   },
                                   child: Container(
@@ -276,6 +277,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                             context: context,
                             widget: RouteDisplaySettingAlert(),
                             paddingLeft: context.screenSize.width * 0.1,
+                            rotate: 0,
                           );
 
                           _firstEntries.clear();

@@ -207,6 +207,7 @@ class _NeedleCompassMapAlertState extends ConsumerState<NeedleCompassMapAlert>
       widget: NeedleCompassSelectedListAlert(selectedGeoloc: insideMarkers),
       paddingLeft: context.screenSize.width * 0.3,
       clearBarrierColor: true,
+      rotate: 0,
     );
   }
 
