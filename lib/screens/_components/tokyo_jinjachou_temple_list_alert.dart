@@ -64,10 +64,14 @@ class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTe
     final List<String> jogaiTempleAddressList = <String>[];
     final List<String> jogaiTempleAddressList2 = <String>[];
 
+    final Map<String, String> templeRankMap = <String, String>{};
+
     for (final TempleLatLngModel element in templeLatLngState.templeLatLngList) {
       jogaiTempleNameList.add(element.temple);
       jogaiTempleAddressList.add(element.address);
       jogaiTempleAddressList2.add('東京都${element.address}');
+
+      templeRankMap[element.temple] = element.rank;
     }
 
     for (int i = 0; i < templeListState.templeListList.length; i++) {
@@ -124,6 +128,7 @@ class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTe
                   ),
                   const SizedBox(height: 10),
                   Text(dateList.length.toString(), style: const TextStyle(color: Colors.white)),
+                  Text(templeRankMap[templeListState.templeListList[i].name] ?? '-'),
                 ],
               ),
               const SizedBox(width: 10),
