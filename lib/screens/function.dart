@@ -33,7 +33,6 @@ Color? getCircleAvatarBgColor(
         color = Colors.orangeAccent.withOpacity(0.5);
       }
 
-      break;
   }
 
   if (element.mark.split('-').length == 2) {

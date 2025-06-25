@@ -26,7 +26,6 @@ class Utility {
 
       default:
         color = Colors.black.withOpacity(0.2);
-        break;
     }
 
     if (holiday.contains(date)) {
