@@ -5,9 +5,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/home_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // ✅ 追加
+
   await SystemChrome.setPreferredOrientations(
-          <DeviceOrientation>[DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
-      .then((_) => runApp(const ProviderScope(child: MyApp())));
+    <DeviceOrientation>[
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
+
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,8 +26,11 @@ class MyApp extends StatelessWidget {
       title: 'Temple List',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scrollbarTheme: const ScrollbarThemeData()
-            .copyWith(thumbColor: MaterialStateProperty.all(Colors.greenAccent.withOpacity(0.4))),
+        scrollbarTheme: const ScrollbarThemeData().copyWith(
+          thumbColor: MaterialStateProperty.all(
+            Colors.greenAccent.withOpacity(0.4),
+          ),
+        ),
         useMaterial3: false,
       ),
       themeMode: ThemeMode.dark,
