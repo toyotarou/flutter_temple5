@@ -204,6 +204,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                   ),
                   IconButton(
                     onPressed: () {
+                      appParamNotifier.setSelectedTokyoJinjachouTempleName(name: '');
+
                       TempleDialog(
                         context: context,
                         widget: TokyoJinjachouTempleListAlert(

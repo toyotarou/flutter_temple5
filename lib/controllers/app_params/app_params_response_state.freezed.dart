@@ -44,6 +44,10 @@ mixin _$AppParamsResponseState {
   String get visitedTempleFromHomeSearchAddress =>
       throw _privateConstructorUsedError;
 
+  ///
+  String get selectedTokyoJinjachouTempleName =>
+      throw _privateConstructorUsedError;
+
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -71,7 +75,8 @@ abstract class $AppParamsResponseStateCopyWith<$Res> {
       String visitedTempleSelectedRank,
       LatLng? visitedTempleFromHomeLatLng,
       List<String> visitedTempleFromHomeSelectedDateList,
-      String visitedTempleFromHomeSearchAddress});
+      String visitedTempleFromHomeSearchAddress,
+      String selectedTokyoJinjachouTempleName});
 }
 
 /// @nodoc
@@ -104,6 +109,7 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
     Object? visitedTempleFromHomeLatLng = freezed,
     Object? visitedTempleFromHomeSelectedDateList = null,
     Object? visitedTempleFromHomeSearchAddress = null,
+    Object? selectedTokyoJinjachouTempleName = null,
   }) {
     return _then(_value.copyWith(
       currentZoom: null == currentZoom
@@ -164,6 +170,10 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
           ? _value.visitedTempleFromHomeSearchAddress
           : visitedTempleFromHomeSearchAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      selectedTokyoJinjachouTempleName: null == selectedTokyoJinjachouTempleName
+          ? _value.selectedTokyoJinjachouTempleName
+          : selectedTokyoJinjachouTempleName // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -191,7 +201,8 @@ abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
       String visitedTempleSelectedRank,
       LatLng? visitedTempleFromHomeLatLng,
       List<String> visitedTempleFromHomeSelectedDateList,
-      String visitedTempleFromHomeSearchAddress});
+      String visitedTempleFromHomeSearchAddress,
+      String selectedTokyoJinjachouTempleName});
 }
 
 /// @nodoc
@@ -223,6 +234,7 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
     Object? visitedTempleFromHomeLatLng = freezed,
     Object? visitedTempleFromHomeSelectedDateList = null,
     Object? visitedTempleFromHomeSearchAddress = null,
+    Object? selectedTokyoJinjachouTempleName = null,
   }) {
     return _then(_$AppParamsResponseStateImpl(
       currentZoom: null == currentZoom
@@ -283,6 +295,10 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
           ? _value.visitedTempleFromHomeSearchAddress
           : visitedTempleFromHomeSearchAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      selectedTokyoJinjachouTempleName: null == selectedTokyoJinjachouTempleName
+          ? _value.selectedTokyoJinjachouTempleName
+          : selectedTokyoJinjachouTempleName // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -305,7 +321,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       this.visitedTempleFromHomeLatLng,
       final List<String> visitedTempleFromHomeSelectedDateList =
           const <String>[],
-      this.visitedTempleFromHomeSearchAddress = ''})
+      this.visitedTempleFromHomeSearchAddress = '',
+      this.selectedTokyoJinjachouTempleName = ''})
       : _firstEntries = firstEntries,
         _secondEntries = secondEntries,
         _visitedTempleFromHomeSelectedDateList =
@@ -384,9 +401,14 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
   @JsonKey()
   final String visitedTempleFromHomeSearchAddress;
 
+  ///
+  @override
+  @JsonKey()
+  final String selectedTokyoJinjachouTempleName;
+
   @override
   String toString() {
-    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate, visitedTempleSelectedRank: $visitedTempleSelectedRank, visitedTempleFromHomeLatLng: $visitedTempleFromHomeLatLng, visitedTempleFromHomeSelectedDateList: $visitedTempleFromHomeSelectedDateList, visitedTempleFromHomeSearchAddress: $visitedTempleFromHomeSearchAddress)';
+    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate, visitedTempleSelectedRank: $visitedTempleSelectedRank, visitedTempleFromHomeLatLng: $visitedTempleFromHomeLatLng, visitedTempleFromHomeSelectedDateList: $visitedTempleFromHomeSelectedDateList, visitedTempleFromHomeSearchAddress: $visitedTempleFromHomeSearchAddress, selectedTokyoJinjachouTempleName: $selectedTokyoJinjachouTempleName)';
   }
 
   @override
@@ -409,8 +431,7 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
                     visitedTempleMapDisplayFinish) &&
             (identical(other.homeTextFormFieldVisible, homeTextFormFieldVisible) ||
                 other.homeTextFormFieldVisible == homeTextFormFieldVisible) &&
-            (identical(other.notReachTempleNearStationName,
-                    notReachTempleNearStationName) ||
+            (identical(other.notReachTempleNearStationName, notReachTempleNearStationName) ||
                 other.notReachTempleNearStationName ==
                     notReachTempleNearStationName) &&
             (identical(other.visitedTempleSelectedYear, visitedTempleSelectedYear) ||
@@ -428,7 +449,10 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
             (identical(other.visitedTempleFromHomeSearchAddress,
                     visitedTempleFromHomeSearchAddress) ||
                 other.visitedTempleFromHomeSearchAddress ==
-                    visitedTempleFromHomeSearchAddress));
+                    visitedTempleFromHomeSearchAddress) &&
+            (identical(other.selectedTokyoJinjachouTempleName, selectedTokyoJinjachouTempleName) ||
+                other.selectedTokyoJinjachouTempleName ==
+                    selectedTokyoJinjachouTempleName));
   }
 
   @override
@@ -448,7 +472,8 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       visitedTempleFromHomeLatLng,
       const DeepCollectionEquality()
           .hash(_visitedTempleFromHomeSelectedDateList),
-      visitedTempleFromHomeSearchAddress);
+      visitedTempleFromHomeSearchAddress,
+      selectedTokyoJinjachouTempleName);
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
@@ -475,7 +500,8 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
           final String visitedTempleSelectedRank,
           final LatLng? visitedTempleFromHomeLatLng,
           final List<String> visitedTempleFromHomeSelectedDateList,
-          final String visitedTempleFromHomeSearchAddress}) =
+          final String visitedTempleFromHomeSearchAddress,
+          final String selectedTokyoJinjachouTempleName}) =
       _$AppParamsResponseStateImpl;
 
   @override
@@ -516,6 +542,10 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
   List<String> get visitedTempleFromHomeSelectedDateList;
   @override
   String get visitedTempleFromHomeSearchAddress;
+
+  ///
+  @override
+  String get selectedTokyoJinjachouTempleName;
 
   /// Create a copy of AppParamsResponseState
   /// with the given fields replaced by the non-null parameter values.
