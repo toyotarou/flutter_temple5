@@ -9,6 +9,7 @@ import '../models/temple_model.dart';
 import '../utility/utility.dart';
 import '_components/needle_compass_map_alert.dart';
 import '_components/not_reach_temple_map_alert.dart';
+import '_components/prefecture_list_alert.dart';
 import '_components/route_train_station_list_alert.dart';
 import '_components/temple_detail_map_alert.dart';
 import '_components/tokyo_jinjachou_temple_list_alert.dart';
@@ -48,6 +49,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
     templeListNotifier.getAllTempleList();
     templeNotifier.getAllTemple();
     tokyoTrainNotifier.getAllTokyoTrain();
+    prefectureNotifier.getAllPrefectureData();
   }
 
   ///
@@ -75,7 +77,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
             bottom: displayHomeAppBar(),
           ),
           body: Column(
-            children: <Widget>[const SizedBox(height: 10), Expanded(child: displayTempleList())],
+            children: <Widget>[
+              const SizedBox(height: 10),
+              Expanded(child: displayTempleList()),
+              const SizedBox(height: 100),
+            ],
           ),
         ),
       ),
@@ -85,10 +91,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   ///
   PreferredSize displayHomeAppBar() {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(120),
+      preferredSize: const Size.fromHeight(170),
       child: Column(
         children: <Widget>[
           displayHomeButton(),
+          const SizedBox(height: 10),
           displaySearchForm(),
           const SizedBox(height: 10),
           displayHomeTabBar(),
@@ -152,14 +159,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   Widget displayHomeButton() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration:
-                  BoxDecoration(color: Colors.greenAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
-              child: Row(
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration:
+              BoxDecoration(color: Colors.greenAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
                 children: <Widget>[
                   IconButton(
                     onPressed: () {
@@ -219,6 +228,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     },
                     icon: const Icon(Icons.ac_unit, color: Colors.white),
                   ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
                   IconButton(
                     onPressed: () => TempleDialog(
                       context: context,
@@ -239,10 +252,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     },
                     icon: const Icon(Icons.home, color: Colors.white),
                   ),
+                  IconButton(
+                      onPressed: () {
+                        TempleDialog(context: context, widget: const PrefectureListAlert(), rotate: 0);
+                      },
+                      icon: const Icon(FontAwesomeIcons.dharmachakra, color: Colors.white))
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),

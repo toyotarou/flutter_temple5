@@ -6,6 +6,7 @@ import 'app_params/app_params_response_state.dart';
 import 'complement_temple_visited_date/complement_temple_visited_date.dart';
 import 'lat_lng_temple/lat_lng_temple.dart';
 import 'not_reach_station_line_count/not_reach_station_line_count.dart';
+import 'prefecture/prefecture.dart';
 import 'routing/routing.dart';
 import 'station/station.dart';
 import 'temple/temple.dart';
@@ -93,6 +94,12 @@ mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   TemplePhotoResponseState get templePhotoState => ref.watch(templePhotoProvider);
 
   TemplePhotoNotifier get templePhotoNotifier => ref.read(templePhotoProvider.notifier);
+
+//==========================================//
+
+  PrefectureState get prefectureState => ref.watch(prefectureProvider);
+
+  Prefecture get prefectureNotifier => ref.read(prefectureProvider.notifier);
 
 //==========================================//
 }
