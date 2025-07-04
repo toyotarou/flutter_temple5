@@ -65,8 +65,9 @@ class AppParamNotifier extends StateNotifier<AppParamsResponseState> {
       state = state.copyWith(visitedTempleFromHomeSelectedDateList: <String>[]);
 
   ///
-  void setVisitedTempleFromHomeSearchAddress({required String str}) =>
-      state = state.copyWith(visitedTempleFromHomeSearchAddress: str);
+  void setVisitedTempleFromHomeSearchAddress({required String str}) {
+    state = state.copyWith(visitedTempleFromHomeSearchAddress: str);
+  }
 
   ///
   void setSelectedTokyoJinjachouTempleName({required String name}) =>

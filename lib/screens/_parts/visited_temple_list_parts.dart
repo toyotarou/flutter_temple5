@@ -230,7 +230,9 @@ Widget visitedTempleListParts({
                               scrollController.jumpTo(0);
                             },
                             child: CircleAvatar(
-                              backgroundColor: Colors.blueAccent.withOpacity(0.4),
+                              backgroundColor: (visitedTempleSelectedYear == e.toInt())
+                                  ? Colors.blueAccent
+                                  : Colors.blueAccent.withOpacity(0.4),
                               child: Text(e, style: const TextStyle(color: Colors.white, fontSize: 12)),
                             ),
                           ),

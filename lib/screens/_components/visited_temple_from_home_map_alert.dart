@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../const/const.dart';
@@ -126,14 +127,24 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                       ),
                     ),
                     const SizedBox(width: 10),
+
                     Container(
                       decoration:
                           BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
                       child: IconButton(
-                        onPressed: () => setState(() => searchAddressAreaDisplayFlag = !searchAddressAreaDisplayFlag),
-                        icon: const Icon(Icons.search, color: Colors.white),
+                        onPressed: () => mapController.rotate(0),
+                        icon: const Icon(FontAwesomeIcons.n, color: Colors.white),
                       ),
                     ),
+
+                    // Container(
+                    //   decoration:
+                    //       BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+                    //   child: IconButton(
+                    //     onPressed: () => setState(() => searchAddressAreaDisplayFlag = !searchAddressAreaDisplayFlag),
+                    //     icon: const Icon(Icons.search, color: Colors.white),
+                    //   ),
+                    // ),
                   ],
                 ),
                 Row(
@@ -198,10 +209,20 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                 decoration:
                     BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
                 child: IconButton(
-                  onPressed: () => mapController.rotate(0),
-                  icon: const Icon(Icons.compass_calibration, color: Colors.white),
+                  onPressed: () => setState(() => searchAddressAreaDisplayFlag = !searchAddressAreaDisplayFlag),
+                  icon: const Icon(Icons.search, color: Colors.white),
                 ),
               ),
+
+              // Container(
+              //   decoration:
+              //       BoxDecoration(color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+              //   child: IconButton(
+              //     onPressed: () => mapController.rotate(0),
+              //     icon: const Icon(FontAwesomeIcons.n, color: Colors.white),
+              //   ),
+              // ),
+
               const SizedBox(width: 20),
               Expanded(
                 child: Column(
@@ -211,7 +232,7 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                         height: 50,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color: Colors.blueAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+                            color: Colors.pinkAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -223,10 +244,10 @@ class _VisitedTempleFromHomeMapAlertState extends ConsumerState<VisitedTempleFro
                                   hintText: '住所',
                                   filled: true,
                                   border: OutlineInputBorder(),
-                                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
-                                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white54)),
+                                  enabledBorder: OutlineInputBorder(),
+                                  focusedBorder: OutlineInputBorder(),
                                 ),
-                                style: const TextStyle(fontSize: 13, color: Colors.white),
+                                style: const TextStyle(fontSize: 13, color: Colors.black),
                                 onTapOutside: (PointerDownEvent event) => FocusManager.instance.primaryFocus?.unfocus(),
                               ),
                             ),

@@ -15,7 +15,6 @@ import '_components/temple_detail_map_alert.dart';
 import '_components/tokyo_jinjachou_temple_list_alert.dart';
 import '_components/visited_temple_from_home_map_alert.dart';
 import '_components/visited_temple_list_alert.dart';
-import '_components/visited_temple_map_alert.dart';
 import '_parts/_temple_dialog.dart';
 import 'function.dart';
 
@@ -49,6 +48,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
     templeListNotifier.getAllTempleList();
     templeNotifier.getAllTemple();
     tokyoTrainNotifier.getAllTokyoTrain();
+
     prefectureNotifier.getAllPrefectureData();
   }
 
@@ -77,11 +77,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
             bottom: displayHomeAppBar(),
           ),
           body: Column(
-            children: <Widget>[
-              const SizedBox(height: 10),
-              Expanded(child: displayTempleList()),
-              const SizedBox(height: 100),
-            ],
+            children: <Widget>[const SizedBox(height: 10), Expanded(child: displayTempleList())],
           ),
         ),
       ),
@@ -91,11 +87,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   ///
   PreferredSize displayHomeAppBar() {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(170),
+      preferredSize: const Size.fromHeight(120),
       child: Column(
         children: <Widget>[
           displayHomeButton(),
-          const SizedBox(height: 10),
           displaySearchForm(),
           const SizedBox(height: 10),
           displayHomeTabBar(),
@@ -159,38 +154,37 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   Widget displayHomeButton() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration:
-              BoxDecoration(color: Colors.greenAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
+        Row(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration:
+                  BoxDecoration(color: Colors.greenAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+              child: Row(
                 children: <Widget>[
-                  IconButton(
-                    onPressed: () {
-                      templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
+                  // IconButton(
+                  //   onPressed: () {
+                  //     templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
+                  //
+                  //     templeNotifier.setSelectVisitedTempleListKey(key: -1);
+                  //
+                  //     TempleDialog(
+                  //       context: context,
+                  //       widget: VisitedTempleMapAlert(
+                  //         templeList: templeState.templeList,
+                  //         templeVisitDateMap: templeState.templeVisitDateMap,
+                  //         dateTempleMap: templeState.dateTempleMap,
+                  //       ),
+                  //       clearBarrierColor: true,
+                  //       executeFunctionWhenDialogClose: true,
+                  //       ref: ref,
+                  //       rotate: 0,
+                  //     );
+                  //   },
+                  //   icon: const Icon(Icons.map, color: Colors.white),
+                  // ),
 
-                      templeNotifier.setSelectVisitedTempleListKey(key: -1);
-
-                      TempleDialog(
-                        context: context,
-                        widget: VisitedTempleMapAlert(
-                          templeList: templeState.templeList,
-                          templeVisitDateMap: templeState.templeVisitDateMap,
-                          dateTempleMap: templeState.dateTempleMap,
-                        ),
-                        clearBarrierColor: true,
-                        executeFunctionWhenDialogClose: true,
-                        ref: ref,
-                        rotate: 0,
-                      );
-                    },
-                    icon: const Icon(Icons.map, color: Colors.white),
-                  ),
                   IconButton(
                     onPressed: () {
                       templeRankNotifier.clearTempleRankNameAndRank();
@@ -209,7 +203,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                         rotate: 0,
                       );
                     },
-                    icon: const Icon(Icons.list, color: Colors.white),
+                    icon: const Icon(FontAwesomeIcons.s, color: Colors.white),
                   ),
                   IconButton(
                     onPressed: () {
@@ -228,10 +222,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     },
                     icon: const Icon(Icons.ac_unit, color: Colors.white),
                   ),
-                ],
-              ),
-              Row(
-                children: <Widget>[
                   IconButton(
                     onPressed: () => TempleDialog(
                       context: context,
@@ -252,15 +242,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     },
                     icon: const Icon(Icons.home, color: Colors.white),
                   ),
+
                   IconButton(
                       onPressed: () {
                         TempleDialog(context: context, widget: const PrefectureListAlert(), rotate: 0);
                       },
-                      icon: const Icon(FontAwesomeIcons.dharmachakra, color: Colors.white))
+                      icon: const Icon(FontAwesomeIcons.city, color: Colors.white, size: 18)),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
