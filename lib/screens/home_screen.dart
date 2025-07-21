@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../controllers/controllers_mixin.dart';
 import '../extensions/extensions.dart';
@@ -77,8 +76,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
             bottom: displayHomeAppBar(),
           ),
           body: Column(
-            children: <Widget>[const SizedBox(height: 10), Expanded(child: displayTempleList())],
+            children: <Widget>[
+              const SizedBox(height: 10),
+              Expanded(child: displayTempleList()),
+              const SizedBox(height: 50),
+            ],
           ),
+          endDrawer: _dispDrawer(),
         ),
       ),
     );
@@ -87,10 +91,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   ///
   PreferredSize displayHomeAppBar() {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(120),
+      preferredSize: const Size.fromHeight(70),
       child: Column(
         children: <Widget>[
-          displayHomeButton(),
+//          displayHomeButton(),
           displaySearchForm(),
           const SizedBox(height: 10),
           displayHomeTabBar(),
@@ -151,115 +155,83 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
   }
 
   ///
-  Widget displayHomeButton() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration:
-                  BoxDecoration(color: Colors.greenAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                children: <Widget>[
-                  // IconButton(
-                  //   onPressed: () {
-                  //     templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
-                  //
-                  //     templeNotifier.setSelectVisitedTempleListKey(key: -1);
-                  //
-                  //     TempleDialog(
-                  //       context: context,
-                  //       widget: VisitedTempleMapAlert(
-                  //         templeList: templeState.templeList,
-                  //         templeVisitDateMap: templeState.templeVisitDateMap,
-                  //         dateTempleMap: templeState.dateTempleMap,
-                  //       ),
-                  //       clearBarrierColor: true,
-                  //       executeFunctionWhenDialogClose: true,
-                  //       ref: ref,
-                  //       rotate: 0,
-                  //     );
-                  //   },
-                  //   icon: const Icon(Icons.map, color: Colors.white),
-                  // ),
-
-                  IconButton(
-                    onPressed: () {
-                      templeRankNotifier.clearTempleRankNameAndRank();
-
-                      appParamNotifier.setVisitedTempleSelectedRank(rank: '');
-
-                      TempleDialog(
-                        context: context,
-                        widget: VisitedTempleListAlert(
-                          templeVisitDateMap: templeState.templeVisitDateMap,
-                          dateTempleMap: templeState.dateTempleMap,
-                        ),
-                        executeFunctionWhenDialogClose: true,
-                        ref: ref,
-                        from: 'VisitedTempleListAlert',
-                        rotate: 0,
-                      );
-                    },
-                    icon: const Icon(FontAwesomeIcons.s, color: Colors.white),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      appParamNotifier.setSelectedTokyoJinjachouTempleName(name: '');
-
-                      TempleDialog(
-                        context: context,
-                        widget: TokyoJinjachouTempleListAlert(
-                          templeVisitDateMap: templeState.templeVisitDateMap,
-                          idBaseComplementTempleVisitedDateMap:
-                              complementTempleVisitedDateState.idBaseComplementTempleVisitedDateMap,
-                          dateTempleMap: templeState.dateTempleMap,
-                        ),
-                        rotate: 0,
-                      );
-                    },
-                    icon: const Icon(Icons.ac_unit, color: Colors.white),
-                  ),
-                  IconButton(
-                    onPressed: () => TempleDialog(
-                      context: context,
-                      widget: const NeedleCompassMapAlert(),
-                      rotate: 0,
-                    ),
-                    icon: const Icon(Icons.nearby_error, color: Colors.white),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      TempleDialog(
-                        context: context,
-                        widget: const VisitedTempleFromHomeMapAlert(),
-                        executeFunctionWhenDialogClose: true,
-                        ref: ref,
-                        rotate: 0,
-                      );
-                    },
-                    icon: const Icon(Icons.home, color: Colors.white),
-                  ),
-
-                  IconButton(
-                      onPressed: () {
-                        TempleDialog(context: context, widget: const PrefectureListAlert(), rotate: 0);
-                      },
-                      icon: const Icon(FontAwesomeIcons.city, color: Colors.white, size: 18)),
-                ],
-              ),
-            ),
-          ],
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration:
-              BoxDecoration(color: Colors.orangeAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
-          child: Row(
+  Widget _dispDrawer() {
+    return Drawer(
+      backgroundColor: Colors.blueGrey.withOpacity(0.2),
+      child: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              IconButton(
+              const SizedBox(height: 60),
+              TextButton(
+                onPressed: () {
+                  templeRankNotifier.clearTempleRankNameAndRank();
+
+                  appParamNotifier.setVisitedTempleSelectedRank(rank: '');
+
+                  TempleDialog(
+                    context: context,
+                    widget: VisitedTempleListAlert(
+                      templeVisitDateMap: templeState.templeVisitDateMap,
+                      dateTempleMap: templeState.dateTempleMap,
+                    ),
+                    executeFunctionWhenDialogClose: true,
+                    ref: ref,
+                    from: 'VisitedTempleListAlert',
+                    rotate: 0,
+                  );
+                },
+                child: const Text('VisitedTempleListAlert'),
+              ),
+              TextButton(
+                onPressed: () {
+                  appParamNotifier.setSelectedTokyoJinjachouTempleName(name: '');
+
+                  TempleDialog(
+                    context: context,
+                    widget: TokyoJinjachouTempleListAlert(
+                      templeVisitDateMap: templeState.templeVisitDateMap,
+                      idBaseComplementTempleVisitedDateMap:
+                          complementTempleVisitedDateState.idBaseComplementTempleVisitedDateMap,
+                      dateTempleMap: templeState.dateTempleMap,
+                    ),
+                    rotate: 0,
+                  );
+                },
+                child: const Text('TokyoJinjachouTempleListAlert'),
+              ),
+              TextButton(
+                onPressed: () {
+                  TempleDialog(
+                    context: context,
+                    widget: const NeedleCompassMapAlert(),
+                    rotate: 0,
+                  );
+                },
+                child: const Text('NeedleCompassMapAlert'),
+              ),
+              TextButton(
+                onPressed: () {
+                  TempleDialog(
+                    context: context,
+                    widget: const VisitedTempleFromHomeMapAlert(),
+                    executeFunctionWhenDialogClose: true,
+                    ref: ref,
+                    rotate: 0,
+                  );
+                },
+                child: const Text('VisitedTempleFromHomeMapAlert'),
+              ),
+              TextButton(
+                onPressed: () {
+                  TempleDialog(context: context, widget: const PrefectureListAlert(), rotate: 0);
+                },
+                child: const Text('PrefectureListAlert'),
+              ),
+              Divider(color: Colors.white.withOpacity(0.4), thickness: 5),
+              TextButton(
                 onPressed: () {
                   appParamNotifier.setHomeTextFormFieldVisible(flag: false);
 
@@ -278,9 +250,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     rotate: 0,
                   );
                 },
-                icon: const Icon(Icons.train, color: Colors.white),
+                child: const Text('RouteTrainStationListAlert'),
               ),
-              IconButton(
+              TextButton(
                 onPressed: () {
                   tokyoTrainNotifier.clearTrainList();
 
@@ -304,12 +276,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
                     rotate: 0,
                   );
                 },
-                icon: const Icon(FontAwesomeIcons.toriiGate, color: Colors.white),
+                child: const Text('NotReachTempleMapAlert'),
               ),
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 
@@ -440,24 +412,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
               children: <Widget>[
                 Positioned(
                   bottom: 5,
-                  child: Row(
-                      children: templeNameList.map(
-                    (String e) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.pinkAccent.withOpacity(0.3),
-                          radius: 10,
-                          child: Text(
-                            (templeLatLngState.templeLatLngMap[e] != null)
-                                ? templeLatLngState.templeLatLngMap[e]!.rank
-                                : '',
-                            style: const TextStyle(fontSize: 12),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                        children: templeNameList.map(
+                      (String e) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.pinkAccent.withOpacity(0.3),
+                            radius: 10,
+                            child: Text(
+                              (templeLatLngState.templeLatLngMap[e] != null)
+                                  ? templeLatLngState.templeLatLngMap[e]!.rank
+                                  : '',
+                              style: const TextStyle(fontSize: 12),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ).toList()),
+                        );
+                      },
+                    ).toList()),
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

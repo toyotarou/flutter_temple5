@@ -84,7 +84,7 @@ class _NeedleCompassSelectedListAlertState extends ConsumerState<NeedleCompassSe
             (TempleData element2) {
               list.add(
                 DefaultTextStyle(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 3),
                     decoration: BoxDecoration(
