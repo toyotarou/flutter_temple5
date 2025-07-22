@@ -138,7 +138,10 @@ class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTe
 
       list.add(
         Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.white.withValues(alpha: 0.3))),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+            color: (dateList.isNotEmpty) ? Colors.transparent : Colors.white.withValues(alpha: 0.1),
+          ),
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.all(3),
           child: DefaultTextStyle(
@@ -204,7 +207,14 @@ class _TokyoJinjachouTempleListAlertState extends ConsumerState<TokyoJinjachouTe
       );
     }
 
-    return SingleChildScrollView(child: Column(children: list));
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverList(
+          delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) => list[index], childCount: list.length),
+        ),
+      ],
+    );
   }
 
   Widget _displayTempleVisitedDateList() {

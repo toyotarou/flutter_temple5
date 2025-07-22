@@ -76,75 +76,44 @@ class _PrefectureListAlertState extends ConsumerState<PrefectureListAlert> with 
       }
     }
 
-    tokyoTempleMap.forEach((String key, List<TempleLatLngModel> value) {
-      list.add(Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(key),
-          Text('${value.length}'),
-        ],
-      ));
-    });
-
-    prefectureTempleMap.forEach((String key, List<TempleLatLngModel> value) {
-      list.add(Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(key),
-          Text('${value.length}'),
-        ],
-      ));
-    });
-
-    /*
-
-    final RegExp reg = RegExp('東京都');
-
-    final List<TempleLatLngModel> notTokyoTemple = <TempleLatLngModel>[];
-
-    for (final TempleLatLngModel element in templeLatLngState.templeLatLngList) {
-      if (reg.firstMatch(element.address) == null) {
-        notTokyoTemple.add(element);
-      }
-    }
-
-    print(templeLatLngState.templeLatLngList.length);
-
-    print(notTokyoTemple.length);
-
-
-    for (final PrefectureModel element in prefectureState.prefectureList) {
-      list.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[Text(element.name!), const SizedBox.shrink()],
-        ),
-      );
-
-      if (element.id == 13) {
+    tokyoTempleMap.forEach(
+      (String key, List<TempleLatLngModel> value) {
         list.add(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const SizedBox.shrink(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: tokyoShikuchouson.map(
-                  (TokyoShikuchousonData e) {
-                    return Text(e.name);
-                  },
-                ).toList(),
-              ),
+              Text(key),
+              Text('${value.length}'),
             ],
           ),
         );
-      }
-    }
+      },
+    );
 
-    */
+    prefectureTempleMap.forEach(
+      (String key, List<TempleLatLngModel> value) {
+        list.add(
+          DefaultTextStyle(
+            style: const TextStyle(fontSize: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(key),
+                Text('${value.length}'),
+              ],
+            ),
+          ),
+        );
+      },
+    );
 
-    return SingleChildScrollView(
-      child: DefaultTextStyle(style: const TextStyle(fontSize: 12), child: Column(children: list)),
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverList(
+          delegate:
+              SliverChildBuilderDelegate((BuildContext context, int index) => list[index], childCount: list.length),
+        ),
+      ],
     );
   }
 }
