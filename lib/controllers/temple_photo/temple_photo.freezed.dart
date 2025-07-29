@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'temple_photo_response_state.dart';
+part of 'temple_photo.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$TemplePhotoResponseState {
+mixin _$TemplePhotoState {
   AsyncValue<List<TemplePhotoModel>> get templePhotoList =>
       throw _privateConstructorUsedError;
   AsyncValue<Map<String, List<TemplePhotoModel>>> get templePhotoTempleMap =>
@@ -23,18 +23,18 @@ mixin _$TemplePhotoResponseState {
   AsyncValue<Map<String, List<TemplePhotoModel>>> get templePhotoDateMap =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of TemplePhotoResponseState
+  /// Create a copy of TemplePhotoState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $TemplePhotoResponseStateCopyWith<TemplePhotoResponseState> get copyWith =>
+  $TemplePhotoStateCopyWith<TemplePhotoState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TemplePhotoResponseStateCopyWith<$Res> {
-  factory $TemplePhotoResponseStateCopyWith(TemplePhotoResponseState value,
-          $Res Function(TemplePhotoResponseState) then) =
-      _$TemplePhotoResponseStateCopyWithImpl<$Res, TemplePhotoResponseState>;
+abstract class $TemplePhotoStateCopyWith<$Res> {
+  factory $TemplePhotoStateCopyWith(
+          TemplePhotoState value, $Res Function(TemplePhotoState) then) =
+      _$TemplePhotoStateCopyWithImpl<$Res, TemplePhotoState>;
   @useResult
   $Res call(
       {AsyncValue<List<TemplePhotoModel>> templePhotoList,
@@ -43,17 +43,16 @@ abstract class $TemplePhotoResponseStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TemplePhotoResponseStateCopyWithImpl<$Res,
-        $Val extends TemplePhotoResponseState>
-    implements $TemplePhotoResponseStateCopyWith<$Res> {
-  _$TemplePhotoResponseStateCopyWithImpl(this._value, this._then);
+class _$TemplePhotoStateCopyWithImpl<$Res, $Val extends TemplePhotoState>
+    implements $TemplePhotoStateCopyWith<$Res> {
+  _$TemplePhotoStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of TemplePhotoResponseState
+  /// Create a copy of TemplePhotoState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -80,12 +79,11 @@ class _$TemplePhotoResponseStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$TemplePhotoResponseStateImplCopyWith<$Res>
-    implements $TemplePhotoResponseStateCopyWith<$Res> {
-  factory _$$TemplePhotoResponseStateImplCopyWith(
-          _$TemplePhotoResponseStateImpl value,
-          $Res Function(_$TemplePhotoResponseStateImpl) then) =
-      __$$TemplePhotoResponseStateImplCopyWithImpl<$Res>;
+abstract class _$$TemplePhotoStateImplCopyWith<$Res>
+    implements $TemplePhotoStateCopyWith<$Res> {
+  factory _$$TemplePhotoStateImplCopyWith(_$TemplePhotoStateImpl value,
+          $Res Function(_$TemplePhotoStateImpl) then) =
+      __$$TemplePhotoStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -95,16 +93,14 @@ abstract class _$$TemplePhotoResponseStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TemplePhotoResponseStateImplCopyWithImpl<$Res>
-    extends _$TemplePhotoResponseStateCopyWithImpl<$Res,
-        _$TemplePhotoResponseStateImpl>
-    implements _$$TemplePhotoResponseStateImplCopyWith<$Res> {
-  __$$TemplePhotoResponseStateImplCopyWithImpl(
-      _$TemplePhotoResponseStateImpl _value,
-      $Res Function(_$TemplePhotoResponseStateImpl) _then)
+class __$$TemplePhotoStateImplCopyWithImpl<$Res>
+    extends _$TemplePhotoStateCopyWithImpl<$Res, _$TemplePhotoStateImpl>
+    implements _$$TemplePhotoStateImplCopyWith<$Res> {
+  __$$TemplePhotoStateImplCopyWithImpl(_$TemplePhotoStateImpl _value,
+      $Res Function(_$TemplePhotoStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of TemplePhotoResponseState
+  /// Create a copy of TemplePhotoState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -113,7 +109,7 @@ class __$$TemplePhotoResponseStateImplCopyWithImpl<$Res>
     Object? templePhotoTempleMap = null,
     Object? templePhotoDateMap = null,
   }) {
-    return _then(_$TemplePhotoResponseStateImpl(
+    return _then(_$TemplePhotoStateImpl(
       templePhotoList: null == templePhotoList
           ? _value.templePhotoList
           : templePhotoList // ignore: cast_nullable_to_non_nullable
@@ -132,8 +128,8 @@ class __$$TemplePhotoResponseStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TemplePhotoResponseStateImpl implements _TemplePhotoResponseState {
-  const _$TemplePhotoResponseStateImpl(
+class _$TemplePhotoStateImpl implements _TemplePhotoState {
+  const _$TemplePhotoStateImpl(
       {this.templePhotoList =
           const AsyncValue<List<TemplePhotoModel>>.loading(),
       this.templePhotoTempleMap =
@@ -153,14 +149,14 @@ class _$TemplePhotoResponseStateImpl implements _TemplePhotoResponseState {
 
   @override
   String toString() {
-    return 'TemplePhotoResponseState(templePhotoList: $templePhotoList, templePhotoTempleMap: $templePhotoTempleMap, templePhotoDateMap: $templePhotoDateMap)';
+    return 'TemplePhotoState(templePhotoList: $templePhotoList, templePhotoTempleMap: $templePhotoTempleMap, templePhotoDateMap: $templePhotoDateMap)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TemplePhotoResponseStateImpl &&
+            other is _$TemplePhotoStateImpl &&
             (identical(other.templePhotoList, templePhotoList) ||
                 other.templePhotoList == templePhotoList) &&
             (identical(other.templePhotoTempleMap, templePhotoTempleMap) ||
@@ -173,23 +169,23 @@ class _$TemplePhotoResponseStateImpl implements _TemplePhotoResponseState {
   int get hashCode => Object.hash(
       runtimeType, templePhotoList, templePhotoTempleMap, templePhotoDateMap);
 
-  /// Create a copy of TemplePhotoResponseState
+  /// Create a copy of TemplePhotoState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$TemplePhotoResponseStateImplCopyWith<_$TemplePhotoResponseStateImpl>
-      get copyWith => __$$TemplePhotoResponseStateImplCopyWithImpl<
-          _$TemplePhotoResponseStateImpl>(this, _$identity);
+  _$$TemplePhotoStateImplCopyWith<_$TemplePhotoStateImpl> get copyWith =>
+      __$$TemplePhotoStateImplCopyWithImpl<_$TemplePhotoStateImpl>(
+          this, _$identity);
 }
 
-abstract class _TemplePhotoResponseState implements TemplePhotoResponseState {
-  const factory _TemplePhotoResponseState(
+abstract class _TemplePhotoState implements TemplePhotoState {
+  const factory _TemplePhotoState(
       {final AsyncValue<List<TemplePhotoModel>> templePhotoList,
       final AsyncValue<Map<String, List<TemplePhotoModel>>>
           templePhotoTempleMap,
       final AsyncValue<Map<String, List<TemplePhotoModel>>>
-          templePhotoDateMap}) = _$TemplePhotoResponseStateImpl;
+          templePhotoDateMap}) = _$TemplePhotoStateImpl;
 
   @override
   AsyncValue<List<TemplePhotoModel>> get templePhotoList;
@@ -198,10 +194,10 @@ abstract class _TemplePhotoResponseState implements TemplePhotoResponseState {
   @override
   AsyncValue<Map<String, List<TemplePhotoModel>>> get templePhotoDateMap;
 
-  /// Create a copy of TemplePhotoResponseState
+  /// Create a copy of TemplePhotoState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TemplePhotoResponseStateImplCopyWith<_$TemplePhotoResponseStateImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$TemplePhotoStateImplCopyWith<_$TemplePhotoStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

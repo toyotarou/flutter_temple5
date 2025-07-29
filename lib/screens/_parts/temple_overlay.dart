@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../controllers/app_params/app_params_notifier.dart';
-import '../../controllers/app_params/app_params_response_state.dart';
+import '../../controllers/app_param/app_param.dart';
 import '../../controllers/temple/temple.dart';
 
 //=======================================================//
@@ -243,7 +242,7 @@ void closeAllOverlays({required WidgetRef ref}) {
 ///
 void closeFirstOverlays({required WidgetRef ref}) {
   final List<OverlayEntry>? firstEntries =
-      ref.watch(appParamProvider.select((AppParamsResponseState value) => value.firstEntries));
+      ref.watch(appParamProvider.select((AppParamState value) => value.firstEntries));
 
   if (firstEntries != null) {
     for (final OverlayEntry e in firstEntries) {
@@ -255,7 +254,7 @@ void closeFirstOverlays({required WidgetRef ref}) {
 ///
 void closeSecondOverlays({required WidgetRef ref}) {
   final List<OverlayEntry>? secondEntries =
-      ref.watch(appParamProvider.select((AppParamsResponseState value) => value.secondEntries));
+      ref.watch(appParamProvider.select((AppParamState value) => value.secondEntries));
 
   if (secondEntries != null) {
     for (final OverlayEntry e2 in secondEntries) {

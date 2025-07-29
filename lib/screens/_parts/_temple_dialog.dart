@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../controllers/app_params/app_params_notifier.dart';
+import '../../controllers/app_param/app_param.dart';
 import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import 'temple_overlay.dart';
 

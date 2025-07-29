@@ -8,7 +8,7 @@ import '../models/temple_model.dart';
 import '../utility/utility.dart';
 import '_components/needle_compass_map_alert.dart';
 import '_components/not_reach_temple_map_alert.dart';
-import '_components/prefecture_list_alert.dart';
+import '_components/prefecture_temple_list_alert.dart';
 import '_components/route_train_station_list_alert.dart';
 import '_components/same_date_visited_temple_list_alert.dart';
 import '_components/temple_detail_map_alert.dart';
@@ -227,7 +227,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
               ),
               TextButton(
                 onPressed: () {
-                  TempleDialog(context: context, widget: const PrefectureListAlert(), rotate: 0);
+                  TempleDialog(context: context, widget: const PrefectureTempleListAlert(), rotate: 0);
                 },
                 child: const Text('PrefectureListAlert'),
               ),

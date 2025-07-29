@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'app_params_response_state.dart';
+part of 'app_param.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$AppParamsResponseState {
+mixin _$AppParamState {
   double get currentZoom => throw _privateConstructorUsedError;
   int get currentPaddingIndex => throw _privateConstructorUsedError;
   Offset? get overlayPosition => throw _privateConstructorUsedError;
@@ -48,18 +48,18 @@ mixin _$AppParamsResponseState {
   String get selectedTokyoJinjachouTempleName =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of AppParamsResponseState
+  /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $AppParamsResponseStateCopyWith<AppParamsResponseState> get copyWith =>
+  $AppParamStateCopyWith<AppParamState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AppParamsResponseStateCopyWith<$Res> {
-  factory $AppParamsResponseStateCopyWith(AppParamsResponseState value,
-          $Res Function(AppParamsResponseState) then) =
-      _$AppParamsResponseStateCopyWithImpl<$Res, AppParamsResponseState>;
+abstract class $AppParamStateCopyWith<$Res> {
+  factory $AppParamStateCopyWith(
+          AppParamState value, $Res Function(AppParamState) then) =
+      _$AppParamStateCopyWithImpl<$Res, AppParamState>;
   @useResult
   $Res call(
       {double currentZoom,
@@ -80,17 +80,16 @@ abstract class $AppParamsResponseStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AppParamsResponseStateCopyWithImpl<$Res,
-        $Val extends AppParamsResponseState>
-    implements $AppParamsResponseStateCopyWith<$Res> {
-  _$AppParamsResponseStateCopyWithImpl(this._value, this._then);
+class _$AppParamStateCopyWithImpl<$Res, $Val extends AppParamState>
+    implements $AppParamStateCopyWith<$Res> {
+  _$AppParamStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of AppParamsResponseState
+  /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -179,12 +178,11 @@ class _$AppParamsResponseStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
-    implements $AppParamsResponseStateCopyWith<$Res> {
-  factory _$$AppParamsResponseStateImplCopyWith(
-          _$AppParamsResponseStateImpl value,
-          $Res Function(_$AppParamsResponseStateImpl) then) =
-      __$$AppParamsResponseStateImplCopyWithImpl<$Res>;
+abstract class _$$AppParamStateImplCopyWith<$Res>
+    implements $AppParamStateCopyWith<$Res> {
+  factory _$$AppParamStateImplCopyWith(
+          _$AppParamStateImpl value, $Res Function(_$AppParamStateImpl) then) =
+      __$$AppParamStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -206,16 +204,14 @@ abstract class _$$AppParamsResponseStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
-    extends _$AppParamsResponseStateCopyWithImpl<$Res,
-        _$AppParamsResponseStateImpl>
-    implements _$$AppParamsResponseStateImplCopyWith<$Res> {
-  __$$AppParamsResponseStateImplCopyWithImpl(
-      _$AppParamsResponseStateImpl _value,
-      $Res Function(_$AppParamsResponseStateImpl) _then)
+class __$$AppParamStateImplCopyWithImpl<$Res>
+    extends _$AppParamStateCopyWithImpl<$Res, _$AppParamStateImpl>
+    implements _$$AppParamStateImplCopyWith<$Res> {
+  __$$AppParamStateImplCopyWithImpl(
+      _$AppParamStateImpl _value, $Res Function(_$AppParamStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of AppParamsResponseState
+  /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -236,7 +232,7 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
     Object? visitedTempleFromHomeSearchAddress = null,
     Object? selectedTokyoJinjachouTempleName = null,
   }) {
-    return _then(_$AppParamsResponseStateImpl(
+    return _then(_$AppParamStateImpl(
       currentZoom: null == currentZoom
           ? _value.currentZoom
           : currentZoom // ignore: cast_nullable_to_non_nullable
@@ -305,8 +301,8 @@ class __$$AppParamsResponseStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
-  const _$AppParamsResponseStateImpl(
+class _$AppParamStateImpl implements _AppParamState {
+  const _$AppParamStateImpl(
       {this.currentZoom = 0,
       this.currentPaddingIndex = 5,
       this.overlayPosition,
@@ -408,14 +404,14 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
 
   @override
   String toString() {
-    return 'AppParamsResponseState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate, visitedTempleSelectedRank: $visitedTempleSelectedRank, visitedTempleFromHomeLatLng: $visitedTempleFromHomeLatLng, visitedTempleFromHomeSelectedDateList: $visitedTempleFromHomeSelectedDateList, visitedTempleFromHomeSearchAddress: $visitedTempleFromHomeSearchAddress, selectedTokyoJinjachouTempleName: $selectedTokyoJinjachouTempleName)';
+    return 'AppParamState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate, visitedTempleSelectedRank: $visitedTempleSelectedRank, visitedTempleFromHomeLatLng: $visitedTempleFromHomeLatLng, visitedTempleFromHomeSelectedDateList: $visitedTempleFromHomeSelectedDateList, visitedTempleFromHomeSearchAddress: $visitedTempleFromHomeSearchAddress, selectedTokyoJinjachouTempleName: $selectedTokyoJinjachouTempleName)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AppParamsResponseStateImpl &&
+            other is _$AppParamStateImpl &&
             (identical(other.currentZoom, currentZoom) ||
                 other.currentZoom == currentZoom) &&
             (identical(other.currentPaddingIndex, currentPaddingIndex) ||
@@ -475,34 +471,32 @@ class _$AppParamsResponseStateImpl implements _AppParamsResponseState {
       visitedTempleFromHomeSearchAddress,
       selectedTokyoJinjachouTempleName);
 
-  /// Create a copy of AppParamsResponseState
+  /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$AppParamsResponseStateImplCopyWith<_$AppParamsResponseStateImpl>
-      get copyWith => __$$AppParamsResponseStateImplCopyWithImpl<
-          _$AppParamsResponseStateImpl>(this, _$identity);
+  _$$AppParamStateImplCopyWith<_$AppParamStateImpl> get copyWith =>
+      __$$AppParamStateImplCopyWithImpl<_$AppParamStateImpl>(this, _$identity);
 }
 
-abstract class _AppParamsResponseState implements AppParamsResponseState {
-  const factory _AppParamsResponseState(
-          {final double currentZoom,
-          final int currentPaddingIndex,
-          final Offset? overlayPosition,
-          final List<OverlayEntry>? firstEntries,
-          final List<OverlayEntry>? secondEntries,
-          final bool visitedTempleMapDisplayFinish,
-          final bool homeTextFormFieldVisible,
-          final String notReachTempleNearStationName,
-          final int visitedTempleSelectedYear,
-          final String visitedTempleSelectedDate,
-          final String visitedTempleSelectedRank,
-          final LatLng? visitedTempleFromHomeLatLng,
-          final List<String> visitedTempleFromHomeSelectedDateList,
-          final String visitedTempleFromHomeSearchAddress,
-          final String selectedTokyoJinjachouTempleName}) =
-      _$AppParamsResponseStateImpl;
+abstract class _AppParamState implements AppParamState {
+  const factory _AppParamState(
+      {final double currentZoom,
+      final int currentPaddingIndex,
+      final Offset? overlayPosition,
+      final List<OverlayEntry>? firstEntries,
+      final List<OverlayEntry>? secondEntries,
+      final bool visitedTempleMapDisplayFinish,
+      final bool homeTextFormFieldVisible,
+      final String notReachTempleNearStationName,
+      final int visitedTempleSelectedYear,
+      final String visitedTempleSelectedDate,
+      final String visitedTempleSelectedRank,
+      final LatLng? visitedTempleFromHomeLatLng,
+      final List<String> visitedTempleFromHomeSelectedDateList,
+      final String visitedTempleFromHomeSearchAddress,
+      final String selectedTokyoJinjachouTempleName}) = _$AppParamStateImpl;
 
   @override
   double get currentZoom;
@@ -547,10 +541,10 @@ abstract class _AppParamsResponseState implements AppParamsResponseState {
   @override
   String get selectedTokyoJinjachouTempleName;
 
-  /// Create a copy of AppParamsResponseState
+  /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AppParamsResponseStateImplCopyWith<_$AppParamsResponseStateImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$AppParamStateImplCopyWith<_$AppParamStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

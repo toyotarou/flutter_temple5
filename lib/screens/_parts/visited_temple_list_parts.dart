@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../controllers/app_params/app_params_notifier.dart';
-import '../../controllers/app_params/app_params_response_state.dart';
+import '../../controllers/app_param/app_param.dart';
 import '../../controllers/station/station.dart';
 import '../../controllers/temple/temple.dart';
 
@@ -38,13 +37,13 @@ Widget visitedTempleListParts({
   }
 
   final List<String> visitedTempleFromHomeSelectedDateList =
-      ref.watch(appParamProvider.select((AppParamsResponseState value) => value.visitedTempleFromHomeSelectedDateList));
+      ref.watch(appParamProvider.select((AppParamState value) => value.visitedTempleFromHomeSelectedDateList));
 
   final Map<String, TempleLatLngModel> templeLatLngMap =
       ref.watch(templeLatLngProvider.select((TempleLatLngState value) => value.templeLatLngMap));
 
   final String visitedTempleFromHomeSearchAddress =
-      ref.watch(appParamProvider.select((AppParamsResponseState value) => value.visitedTempleFromHomeSearchAddress));
+      ref.watch(appParamProvider.select((AppParamState value) => value.visitedTempleFromHomeSearchAddress));
 
   RegExp? reg;
 
@@ -53,7 +52,7 @@ Widget visitedTempleListParts({
   }
 
   final int visitedTempleSelectedYear =
-      ref.watch(appParamProvider.select((AppParamsResponseState value) => value.visitedTempleSelectedYear));
+      ref.watch(appParamProvider.select((AppParamState value) => value.visitedTempleSelectedYear));
 
   String keepYear = '';
 

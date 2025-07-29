@@ -1,26 +1,37 @@
-// ignore_for_file: avoid_dynamic_calls
-
 import 'dart:convert';
 
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-//
-// import '../../models/holiday.dart';
 import '../../extensions/extensions.dart';
 import '../../models/temple_photo_model.dart';
-import 'temple_photo_response_state.dart';
+import '../../utility/utility.dart';
 
-final AutoDisposeStateNotifierProvider<TemplePhotoNotifier, TemplePhotoResponseState> templePhotoProvider =
-    StateNotifierProvider.autoDispose<TemplePhotoNotifier, TemplePhotoResponseState>(
-        (AutoDisposeStateNotifierProviderRef<TemplePhotoNotifier, TemplePhotoResponseState> ref) {
-  return TemplePhotoNotifier(const TemplePhotoResponseState())..getTemplePhoto();
-});
+part 'temple_photo.freezed.dart';
 
-class TemplePhotoNotifier extends StateNotifier<TemplePhotoResponseState> {
-  TemplePhotoNotifier(super.state);
+part 'temple_photo.g.dart';
 
+@freezed
+class TemplePhotoState with _$TemplePhotoState {
+  const factory TemplePhotoState({
+    @Default(AsyncValue<List<TemplePhotoModel>>.loading()) AsyncValue<List<TemplePhotoModel>> templePhotoList,
+    @Default(AsyncValue<Map<String, List<TemplePhotoModel>>>.loading())
+    AsyncValue<Map<String, List<TemplePhotoModel>>> templePhotoTempleMap,
+    @Default(AsyncValue<Map<String, List<TemplePhotoModel>>>.loading())
+    AsyncValue<Map<String, List<TemplePhotoModel>>> templePhotoDateMap,
+  }) = _TemplePhotoState;
+}
+
+@Riverpod(keepAlive: true)
+class TemplePhoto extends _$TemplePhoto {
+  final Utility utility = Utility();
+
+  ///
+  @override
+  TemplePhotoState build() => const TemplePhotoState();
+
+  ///
   Future<void> getTemplePhoto() async {
     try {
       const String url = 'http://toyohide.work/BrainLog/api/getTempleDatePhoto';
@@ -34,7 +45,9 @@ class TemplePhotoNotifier extends StateNotifier<TemplePhotoResponseState> {
       final Map<String, List<TemplePhotoModel>> map = <String, List<TemplePhotoModel>>{};
       final Map<String, List<TemplePhotoModel>> map2 = <String, List<TemplePhotoModel>>{};
 
+      // ignore: avoid_dynamic_calls
       for (int i = 0; i < (templePhoto['data'] as List<dynamic>).length; i++) {
+        // ignore: avoid_dynamic_calls
         final TemplePhotoModel value = TemplePhotoModel.fromJson(templePhoto['data'][i] as Map<String, dynamic>);
 
         map[value.date.yyyymmdd] = <TemplePhotoModel>[];
@@ -42,7 +55,9 @@ class TemplePhotoNotifier extends StateNotifier<TemplePhotoResponseState> {
         map2[value.temple] = <TemplePhotoModel>[];
       }
 
+      // ignore: avoid_dynamic_calls
       for (int i = 0; i < (templePhoto['data'] as List<dynamic>).length; i++) {
+        // ignore: avoid_dynamic_calls
         final TemplePhotoModel value = TemplePhotoModel.fromJson(templePhoto['data'][i] as Map<String, dynamic>);
 
         list.add(value);

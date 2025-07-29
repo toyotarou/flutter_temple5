@@ -1,8 +1,8 @@
 // ignore: depend_on_referenced_packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'app_params/app_params_notifier.dart';
-import 'app_params/app_params_response_state.dart';
+import 'app_param/app_param.dart';
+
 import 'complement_temple_visited_date/complement_temple_visited_date.dart';
 import 'lat_lng_temple/lat_lng_temple.dart';
 import 'not_reach_station_line_count/not_reach_station_line_count.dart';
@@ -12,16 +12,16 @@ import 'station/station.dart';
 import 'temple/temple.dart';
 import 'temple_lat_lng/temple_lat_lng.dart';
 import 'temple_list/temple_list.dart';
-import 'temple_photo/temple_photo_notifier.dart';
-import 'temple_photo/temple_photo_response_state.dart';
+import 'temple_photo/temple_photo.dart';
 import 'temple_rank/temple_rank.dart';
 import 'tokyo_train/tokyo_train.dart';
 
 mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   //==========================================//
-  AppParamsResponseState get appParamState => ref.watch(appParamProvider);
 
-  AppParamNotifier get appParamNotifier => ref.read(appParamProvider.notifier);
+  AppParamState get appParamState => ref.watch(appParamProvider);
+
+  AppParam get appParamNotifier => ref.read(appParamProvider.notifier);
 
   //==========================================//
 
@@ -91,9 +91,9 @@ mixin ControllersMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
 
 //==========================================//
 
-  TemplePhotoResponseState get templePhotoState => ref.watch(templePhotoProvider);
+  TemplePhotoState get templePhotoState => ref.watch(templePhotoProvider);
 
-  TemplePhotoNotifier get templePhotoNotifier => ref.read(templePhotoProvider.notifier);
+  TemplePhoto get templePhotoNotifier => ref.read(templePhotoProvider.notifier);
 
 //==========================================//
 

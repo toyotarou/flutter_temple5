@@ -7,15 +7,18 @@ import '../../models/common/tokyo_shikuchouson_data.dart';
 import '../../models/prefecture_model.dart';
 import '../../models/temple_lat_lng_model.dart';
 import '../../utility/tokyo_shikuchouson.dart';
+import '../_parts/_temple_dialog.dart';
+import 'prefecture_temple_map_alert.dart';
 
-class PrefectureListAlert extends ConsumerStatefulWidget {
-  const PrefectureListAlert({super.key});
+class PrefectureTempleListAlert extends ConsumerStatefulWidget {
+  const PrefectureTempleListAlert({super.key});
 
   @override
-  ConsumerState<PrefectureListAlert> createState() => _PrefectureListAlertState();
+  ConsumerState<PrefectureTempleListAlert> createState() => _PrefectureListAlertState();
 }
 
-class _PrefectureListAlertState extends ConsumerState<PrefectureListAlert> with ControllersMixin<PrefectureListAlert> {
+class _PrefectureListAlertState extends ConsumerState<PrefectureTempleListAlert>
+    with ControllersMixin<PrefectureTempleListAlert> {
   ///
   @override
   Widget build(BuildContext context) {
@@ -76,31 +79,48 @@ class _PrefectureListAlertState extends ConsumerState<PrefectureListAlert> with 
       }
     }
 
-    tokyoTempleMap.forEach(
-      (String key, List<TempleLatLngModel> value) {
-        list.add(
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(key),
-              Text('${value.length}'),
-            ],
-          ),
-        );
-      },
-    );
+    final Map<String, List<TempleLatLngModel>> roopVal = <String, List<TempleLatLngModel>>{
+      ...tokyoTempleMap,
+      ...prefectureTempleMap
+    };
 
-    prefectureTempleMap.forEach(
+    roopVal.forEach(
       (String key, List<TempleLatLngModel> value) {
         list.add(
           DefaultTextStyle(
             style: const TextStyle(fontSize: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(key),
-                Text('${value.length}'),
-              ],
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.3))),
+              ),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(key),
+                  Row(
+                    children: <Widget>[
+                      Text('${value.length}'),
+                      const SizedBox(width: 20),
+                      GestureDetector(
+                        onTap: () {
+                          TempleDialog(
+                            context: context,
+                            widget: PrefectureTempleMapAlert(
+                              templeLatLngModelList: value,
+                              prefectureName: key,
+                            ),
+                            rotate: 0,
+                            clearBarrierColor: true,
+                          );
+                        },
+                        child: Icon(Icons.map, color: Colors.white.withValues(alpha: 0.4)),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );

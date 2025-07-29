@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../controllers/app_params/app_params_notifier.dart';
-import '../../controllers/app_params/app_params_response_state.dart';
+import '../../controllers/app_param/app_param.dart';
 import '../../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../../controllers/near_station/near_station.dart';
 import '../../controllers/routing/routing.dart';
 import '../../controllers/temple/temple.dart';
-import '../../controllers/temple_photo/temple_photo_notifier.dart';
-import '../../controllers/temple_photo/temple_photo_response_state.dart';
+import '../../controllers/temple_photo/temple_photo.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
 import '../../models/near_station_model.dart';
@@ -28,10 +26,10 @@ Widget templeInfoDisplayParts({
   required List<TokyoTrainModel> tokyoTrainList,
   required BuildContext context,
   TokyoStationModel? station,
-  required AppParamsResponseState appParamState,
+  required AppParamState appParamState,
   required WidgetRef ref,
 }) {
-  final AppParamsResponseState appParamState = ref.watch(appParamProvider);
+  final AppParamState appParamState = ref.watch(appParamProvider);
 
   return DefaultTextStyle(
     style: const TextStyle(fontSize: 12),
@@ -235,7 +233,7 @@ Widget displayVisitedTemplePhoto(
     required TempleData temple,
     required Map<String, TempleModel> dateTempleMap,
     required WidgetRef ref}) {
-  final TemplePhotoResponseState templePhotoState = ref.watch(templePhotoProvider);
+  final TemplePhotoState templePhotoState = ref.watch(templePhotoProvider);
 
   Map<String, List<TemplePhotoModel>> templePhotoTempleMap = <String, List<TemplePhotoModel>>{};
 
