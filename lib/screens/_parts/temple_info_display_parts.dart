@@ -5,7 +5,6 @@ import '../../controllers/app_param/app_param.dart';
 import '../../controllers/lat_lng_temple/lat_lng_temple.dart';
 import '../../controllers/near_station/near_station.dart';
 import '../../controllers/routing/routing.dart';
-import '../../controllers/temple/temple.dart';
 import '../../controllers/temple_photo/temple_photo.dart';
 import '../../extensions/extensions.dart';
 import '../../models/common/temple_data.dart';
@@ -188,7 +187,7 @@ Widget displayAddRemoveRoutingButton(
           ref.read(routingProvider.notifier).setRouting(templeData: temple, station: station);
 
           if (pos != -1) {
-            ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+            ref.read(appParamProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
           }
         },
         style: ElevatedButton.styleFrom(

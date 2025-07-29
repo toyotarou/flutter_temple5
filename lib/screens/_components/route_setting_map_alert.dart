@@ -178,7 +178,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                     strokeWidth: 5,
                   ),
 
-                  if (tokyoTrainState.selectTrainList.isNotEmpty) ...<Polyline<Object>>[getTrainPolyline()],
+                  if (appParamState.selectTrainList.isNotEmpty) ...<Polyline<Object>>[getTrainPolyline()],
                 ],
               ),
 
@@ -269,7 +269,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                       const SizedBox(width: 20),
                       GestureDetector(
                         onTap: () {
-                          templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
+                          appParamNotifier.setSelectTemple(name: '', lat: '', lng: '');
 
                           closeAllOverlays(ref: ref);
 
@@ -382,7 +382,7 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
                     if (exMarkLength == 2) {
                       return;
                     } else {
-                      templeNotifier.setSelectTemple(
+                      appParamNotifier.setSelectTemple(
                           name: templeDataList[i].name,
                           lat: templeDataList[i].latitude,
                           lng: templeDataList[i].longitude);
@@ -509,8 +509,8 @@ class _RouteSettingMapAlertState extends ConsumerState<RouteSettingMapAlert>
   Polyline getTrainPolyline() {
     final List<LatLng> points = <LatLng>[];
 
-    if (tokyoTrainState.selectTrainList.isNotEmpty) {
-      final TokyoTrainModel? selectedTokyoTrainMap = widget.tokyoTrainIdMap[tokyoTrainState.selectTrainList[0]];
+    if (appParamState.selectTrainList.isNotEmpty) {
+      final TokyoTrainModel? selectedTokyoTrainMap = widget.tokyoTrainIdMap[appParamState.selectTrainList[0]];
 
       selectedTokyoTrainMap?.station.forEach(
           (TokyoStationModel element2) => points.add(LatLng(element2.lat.toDouble(), element2.lng.toDouble())));

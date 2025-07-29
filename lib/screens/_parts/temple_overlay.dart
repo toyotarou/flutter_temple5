@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/app_param/app_param.dart';
-import '../../controllers/temple/temple.dart';
 
 //=======================================================//
 
@@ -159,13 +158,13 @@ void addFirstOverlay({
     onRemove: () {
       if (from == 'NotReachTempleMapAlert') {
         if (ref != null) {
-          ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+          ref.read(appParamProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
         }
       }
 
       if (from == 'VisitedTempleMapAlert') {
         if (ref != null) {
-          ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+          ref.read(appParamProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
         }
       }
 

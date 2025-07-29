@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/_get_data/temple_lat_lng/temple_lat_lng.dart';
 import '../../controllers/app_param/app_param.dart';
-import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import 'temple_overlay.dart';
 
 Future<void> TempleDialog({

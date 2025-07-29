@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/_get_data/station/station.dart';
+import '../../controllers/_get_data/temple/temple.dart';
+import '../../controllers/_get_data/temple_lat_lng/temple_lat_lng.dart';
 import '../../controllers/app_param/app_param.dart';
-import '../../controllers/station/station.dart';
-import '../../controllers/temple/temple.dart';
 
-import '../../controllers/temple_lat_lng/temple_lat_lng.dart';
 import '../../extensions/extensions.dart';
 
 import '../../models/station_model.dart';
@@ -146,7 +146,7 @@ Widget visitedTempleListParts({
                                   if (templeLatLngMap[element2] != null) {
                                     ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: false);
 
-                                    ref.read(templeProvider.notifier).setSelectTemple(
+                                    ref.read(appParamProvider.notifier).setSelectTemple(
                                         name: element2,
                                         lat: templeLatLngMap[element2]!.lat,
                                         lng: templeLatLngMap[element2]!.lng);
@@ -206,7 +206,7 @@ Widget visitedTempleListParts({
 
                     ref.read(appParamProvider.notifier).setVisitedTempleMapDisplayFinish(flag: true);
 
-                    ref.read(templeProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
+                    ref.read(appParamProvider.notifier).setSelectTemple(name: '', lat: '', lng: '');
                   } else if (from == 'VisitedTempleFromHomeMapAlert') {
                     ref.read(appParamProvider.notifier).clearVisitedTempleFromHomeSelectedDateList();
                   }

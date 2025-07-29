@@ -1,12 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../data/http/client.dart';
-import '../../data/http/path.dart';
-import '../../extensions/extensions.dart';
-import '../../models/tokyo_station_model.dart';
-import '../../models/tokyo_train_model.dart';
-import '../../utility/utility.dart';
+import '../../../data/http/client.dart';
+import '../../../data/http/path.dart';
+import '../../../extensions/extensions.dart';
+import '../../../models/tokyo_station_model.dart';
+import '../../../models/tokyo_train_model.dart';
+import '../../../utility/utility.dart';
 
 part 'tokyo_train.freezed.dart';
 
@@ -19,9 +19,6 @@ class TokyoTrainState with _$TokyoTrainState {
     @Default(<String, TokyoTrainModel>{}) Map<String, TokyoTrainModel> tokyoTrainMap,
     @Default(<int, TokyoTrainModel>{}) Map<int, TokyoTrainModel> tokyoTrainIdMap,
     @Default(<String, TokyoStationModel>{}) Map<String, TokyoStationModel> tokyoStationMap,
-
-    //
-    @Default(<int>[]) List<int> selectTrainList,
   }) = _TokyoTrainState;
 }
 
@@ -83,21 +80,5 @@ class TokyoTrain extends _$TokyoTrain {
     } catch (_) {}
   }
 
-  //============================================== api
-
-  ///
-  void setTrainList({required int trainNumber}) {
-    final List<int> list = <int>[...state.selectTrainList];
-
-    if (list.contains(trainNumber)) {
-      list.remove(trainNumber);
-    } else {
-      list.add(trainNumber);
-    }
-
-    state = state.copyWith(selectTrainList: list);
-  }
-
-  ///
-  void clearTrainList() => state = state.copyWith(selectTrainList: <int>[]);
+//============================================== api
 }

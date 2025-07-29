@@ -6,7 +6,7 @@ part of 'temple_photo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$templePhotoHash() => r'4a0c164c85b5c94d893b9f86bcfbc34f6800de82';
+String _$templePhotoHash() => r'6c02ad56967b0be31e904b3bfece7a7adbd3823c';
 
 /// See also [TemplePhoto].
 @ProviderFor(TemplePhoto)

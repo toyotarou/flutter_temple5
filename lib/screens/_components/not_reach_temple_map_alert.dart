@@ -274,8 +274,8 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
       final List<double> stationLatList = <double>[];
       final List<double> stationLngList = <double>[];
 
-      if (tokyoTrainState.selectTrainList.isNotEmpty) {
-        final TokyoTrainModel? map = widget.tokyoTrainIdMap[tokyoTrainState.selectTrainList[0]];
+      if (appParamState.selectTrainList.isNotEmpty) {
+        final TokyoTrainModel? map = widget.tokyoTrainIdMap[appParamState.selectTrainList[0]];
 
         map?.station.forEach((TokyoStationModel element) {
           stationLatList.add(element.lat.toDouble());
@@ -314,8 +314,8 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
 
     final List<LatLng> points = <LatLng>[];
 
-    for (int i = 0; i < tokyoTrainState.selectTrainList.length; i++) {
-      final TokyoTrainModel? map = widget.tokyoTrainIdMap[tokyoTrainState.selectTrainList[i]];
+    for (int i = 0; i < appParamState.selectTrainList.length; i++) {
+      final TokyoTrainModel? map = widget.tokyoTrainIdMap[appParamState.selectTrainList[i]];
 
       map?.station.forEach(
           (TokyoStationModel element2) => points.add(LatLng(element2.lat.toDouble(), element2.lng.toDouble())));
@@ -343,7 +343,7 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
           height: 40,
           child: GestureDetector(
             onTap: () {
-              templeNotifier.setSelectTemple(
+              appParamNotifier.setSelectTemple(
                   name: templeDataList[i].name, lat: templeDataList[i].latitude, lng: templeDataList[i].longitude);
 
               appParamNotifier.setFirstOverlayParams(firstEntries: _firstEntries);
@@ -377,9 +377,9 @@ class _NotReachTempleMapAlertState extends ConsumerState<NotReachTempleMapAlert>
               );
             },
             child: CircleAvatar(
-              backgroundColor: (templeState.selectTempleName == templeDataList[i].name &&
-                      templeState.selectTempleLat == templeDataList[i].latitude &&
-                      templeState.selectTempleLng == templeDataList[i].longitude)
+              backgroundColor: (appParamState.selectTempleName == templeDataList[i].name &&
+                      appParamState.selectTempleLat == templeDataList[i].latitude &&
+                      appParamState.selectTempleLng == templeDataList[i].longitude)
                   ? Colors.redAccent.withOpacity(0.5)
                   : Colors.orangeAccent.withOpacity(0.5),
               child: Text(

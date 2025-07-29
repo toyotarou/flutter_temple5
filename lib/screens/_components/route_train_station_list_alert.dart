@@ -119,9 +119,9 @@ class _TempleTrainListAlertState extends ConsumerState<RouteTrainStationListAler
 
               latLngTempleNotifier.clearSelectedNearStation();
 
-              templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
+              appParamNotifier.setSelectTemple(name: '', lat: '', lng: '');
 
-              tokyoTrainNotifier.clearTrainList();
+              appParamNotifier.clearTrainList();
 
               latLngTempleNotifier.clearParamLatLng();
 

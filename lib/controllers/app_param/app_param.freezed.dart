@@ -48,6 +48,18 @@ mixin _$AppParamState {
   String get selectedTokyoJinjachouTempleName =>
       throw _privateConstructorUsedError;
 
+  ///
+  String get searchWord => throw _privateConstructorUsedError;
+  bool get doSearch => throw _privateConstructorUsedError;
+
+  ///
+  String get selectYear => throw _privateConstructorUsedError; //
+  String get selectTempleName => throw _privateConstructorUsedError;
+  String get selectTempleLat => throw _privateConstructorUsedError;
+  String get selectTempleLng => throw _privateConstructorUsedError; //
+  int get selectVisitedTempleListKey => throw _privateConstructorUsedError; //
+  List<int> get selectTrainList => throw _privateConstructorUsedError;
+
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -76,7 +88,15 @@ abstract class $AppParamStateCopyWith<$Res> {
       LatLng? visitedTempleFromHomeLatLng,
       List<String> visitedTempleFromHomeSelectedDateList,
       String visitedTempleFromHomeSearchAddress,
-      String selectedTokyoJinjachouTempleName});
+      String selectedTokyoJinjachouTempleName,
+      String searchWord,
+      bool doSearch,
+      String selectYear,
+      String selectTempleName,
+      String selectTempleLat,
+      String selectTempleLng,
+      int selectVisitedTempleListKey,
+      List<int> selectTrainList});
 }
 
 /// @nodoc
@@ -109,6 +129,14 @@ class _$AppParamStateCopyWithImpl<$Res, $Val extends AppParamState>
     Object? visitedTempleFromHomeSelectedDateList = null,
     Object? visitedTempleFromHomeSearchAddress = null,
     Object? selectedTokyoJinjachouTempleName = null,
+    Object? searchWord = null,
+    Object? doSearch = null,
+    Object? selectYear = null,
+    Object? selectTempleName = null,
+    Object? selectTempleLat = null,
+    Object? selectTempleLng = null,
+    Object? selectVisitedTempleListKey = null,
+    Object? selectTrainList = null,
   }) {
     return _then(_value.copyWith(
       currentZoom: null == currentZoom
@@ -173,6 +201,38 @@ class _$AppParamStateCopyWithImpl<$Res, $Val extends AppParamState>
           ? _value.selectedTokyoJinjachouTempleName
           : selectedTokyoJinjachouTempleName // ignore: cast_nullable_to_non_nullable
               as String,
+      searchWord: null == searchWord
+          ? _value.searchWord
+          : searchWord // ignore: cast_nullable_to_non_nullable
+              as String,
+      doSearch: null == doSearch
+          ? _value.doSearch
+          : doSearch // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectYear: null == selectYear
+          ? _value.selectYear
+          : selectYear // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectTempleName: null == selectTempleName
+          ? _value.selectTempleName
+          : selectTempleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectTempleLat: null == selectTempleLat
+          ? _value.selectTempleLat
+          : selectTempleLat // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectTempleLng: null == selectTempleLng
+          ? _value.selectTempleLng
+          : selectTempleLng // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectVisitedTempleListKey: null == selectVisitedTempleListKey
+          ? _value.selectVisitedTempleListKey
+          : selectVisitedTempleListKey // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectTrainList: null == selectTrainList
+          ? _value.selectTrainList
+          : selectTrainList // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -200,7 +260,15 @@ abstract class _$$AppParamStateImplCopyWith<$Res>
       LatLng? visitedTempleFromHomeLatLng,
       List<String> visitedTempleFromHomeSelectedDateList,
       String visitedTempleFromHomeSearchAddress,
-      String selectedTokyoJinjachouTempleName});
+      String selectedTokyoJinjachouTempleName,
+      String searchWord,
+      bool doSearch,
+      String selectYear,
+      String selectTempleName,
+      String selectTempleLat,
+      String selectTempleLng,
+      int selectVisitedTempleListKey,
+      List<int> selectTrainList});
 }
 
 /// @nodoc
@@ -231,6 +299,14 @@ class __$$AppParamStateImplCopyWithImpl<$Res>
     Object? visitedTempleFromHomeSelectedDateList = null,
     Object? visitedTempleFromHomeSearchAddress = null,
     Object? selectedTokyoJinjachouTempleName = null,
+    Object? searchWord = null,
+    Object? doSearch = null,
+    Object? selectYear = null,
+    Object? selectTempleName = null,
+    Object? selectTempleLat = null,
+    Object? selectTempleLng = null,
+    Object? selectVisitedTempleListKey = null,
+    Object? selectTrainList = null,
   }) {
     return _then(_$AppParamStateImpl(
       currentZoom: null == currentZoom
@@ -295,6 +371,38 @@ class __$$AppParamStateImplCopyWithImpl<$Res>
           ? _value.selectedTokyoJinjachouTempleName
           : selectedTokyoJinjachouTempleName // ignore: cast_nullable_to_non_nullable
               as String,
+      searchWord: null == searchWord
+          ? _value.searchWord
+          : searchWord // ignore: cast_nullable_to_non_nullable
+              as String,
+      doSearch: null == doSearch
+          ? _value.doSearch
+          : doSearch // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectYear: null == selectYear
+          ? _value.selectYear
+          : selectYear // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectTempleName: null == selectTempleName
+          ? _value.selectTempleName
+          : selectTempleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectTempleLat: null == selectTempleLat
+          ? _value.selectTempleLat
+          : selectTempleLat // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectTempleLng: null == selectTempleLng
+          ? _value.selectTempleLng
+          : selectTempleLng // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectVisitedTempleListKey: null == selectVisitedTempleListKey
+          ? _value.selectVisitedTempleListKey
+          : selectVisitedTempleListKey // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectTrainList: null == selectTrainList
+          ? _value._selectTrainList
+          : selectTrainList // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -318,11 +426,20 @@ class _$AppParamStateImpl implements _AppParamState {
       final List<String> visitedTempleFromHomeSelectedDateList =
           const <String>[],
       this.visitedTempleFromHomeSearchAddress = '',
-      this.selectedTokyoJinjachouTempleName = ''})
+      this.selectedTokyoJinjachouTempleName = '',
+      this.searchWord = '',
+      this.doSearch = false,
+      this.selectYear = '',
+      this.selectTempleName = '',
+      this.selectTempleLat = '',
+      this.selectTempleLng = '',
+      this.selectVisitedTempleListKey = -1,
+      final List<int> selectTrainList = const <int>[]})
       : _firstEntries = firstEntries,
         _secondEntries = secondEntries,
         _visitedTempleFromHomeSelectedDateList =
-            visitedTempleFromHomeSelectedDateList;
+            visitedTempleFromHomeSelectedDateList,
+        _selectTrainList = selectTrainList;
 
   @override
   @JsonKey()
@@ -402,9 +519,46 @@ class _$AppParamStateImpl implements _AppParamState {
   @JsonKey()
   final String selectedTokyoJinjachouTempleName;
 
+  ///
+  @override
+  @JsonKey()
+  final String searchWord;
+  @override
+  @JsonKey()
+  final bool doSearch;
+
+  ///
+  @override
+  @JsonKey()
+  final String selectYear;
+//
+  @override
+  @JsonKey()
+  final String selectTempleName;
+  @override
+  @JsonKey()
+  final String selectTempleLat;
+  @override
+  @JsonKey()
+  final String selectTempleLng;
+//
+  @override
+  @JsonKey()
+  final int selectVisitedTempleListKey;
+//
+  final List<int> _selectTrainList;
+//
+  @override
+  @JsonKey()
+  List<int> get selectTrainList {
+    if (_selectTrainList is EqualUnmodifiableListView) return _selectTrainList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectTrainList);
+  }
+
   @override
   String toString() {
-    return 'AppParamState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate, visitedTempleSelectedRank: $visitedTempleSelectedRank, visitedTempleFromHomeLatLng: $visitedTempleFromHomeLatLng, visitedTempleFromHomeSelectedDateList: $visitedTempleFromHomeSelectedDateList, visitedTempleFromHomeSearchAddress: $visitedTempleFromHomeSearchAddress, selectedTokyoJinjachouTempleName: $selectedTokyoJinjachouTempleName)';
+    return 'AppParamState(currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, overlayPosition: $overlayPosition, firstEntries: $firstEntries, secondEntries: $secondEntries, visitedTempleMapDisplayFinish: $visitedTempleMapDisplayFinish, homeTextFormFieldVisible: $homeTextFormFieldVisible, notReachTempleNearStationName: $notReachTempleNearStationName, visitedTempleSelectedYear: $visitedTempleSelectedYear, visitedTempleSelectedDate: $visitedTempleSelectedDate, visitedTempleSelectedRank: $visitedTempleSelectedRank, visitedTempleFromHomeLatLng: $visitedTempleFromHomeLatLng, visitedTempleFromHomeSelectedDateList: $visitedTempleFromHomeSelectedDateList, visitedTempleFromHomeSearchAddress: $visitedTempleFromHomeSearchAddress, selectedTokyoJinjachouTempleName: $selectedTokyoJinjachouTempleName, searchWord: $searchWord, doSearch: $doSearch, selectYear: $selectYear, selectTempleName: $selectTempleName, selectTempleLat: $selectTempleLat, selectTempleLng: $selectTempleLng, selectVisitedTempleListKey: $selectVisitedTempleListKey, selectTrainList: $selectTrainList)';
   }
 
   @override
@@ -448,28 +602,46 @@ class _$AppParamStateImpl implements _AppParamState {
                     visitedTempleFromHomeSearchAddress) &&
             (identical(other.selectedTokyoJinjachouTempleName, selectedTokyoJinjachouTempleName) ||
                 other.selectedTokyoJinjachouTempleName ==
-                    selectedTokyoJinjachouTempleName));
+                    selectedTokyoJinjachouTempleName) &&
+            (identical(other.searchWord, searchWord) ||
+                other.searchWord == searchWord) &&
+            (identical(other.doSearch, doSearch) || other.doSearch == doSearch) &&
+            (identical(other.selectYear, selectYear) || other.selectYear == selectYear) &&
+            (identical(other.selectTempleName, selectTempleName) || other.selectTempleName == selectTempleName) &&
+            (identical(other.selectTempleLat, selectTempleLat) || other.selectTempleLat == selectTempleLat) &&
+            (identical(other.selectTempleLng, selectTempleLng) || other.selectTempleLng == selectTempleLng) &&
+            (identical(other.selectVisitedTempleListKey, selectVisitedTempleListKey) || other.selectVisitedTempleListKey == selectVisitedTempleListKey) &&
+            const DeepCollectionEquality().equals(other._selectTrainList, _selectTrainList));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      currentZoom,
-      currentPaddingIndex,
-      overlayPosition,
-      const DeepCollectionEquality().hash(_firstEntries),
-      const DeepCollectionEquality().hash(_secondEntries),
-      visitedTempleMapDisplayFinish,
-      homeTextFormFieldVisible,
-      notReachTempleNearStationName,
-      visitedTempleSelectedYear,
-      visitedTempleSelectedDate,
-      visitedTempleSelectedRank,
-      visitedTempleFromHomeLatLng,
-      const DeepCollectionEquality()
-          .hash(_visitedTempleFromHomeSelectedDateList),
-      visitedTempleFromHomeSearchAddress,
-      selectedTokyoJinjachouTempleName);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        currentZoom,
+        currentPaddingIndex,
+        overlayPosition,
+        const DeepCollectionEquality().hash(_firstEntries),
+        const DeepCollectionEquality().hash(_secondEntries),
+        visitedTempleMapDisplayFinish,
+        homeTextFormFieldVisible,
+        notReachTempleNearStationName,
+        visitedTempleSelectedYear,
+        visitedTempleSelectedDate,
+        visitedTempleSelectedRank,
+        visitedTempleFromHomeLatLng,
+        const DeepCollectionEquality()
+            .hash(_visitedTempleFromHomeSelectedDateList),
+        visitedTempleFromHomeSearchAddress,
+        selectedTokyoJinjachouTempleName,
+        searchWord,
+        doSearch,
+        selectYear,
+        selectTempleName,
+        selectTempleLat,
+        selectTempleLng,
+        selectVisitedTempleListKey,
+        const DeepCollectionEquality().hash(_selectTrainList)
+      ]);
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
@@ -496,7 +668,15 @@ abstract class _AppParamState implements AppParamState {
       final LatLng? visitedTempleFromHomeLatLng,
       final List<String> visitedTempleFromHomeSelectedDateList,
       final String visitedTempleFromHomeSearchAddress,
-      final String selectedTokyoJinjachouTempleName}) = _$AppParamStateImpl;
+      final String selectedTokyoJinjachouTempleName,
+      final String searchWord,
+      final bool doSearch,
+      final String selectYear,
+      final String selectTempleName,
+      final String selectTempleLat,
+      final String selectTempleLng,
+      final int selectVisitedTempleListKey,
+      final List<int> selectTrainList}) = _$AppParamStateImpl;
 
   @override
   double get currentZoom;
@@ -540,6 +720,26 @@ abstract class _AppParamState implements AppParamState {
   ///
   @override
   String get selectedTokyoJinjachouTempleName;
+
+  ///
+  @override
+  String get searchWord;
+  @override
+  bool get doSearch;
+
+  ///
+  @override
+  String get selectYear; //
+  @override
+  String get selectTempleName;
+  @override
+  String get selectTempleLat;
+  @override
+  String get selectTempleLng; //
+  @override
+  int get selectVisitedTempleListKey; //
+  @override
+  List<int> get selectTrainList;
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.

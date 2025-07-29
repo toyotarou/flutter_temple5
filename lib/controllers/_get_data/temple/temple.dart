@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../data/http/client.dart';
-import '../../data/http/path.dart';
-import '../../extensions/extensions.dart';
-import '../../models/temple_model.dart';
-import '../../utility/utility.dart';
+import '../../../data/http/client.dart';
+import '../../../data/http/path.dart';
+import '../../../extensions/extensions.dart';
+import '../../../models/temple_model.dart';
+import '../../../utility/utility.dart';
 
 part 'temple.freezed.dart';
 
@@ -18,21 +18,6 @@ class TempleState with _$TempleState {
     @Default(<String, TempleModel>{}) Map<String, TempleModel> dateTempleMap,
     @Default(<String, TempleModel>{}) Map<String, TempleModel> latLngTempleMap,
     @Default(<String, TempleModel>{}) Map<String, TempleModel> nameTempleMap,
-
-    ///
-    @Default('') String searchWord,
-    @Default(false) bool doSearch,
-
-    ///
-    @Default('') String selectYear,
-
-    //
-    @Default('') String selectTempleName,
-    @Default('') String selectTempleLat,
-    @Default('') String selectTempleLng,
-
-    //
-    @Default(-1) int selectVisitedTempleListKey,
 
     //
     @Default(<String, List<String>>{}) Map<String, List<String>> templeVisitDateMap,
@@ -138,21 +123,5 @@ class Temple extends _$Temple {
     } catch (_) {}
   }
 
-  //============================================== api
-
-  ///
-  void doSearch({required String searchWord}) => state = state.copyWith(searchWord: searchWord, doSearch: true);
-
-  ///
-  void clearSearch() => state = state.copyWith(searchWord: '', doSearch: false);
-
-  ///
-  void setSelectYear({required String year}) => state = state.copyWith(selectYear: year);
-
-  ///
-  void setSelectTemple({required String name, required String lat, required String lng}) =>
-      state = state.copyWith(selectTempleName: name, selectTempleLat: lat, selectTempleLng: lng);
-
-  ///
-  void setSelectVisitedTempleListKey({required int key}) => state = state.copyWith(selectVisitedTempleListKey: key);
+//============================================== api
 }

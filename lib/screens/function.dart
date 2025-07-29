@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../controllers/_get_data/temple/temple.dart';
+import '../controllers/app_param/app_param.dart';
 import '../controllers/routing/routing.dart';
-import '../controllers/temple/temple.dart';
 import '../extensions/extensions.dart';
 import '../models/common/temple_data.dart';
 import '../models/temple_model.dart';
 
 ///
-Color? getCircleAvatarBgColor(
-    {required TempleData element, required WidgetRef ref}) {
-  final TempleState templeState = ref.watch(templeProvider);
+Color? getCircleAvatarBgColor({required TempleData element, required WidgetRef ref}) {
+  var appParamState = ref.watch(appParamProvider);
 
   Color? color;
 
@@ -32,26 +32,24 @@ Color? getCircleAvatarBgColor(
       } else {
         color = Colors.orangeAccent.withOpacity(0.5);
       }
-
   }
 
   if (element.mark.split('-').length == 2) {
     color = Colors.purpleAccent.withOpacity(0.5);
   } else {
-    final List<TempleData> routingTempleDataList = ref.watch(routingProvider
-        .select((RoutingState value) => value.routingTempleDataList));
+    final List<TempleData> routingTempleDataList =
+        ref.watch(routingProvider.select((RoutingState value) => value.routingTempleDataList));
 
-    final int pos = routingTempleDataList
-        .indexWhere((TempleData element2) => element2.mark == element.mark);
+    final int pos = routingTempleDataList.indexWhere((TempleData element2) => element2.mark == element.mark);
 
     if (pos != -1) {
       color = Colors.indigo.withOpacity(0.5);
     }
   }
 
-  if (templeState.selectTempleName == element.name &&
-      templeState.selectTempleLat == element.latitude &&
-      templeState.selectTempleLng == element.longitude) {
+  if (appParamState.selectTempleName == element.name &&
+      appParamState.selectTempleLat == element.latitude &&
+      appParamState.selectTempleLng == element.longitude) {
     color = Colors.redAccent.withOpacity(0.5);
   }
 
@@ -85,10 +83,7 @@ Map<String, dynamic> makeBounds({required List<TempleData> data}) {
       'maxLng': maxLng,
     };
 
-    return <String, dynamic>{
-      'boundsLatLngMap': boundsLatLngMap,
-      'boundsInner': small
-    };
+    return <String, dynamic>{'boundsLatLngMap': boundsLatLngMap, 'boundsInner': small};
   }
 
   return <String, dynamic>{};
@@ -103,9 +98,7 @@ String calcDistance({
 }) {
   final double distanceKm = 6371 *
       acos(
-        cos(originLat / 180 * pi) *
-                cos((destLng - originLng) / 180 * pi) *
-                cos(destLat / 180 * pi) +
+        cos(originLat / 180 * pi) * cos((destLng - originLng) / 180 * pi) * cos(destLat / 180 * pi) +
             sin(originLat / 180 * pi) * sin(destLat / 180 * pi),
       );
 
@@ -121,9 +114,7 @@ String calcDistance({
 List<int> makeTempleVisitYearList({required WidgetRef ref}) {
   final List<int> list = <int>[];
 
-  ref
-      .watch(templeProvider.select((TempleState value) => value.templeList))
-      .forEach((TempleModel element) {
+  ref.watch(templeProvider.select((TempleState value) => value.templeList)).forEach((TempleModel element) {
     if (!list.contains(element.date.year)) {
       list.add(element.date.year);
     }

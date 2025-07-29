@@ -84,7 +84,7 @@ class _GoalStationSettingAlertState extends ConsumerState<RouteGoalStationSettin
               onTap: () {
                 routingNotifier.setGoalStationId(id: data.id);
 
-                templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
+                appParamNotifier.setSelectTemple(name: '', lat: '', lng: '');
 
                 final TokyoStationModel? station = widget.tokyoStationMap[data.id];
 

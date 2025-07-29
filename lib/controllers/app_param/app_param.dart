@@ -40,6 +40,24 @@ class AppParamState with _$AppParamState {
 
     ///
     @Default('') String selectedTokyoJinjachouTempleName,
+
+    ///
+    @Default('') String searchWord,
+    @Default(false) bool doSearch,
+
+    ///
+    @Default('') String selectYear,
+
+    //
+    @Default('') String selectTempleName,
+    @Default('') String selectTempleLat,
+    @Default('') String selectTempleLng,
+
+    //
+    @Default(-1) int selectVisitedTempleListKey,
+
+    //
+    @Default(<int>[]) List<int> selectTrainList,
   }) = _AppParamState;
 }
 
@@ -50,6 +68,22 @@ class AppParam extends _$AppParam {
   ///
   @override
   AppParamState build() => const AppParamState();
+
+  ///
+  void doSearch({required String searchWord}) => state = state.copyWith(searchWord: searchWord, doSearch: true);
+
+  ///
+  void clearSearch() => state = state.copyWith(searchWord: '', doSearch: false);
+
+  ///
+  void setSelectYear({required String year}) => state = state.copyWith(selectYear: year);
+
+  ///
+  void setSelectTemple({required String name, required String lat, required String lng}) =>
+      state = state.copyWith(selectTempleName: name, selectTempleLat: lat, selectTempleLng: lng);
+
+  ///
+  void setSelectVisitedTempleListKey({required int key}) => state = state.copyWith(selectVisitedTempleListKey: key);
 
   ///
   void setCurrentZoom({required double zoom}) => state = state.copyWith(currentZoom: zoom);
@@ -108,4 +142,20 @@ class AppParam extends _$AppParam {
   ///
   void setSelectedTokyoJinjachouTempleName({required String name}) =>
       state = state.copyWith(selectedTokyoJinjachouTempleName: name);
+
+  ///
+  void setTrainList({required int trainNumber}) {
+    final List<int> list = <int>[...state.selectTrainList];
+
+    if (list.contains(trainNumber)) {
+      list.remove(trainNumber);
+    } else {
+      list.add(trainNumber);
+    }
+
+    state = state.copyWith(selectTrainList: list);
+  }
+
+  ///
+  void clearTrainList() => state = state.copyWith(selectTrainList: <int>[]);
 }

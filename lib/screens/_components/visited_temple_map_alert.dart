@@ -62,13 +62,13 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
     makeMarker();
 
     if (!appParamState.visitedTempleMapDisplayFinish) {
-      if (templeState.selectTempleLat != '' && templeState.selectTempleLng != '') {
+      if (appParamState.selectTempleLat != '' && appParamState.selectTempleLng != '') {
         // ignore: always_specify_types
         Future(() {
           appParamNotifier.setVisitedTempleMapDisplayFinish(flag: true);
         });
 
-        mapController.move(LatLng(templeState.selectTempleLat.toDouble(), templeState.selectTempleLng.toDouble()), 13);
+        mapController.move(LatLng(appParamState.selectTempleLat.toDouble(), appParamState.selectTempleLng.toDouble()), 13);
       } else {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           setState(() => isLoading = true);
@@ -239,10 +239,10 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
     if (appParamState.visitedTempleSelectedDate == '') {
       selectedTempleDateList.add(
         TempleData(
-          name: templeState.selectTempleName,
+          name: appParamState.selectTempleName,
           address: '',
-          latitude: templeState.selectTempleLat,
-          longitude: templeState.selectTempleLng,
+          latitude: appParamState.selectTempleLat,
+          longitude: appParamState.selectTempleLng,
         ),
       );
     } else {
@@ -286,7 +286,7 @@ class _VisitedTempleMapAlertState extends ConsumerState<VisitedTempleMapAlert>
             onTap: (templeDataList[i].mark == '0')
                 ? null
                 : () {
-                    templeNotifier.setSelectTemple(
+                    appParamNotifier.setSelectTemple(
                         name: templeDataList[i].name,
                         lat: templeDataList[i].latitude,
                         lng: templeDataList[i].longitude);

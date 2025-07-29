@@ -107,7 +107,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
   ///
   Widget displayHomeTabBar() {
-    if (templeState.doSearch) {
+    if (appParamState.doSearch) {
       return Container(
         height: 40,
         margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
@@ -132,14 +132,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
       list.add(
         GestureDetector(
           onTap: () {
-            templeNotifier.setSelectYear(year: yearList[i].toString());
+            appParamNotifier.setSelectYear(year: yearList[i].toString());
 
             scrollToIndex(i);
           },
           child: Text(
             yearList[i].toString(),
             style: TextStyle(
-                color: (templeState.selectYear == yearList[i].toString()) ? Colors.yellowAccent : Colors.white),
+                color: (appParamState.selectYear == yearList[i].toString()) ? Colors.yellowAccent : Colors.white),
           ),
         ),
       );
@@ -261,11 +261,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
               ),
               TextButton(
                 onPressed: () {
-                  tokyoTrainNotifier.clearTrainList();
+                  appParamNotifier.clearTrainList();
 
                   latLngTempleNotifier.clearSelectedNearStation();
 
-                  templeNotifier.setSelectTemple(name: '', lat: '', lng: '');
+                  appParamNotifier.setSelectTemple(name: '', lat: '', lng: '');
 
                   appParamNotifier.setFirstOverlayParams(firstEntries: null);
                   appParamNotifier.setSecondOverlayParams(secondEntries: null);
@@ -300,7 +300,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
           onPressed: () {
             searchWordEditingController.text = '';
 
-            templeNotifier.clearSearch();
+            appParamNotifier.clearSearch();
           },
           icon: const Icon(Icons.close, color: Colors.white),
         ),
@@ -325,7 +325,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
               : Container(),
         ),
         IconButton(
-          onPressed: () => templeNotifier.doSearch(searchWord: searchWordEditingController.text),
+          onPressed: () => appParamNotifier.doSearch(searchWord: searchWordEditingController.text),
           icon: const Icon(Icons.search, color: Colors.white),
         ),
       ],
@@ -340,7 +340,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
     int i = 0;
     for (final TempleModel element in templeState.templeList) {
       if (keepYear != element.date.year) {
-        if (!templeState.doSearch) {
+        if (!appParamState.doSearch) {
           list.add(Container(
             key: globalKeyList[i],
             decoration: BoxDecoration(
@@ -367,8 +367,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
 
       bool dispFlag = true;
 
-      if (templeState.doSearch) {
-        final RegExp reg = RegExp(templeState.searchWord);
+      if (appParamState.doSearch) {
+        final RegExp reg = RegExp(appParamState.searchWord);
 
         if (reg.firstMatch(element.temple) != null || reg.firstMatch(element.memo) != null) {
           dispFlag = true;
@@ -378,7 +378,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
       }
 
       if (dispFlag) {
-        list.add(displayHomeCard(data: element, selectYear: templeState.selectYear));
+        list.add(displayHomeCard(data: element, selectYear: appParamState.selectYear));
       }
 
       keepYear = element.date.year;
@@ -403,7 +403,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
       child: ListTile(
         leading: SizedBox(
           width: 40,
-          child: (data.date.year.toString() == selectYear || templeState.searchWord != '')
+          child: (data.date.year.toString() == selectYear || appParamState.searchWord != '')
               ? CachedNetworkImage(
                   imageUrl: data.thumbnail,
                   placeholder: (BuildContext context, String url) => Image.asset('assets/images/no_image.png'),

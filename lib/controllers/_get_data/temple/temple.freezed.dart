@@ -22,18 +22,7 @@ mixin _$TempleState {
   Map<String, TempleModel> get latLngTempleMap =>
       throw _privateConstructorUsedError;
   Map<String, TempleModel> get nameTempleMap =>
-      throw _privateConstructorUsedError;
-
-  ///
-  String get searchWord => throw _privateConstructorUsedError;
-  bool get doSearch => throw _privateConstructorUsedError;
-
-  ///
-  String get selectYear => throw _privateConstructorUsedError; //
-  String get selectTempleName => throw _privateConstructorUsedError;
-  String get selectTempleLat => throw _privateConstructorUsedError;
-  String get selectTempleLng => throw _privateConstructorUsedError; //
-  int get selectVisitedTempleListKey => throw _privateConstructorUsedError; //
+      throw _privateConstructorUsedError; //
   Map<String, List<String>> get templeVisitDateMap =>
       throw _privateConstructorUsedError; //
   Map<String, List<String>> get templeCountMap =>
@@ -57,13 +46,6 @@ abstract class $TempleStateCopyWith<$Res> {
       Map<String, TempleModel> dateTempleMap,
       Map<String, TempleModel> latLngTempleMap,
       Map<String, TempleModel> nameTempleMap,
-      String searchWord,
-      bool doSearch,
-      String selectYear,
-      String selectTempleName,
-      String selectTempleLat,
-      String selectTempleLng,
-      int selectVisitedTempleListKey,
       Map<String, List<String>> templeVisitDateMap,
       Map<String, List<String>> templeCountMap});
 }
@@ -87,13 +69,6 @@ class _$TempleStateCopyWithImpl<$Res, $Val extends TempleState>
     Object? dateTempleMap = null,
     Object? latLngTempleMap = null,
     Object? nameTempleMap = null,
-    Object? searchWord = null,
-    Object? doSearch = null,
-    Object? selectYear = null,
-    Object? selectTempleName = null,
-    Object? selectTempleLat = null,
-    Object? selectTempleLng = null,
-    Object? selectVisitedTempleListKey = null,
     Object? templeVisitDateMap = null,
     Object? templeCountMap = null,
   }) {
@@ -114,34 +89,6 @@ class _$TempleStateCopyWithImpl<$Res, $Val extends TempleState>
           ? _value.nameTempleMap
           : nameTempleMap // ignore: cast_nullable_to_non_nullable
               as Map<String, TempleModel>,
-      searchWord: null == searchWord
-          ? _value.searchWord
-          : searchWord // ignore: cast_nullable_to_non_nullable
-              as String,
-      doSearch: null == doSearch
-          ? _value.doSearch
-          : doSearch // ignore: cast_nullable_to_non_nullable
-              as bool,
-      selectYear: null == selectYear
-          ? _value.selectYear
-          : selectYear // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectTempleName: null == selectTempleName
-          ? _value.selectTempleName
-          : selectTempleName // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectTempleLat: null == selectTempleLat
-          ? _value.selectTempleLat
-          : selectTempleLat // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectTempleLng: null == selectTempleLng
-          ? _value.selectTempleLng
-          : selectTempleLng // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectVisitedTempleListKey: null == selectVisitedTempleListKey
-          ? _value.selectVisitedTempleListKey
-          : selectVisitedTempleListKey // ignore: cast_nullable_to_non_nullable
-              as int,
       templeVisitDateMap: null == templeVisitDateMap
           ? _value.templeVisitDateMap
           : templeVisitDateMap // ignore: cast_nullable_to_non_nullable
@@ -167,13 +114,6 @@ abstract class _$$TempleStateImplCopyWith<$Res>
       Map<String, TempleModel> dateTempleMap,
       Map<String, TempleModel> latLngTempleMap,
       Map<String, TempleModel> nameTempleMap,
-      String searchWord,
-      bool doSearch,
-      String selectYear,
-      String selectTempleName,
-      String selectTempleLat,
-      String selectTempleLng,
-      int selectVisitedTempleListKey,
       Map<String, List<String>> templeVisitDateMap,
       Map<String, List<String>> templeCountMap});
 }
@@ -195,13 +135,6 @@ class __$$TempleStateImplCopyWithImpl<$Res>
     Object? dateTempleMap = null,
     Object? latLngTempleMap = null,
     Object? nameTempleMap = null,
-    Object? searchWord = null,
-    Object? doSearch = null,
-    Object? selectYear = null,
-    Object? selectTempleName = null,
-    Object? selectTempleLat = null,
-    Object? selectTempleLng = null,
-    Object? selectVisitedTempleListKey = null,
     Object? templeVisitDateMap = null,
     Object? templeCountMap = null,
   }) {
@@ -222,34 +155,6 @@ class __$$TempleStateImplCopyWithImpl<$Res>
           ? _value._nameTempleMap
           : nameTempleMap // ignore: cast_nullable_to_non_nullable
               as Map<String, TempleModel>,
-      searchWord: null == searchWord
-          ? _value.searchWord
-          : searchWord // ignore: cast_nullable_to_non_nullable
-              as String,
-      doSearch: null == doSearch
-          ? _value.doSearch
-          : doSearch // ignore: cast_nullable_to_non_nullable
-              as bool,
-      selectYear: null == selectYear
-          ? _value.selectYear
-          : selectYear // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectTempleName: null == selectTempleName
-          ? _value.selectTempleName
-          : selectTempleName // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectTempleLat: null == selectTempleLat
-          ? _value.selectTempleLat
-          : selectTempleLat // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectTempleLng: null == selectTempleLng
-          ? _value.selectTempleLng
-          : selectTempleLng // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectVisitedTempleListKey: null == selectVisitedTempleListKey
-          ? _value.selectVisitedTempleListKey
-          : selectVisitedTempleListKey // ignore: cast_nullable_to_non_nullable
-              as int,
       templeVisitDateMap: null == templeVisitDateMap
           ? _value._templeVisitDateMap
           : templeVisitDateMap // ignore: cast_nullable_to_non_nullable
@@ -273,13 +178,6 @@ class _$TempleStateImpl implements _TempleState {
           const <String, TempleModel>{},
       final Map<String, TempleModel> nameTempleMap =
           const <String, TempleModel>{},
-      this.searchWord = '',
-      this.doSearch = false,
-      this.selectYear = '',
-      this.selectTempleName = '',
-      this.selectTempleLat = '',
-      this.selectTempleLng = '',
-      this.selectVisitedTempleListKey = -1,
       final Map<String, List<String>> templeVisitDateMap =
           const <String, List<String>>{},
       final Map<String, List<String>> templeCountMap =
@@ -327,32 +225,6 @@ class _$TempleStateImpl implements _TempleState {
     return EqualUnmodifiableMapView(_nameTempleMap);
   }
 
-  ///
-  @override
-  @JsonKey()
-  final String searchWord;
-  @override
-  @JsonKey()
-  final bool doSearch;
-
-  ///
-  @override
-  @JsonKey()
-  final String selectYear;
-//
-  @override
-  @JsonKey()
-  final String selectTempleName;
-  @override
-  @JsonKey()
-  final String selectTempleLat;
-  @override
-  @JsonKey()
-  final String selectTempleLng;
-//
-  @override
-  @JsonKey()
-  final int selectVisitedTempleListKey;
 //
   final Map<String, List<String>> _templeVisitDateMap;
 //
@@ -378,7 +250,7 @@ class _$TempleStateImpl implements _TempleState {
 
   @override
   String toString() {
-    return 'TempleState(templeList: $templeList, dateTempleMap: $dateTempleMap, latLngTempleMap: $latLngTempleMap, nameTempleMap: $nameTempleMap, searchWord: $searchWord, doSearch: $doSearch, selectYear: $selectYear, selectTempleName: $selectTempleName, selectTempleLat: $selectTempleLat, selectTempleLng: $selectTempleLng, selectVisitedTempleListKey: $selectVisitedTempleListKey, templeVisitDateMap: $templeVisitDateMap, templeCountMap: $templeCountMap)';
+    return 'TempleState(templeList: $templeList, dateTempleMap: $dateTempleMap, latLngTempleMap: $latLngTempleMap, nameTempleMap: $nameTempleMap, templeVisitDateMap: $templeVisitDateMap, templeCountMap: $templeCountMap)';
   }
 
   @override
@@ -394,22 +266,6 @@ class _$TempleStateImpl implements _TempleState {
                 .equals(other._latLngTempleMap, _latLngTempleMap) &&
             const DeepCollectionEquality()
                 .equals(other._nameTempleMap, _nameTempleMap) &&
-            (identical(other.searchWord, searchWord) ||
-                other.searchWord == searchWord) &&
-            (identical(other.doSearch, doSearch) ||
-                other.doSearch == doSearch) &&
-            (identical(other.selectYear, selectYear) ||
-                other.selectYear == selectYear) &&
-            (identical(other.selectTempleName, selectTempleName) ||
-                other.selectTempleName == selectTempleName) &&
-            (identical(other.selectTempleLat, selectTempleLat) ||
-                other.selectTempleLat == selectTempleLat) &&
-            (identical(other.selectTempleLng, selectTempleLng) ||
-                other.selectTempleLng == selectTempleLng) &&
-            (identical(other.selectVisitedTempleListKey,
-                    selectVisitedTempleListKey) ||
-                other.selectVisitedTempleListKey ==
-                    selectVisitedTempleListKey) &&
             const DeepCollectionEquality()
                 .equals(other._templeVisitDateMap, _templeVisitDateMap) &&
             const DeepCollectionEquality()
@@ -423,13 +279,6 @@ class _$TempleStateImpl implements _TempleState {
       const DeepCollectionEquality().hash(_dateTempleMap),
       const DeepCollectionEquality().hash(_latLngTempleMap),
       const DeepCollectionEquality().hash(_nameTempleMap),
-      searchWord,
-      doSearch,
-      selectYear,
-      selectTempleName,
-      selectTempleLat,
-      selectTempleLng,
-      selectVisitedTempleListKey,
       const DeepCollectionEquality().hash(_templeVisitDateMap),
       const DeepCollectionEquality().hash(_templeCountMap));
 
@@ -448,13 +297,6 @@ abstract class _TempleState implements TempleState {
       final Map<String, TempleModel> dateTempleMap,
       final Map<String, TempleModel> latLngTempleMap,
       final Map<String, TempleModel> nameTempleMap,
-      final String searchWord,
-      final bool doSearch,
-      final String selectYear,
-      final String selectTempleName,
-      final String selectTempleLat,
-      final String selectTempleLng,
-      final int selectVisitedTempleListKey,
       final Map<String, List<String>> templeVisitDateMap,
       final Map<String, List<String>> templeCountMap}) = _$TempleStateImpl;
 
@@ -465,25 +307,7 @@ abstract class _TempleState implements TempleState {
   @override
   Map<String, TempleModel> get latLngTempleMap;
   @override
-  Map<String, TempleModel> get nameTempleMap;
-
-  ///
-  @override
-  String get searchWord;
-  @override
-  bool get doSearch;
-
-  ///
-  @override
-  String get selectYear; //
-  @override
-  String get selectTempleName;
-  @override
-  String get selectTempleLat;
-  @override
-  String get selectTempleLng; //
-  @override
-  int get selectVisitedTempleListKey; //
+  Map<String, TempleModel> get nameTempleMap; //
   @override
   Map<String, List<String>> get templeVisitDateMap; //
   @override
